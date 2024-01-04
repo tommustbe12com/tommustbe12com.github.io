@@ -1,0 +1,11 @@
+This Bot's Status:
+
+Overall Development: 100%
+Functionality Development: 95%
+Command Development: 100%
+
+More features are always going to be added, don't expect this to be the end of its updates!!
+
+Additional information:
+
+The ChatGPT command might not be the same as the real ChatGPT AI because the real one costs money for a bigger quota.

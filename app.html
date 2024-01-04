@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TomMustBe12 App Home</title>
+    <link rel="icon" href="assets/profile.png/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: Montserrat;
+        text-align: center;
+      }
+      body {
+        background: #2f2f2f;
+        color: #f2f2f2;
+      }
+      h3 {
+        font-weight: 15;
+      }
+      button {
+        color: #f3f3f3;
+        background: #3f3f3f;
+        border: none;
+        border-radius: 2.5px;
+        padding: 10px;
+        transition: 0.25s;
+      }
+      button:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>TomMustBe12's App</h1>
+    <p>Nothing much around here, for now.</p>
+    <script src="scripts/popup-dark.js"></script>
+    <script>
+      PopupDark({
+          title: 'Custom Popup Title',
+          content: 'This is the content of the popup.',
+          closeButton: true,
+          customClass: 'custom-popup',
+      });
+    </script>
+  </body>
+</html>
