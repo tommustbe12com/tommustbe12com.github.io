@@ -96,13 +96,13 @@
 <body>
     <div class="top">
         <div class="left">
-            <img src="../icons/arrowLeft.svg" alt="Go Backward Icon" onclick="window.history.back()">
-            <img src="../icons/arrowRight.svg" alt="Go Forward Icon" onabort="window.history.forward()">
-            <img src="../icons/refresh.svg" alt="Refresh Icon" onclick="window.location.reload()">
+            <img src="browser/arrowLeft.svg" alt="Go Backward Icon" onclick="window.history.back()">
+            <img src="browser/arrowRight.svg" alt="Go Forward Icon" onabort="window.history.forward()">
+            <img src="browser/refresh.svg" alt="Refresh Icon" onclick="window.location.reload()">
         </div>
         <div class="center">
             <label>
-                <img src="../icons/search.svg" alt="Search Icon">
+                <img src="browser/search.svg" alt="Search Icon">
                 <input type="url" class="url" placeholder="Search or enter web address" autofocus spellcheck="false"
                     autocomplete="url" value="" onkeydown="if(event.key == 'Enter')loadURL(this.value)"
                     onfocus="document.querySelector('label').classList.add('focus')"
@@ -110,8 +110,8 @@
             </label>
         </div>
         <div class="right">
-            <img src="../icons/user.svg" alt="User Icon" class="user">
-            <img src="../icons/threeDots.svg" alt="Menu Icon" class="menu">
+            <img src="browser/user.svg" alt="User Icon" class="user">
+            <img src="browser/threeDots.svg" alt="Menu Icon" class="menu">
         </div>
     </div>
     <div class="container">
