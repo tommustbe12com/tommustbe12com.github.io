@@ -1,0 +1,180 @@
+
+#header {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: -o-linear-gradient(320deg, #29443bcc 40%, #074d66cc), url('assets/iconlong.png');
+    background: linear-gradient(130deg, #29443bcc 40%, #074d66cc), url('assets/iconlong.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-clip-path: ellipse(100% 70% at 50% 20%);
+    clip-path: ellipse(100% 70% at 50% 20%);
+    -webkit-animation: goo 3s infinite ease-in-out;
+    animation: goo 3s infinite ease-in-out;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+  }
+
+  @-webkit-keyframes goo {
+    50% {
+      -webkit-clip-path: ellipse(100% 70% at 50% calc(20% + 10px));
+      clip-path: ellipse(100% 70% at 50% calc(20% + 10px));
+    }
+  }
+
+  @keyframes goo {
+    50% {
+      -webkit-clip-path: ellipse(100% 70% at 50% calc(20% + 10px));
+      clip-path: ellipse(100% 70% at 50% calc(20% + 10px));
+    }
+  }
+
+  #nav-bar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    font-size: 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 20px 30px;
+    padding-right: 50px;
+    color: var(--background-color);
+    font-family: var(--heading-font);
+    font-weight: 600;
+    text-transform: uppercase;
+    animation: header-fade 10s ease-in-out;
+    animation-delay: -9.5s;
+  }
+
+  @keyframes header-fade {
+    0% {
+      opacity: 0;
+    }
+
+    95% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .nav-link {
+    margin: 0px 10px;
+    text-decoration: none;
+    -webkit-transition: all 0.2s ease;
+    -webkit-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
+    transition: 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    outline: none;
+  }
+
+  .nav-link:hover {
+    color: var(--vlblue-color);
+  }
+
+  .nav-link::after {
+    content: " ";
+    width: 100%;
+    height: 2px;
+    margin-top: -1px;
+    display: block;
+    background: var(--vlblue-color);
+    -webkit-transition: inherit;
+    -o-transition: inherit;
+    transition: inherit;
+    -webkit-transform: scaleX(0);
+    -ms-transform: scaleX(0);
+    transform: scaleX(0);
+  }
+
+  .nav-link:focus::after,
+  .nav-link:hover::after {
+    -webkit-transform: scaleX(1);
+    -ms-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+
+  #nav-promo {
+    font-weight: 700;
+    color: var(--vlblue-color);
+    -webkit-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
+    transition: 0.2s ease;
+  }
+
+  #nav-promo:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  #header-text {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 70%;
+    text-align: center;
+    color: var(--background-color);
+  }
+
+  #header-title {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: max(6vw, 50px);
+    animation: header-fade 10s ease-in-out;
+    animation-delay: -9s;
+  }
+
+  #header-desc {
+    font-weight: 600;
+    color: #DCDDE1aa;
+    animation: header-fade 10s ease-in-out;
+    animation-delay: -8.75s;
+  }
+
+  #header-icon {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: #DCDDE177;
+    font-size: 2rem;
+    -webkit-animation: icon-shm 3s infinite ease-in-out;
+    animation: icon-shm 3s infinite ease-in-out, header-fade 10s ease-in-out;
+    animation-delay: 0s, -8.5s;
+  }
+
+  @-webkit-keyframes icon-shm {
+    50% {
+      -webkit-transform: translate(-50%, calc(-50% + 10px));
+      transform: translate(-50%, calc(-50% + 10px));
+    }
+  }
+
+  @keyframes icon-shm {
+    50% {
+      -webkit-transform: translate(-50%, calc(-50% + 10px));
+      transform: translate(-50%, calc(-50% + 10px));
+    }
+  }
+
