@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <title>why ;-;</title>
+    <style>
+        :root {
+            --black: #303030;
+            --white: #eaeaea;
+            --heading: 'Bitter';
+        }
+        
+        body {
+            background: #353535;
+            color: var(--white);
+            font-size: 1rem;
+            font-family: var(--heading);
+            margin: 0px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        #divi {
+            width: 70%;
+            height: 70%;
+            border-radius: 20px;
+            box-shadow: 0px 0px 30px #000000AA inset;
+            position: relative;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        
+        #divi:before {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(45deg, #FC4A1A 0%, #F7B733 100% );
+            transform: translate3d(0px, 0px, 0) scale(1.05);
+            filter: blur(20px);
+            opacity: var(0.5);
+            transition: opacity 0.3s;
+            border-radius: inherit;
+        }
+        
+        #divi:after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: inherit;
+            border-radius: inherit;
+        }
+        
+        #heading {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #eaeaeaaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="divi">
+        <span id="heading">Welcome to HTML TEMPLATES</span>
+        <span>Here you can find HTML Templates that TomMustBe12 has created.</span>
+        <span>These are licensed under the MIT license and you have to give credit if used.</span>
+        <a href="futuristic.html" style="color: orange;">Futuristic</a>
+    </div>
+</body>
+
+</html>
