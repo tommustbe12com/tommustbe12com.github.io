@@ -13,7 +13,21 @@
     <link rel="manifest" href="/manifest.json">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7105299937862690"
      crossorigin="anonymous"></script>
-    
+    <!-- PWA shtuff -->
+    <script>
+      //Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function(registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(function(error) {
+            console.error('Service Worker registration failed:', error);
+          });
+      }
+    </script>
+    <link rel="manifest" href="/manifest.json">
+    <!-- End PWA shtuff -->
     <title>TomMustBe12 | YouTuber, Coder, and Gamer</title>
     
     <style>
@@ -196,7 +210,6 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        text-fill-color: transparent;
       }
       
       #header-promo-container {
