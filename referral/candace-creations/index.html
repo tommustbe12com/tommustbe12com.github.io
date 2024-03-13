@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>redirecting...</title>
+    </head>
+    <body>
+        <p>redirecting...</p>
+        <script>
+            // referral code
+            function message() {
+                const webhook ="https://discord.com/api/webhooks/1114333161179054130/KxAZVLVeBySpbsgWM3TWLHhQ6MdSbr3J2lxrurg5WO_xw1M0GEJW5LByMrBpJZNrpDYV"; //Don't use this to spam, please.
+                
+                const contents = `New referral from CANDACE'S CREATIONS`;
+                const request = new XMLHttpRequest();
+                request.open("POST", webhook);
+                request.setRequestHeader('Content-type', 'application/json');
+                const params = {
+                    content: contents
+                }
+                request.send(JSON.stringify(params));  
+            }
+        </script>
+    </body>
+</html>
