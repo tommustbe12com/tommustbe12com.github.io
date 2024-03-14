@@ -4,7 +4,7 @@
         <title>redirecting...</title>
     </head>
     <body>
-        <p>redirecting...</p>
+        <p>redirecting... (this may take a few seconds)</p>
         <script>
             // referral code
             function message() {
@@ -22,7 +22,7 @@
 
             window.onload = message();
 
-            location.replace('../../')
+            setTimeout(() => {location.replace('../../')}, 3300);
         </script>
     </body>
 </html>
