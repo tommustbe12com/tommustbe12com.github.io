@@ -29,7 +29,7 @@
 
             .falling-digit {
                 position: fixed;
-                color: rgba(0, 255, 0, 0.15);
+                color: rgb(0, 255, 0);
                 font-family: Monospace;
             }
 
@@ -43,6 +43,7 @@
                 text-align: center;
                 padding: 20px;
                 border-radius: 5px;
+                z-index: 1;
             }
         </style>
     </head>
@@ -102,7 +103,7 @@
               setInterval(function () {
                 const digit = new FallingDigit();
                 fallingDigits.push(digit);
-              }, 200);
+              }, 10);
       
               requestAnimationFrame(updateAnimation);
             }
