@@ -41,12 +41,13 @@
         <li>Lost in Reflection - 2:56</li>
         <li>Shadows of Existence - 2:58</li>
         <li>Midnight Solace - 4:15</li>
+        <li>Twist of the Beat - 4:00</li>
       </ol>
       <br><br><br><p>More coming soon!</p>
 
 <script>
   var soundtrack = document.getElementById("soundtrack");
-  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3"];
+  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3", "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3"];
 
   var songTitle = "An error occurred.";
 
@@ -62,6 +63,8 @@ function updateSongTitle() {
     songTitle = "Shadows of Existence"
   } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-solace.mp3") {
     songTitle = "Midnight Solace"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3") {
+    songTitle = "Twist of the Beat"
   }
 
   }
@@ -82,6 +85,8 @@ function updateSongTitle() {
       songTitle = "Shadows of Existence"
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-solace.mp3") {
       songTitle = "Midnight Solace"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3") {
+      songTitle = "Twist of the Beat"
     }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
   }
@@ -100,6 +105,8 @@ function updateSongTitle() {
       songTitle = "Shadows of Existence"
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-solace.mp3") {
       songTitle = "Midnight Solace"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3") {
+      songTitle = "Twist of the Beat"
     }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
   }
@@ -121,6 +128,8 @@ function updateSongTitle() {
         songTitle = "Shadows of Existence"
       } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-solace.mp3") {
         songTitle = "Midnight Solace"
+      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3") {
+        songTitle = "Twist of the Beat"
       }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
     }
