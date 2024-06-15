@@ -1,151 +1,36 @@
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #121212;
-    color: #fff;
-}
-
-.container {
-    width: 80%;
-    margin: auto;
-}
-
-header {
-    background-color: #1a1a1a;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    background: url('../clients/rysterio/banner.png');
-    background-size: cover;
-}
-
-h1 {
-    font-size: 36px;
-    color: #ff4081; /* Pink accent color */
-    padding: 10px;
-    /* background-color: black;
-    padding: 20px;
-    border-radius: 2.5px; */
+  background-color: #2c2c2c;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 nav {
-  background-color: #2F2F2F;
-  padding: 45px;
-  border-radius: 5px;
-}
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #ff4081; /* Pink accent color */
-    font-weight: bold;
-    font-size: 18px;
-    transition: color 0.5s ease; /* Smooth color transition */
-    background-color: black;
-    padding: 15px;
-    border-radius: 5px;
-}
-
-nav ul li a:hover {
-    color: #ffd700; /* Gold on hover */
-}
-
-.section {
-    display: none;
-    padding: 50px;
-    text-align: center;
-}
-
-.content {
-    max-width: 800px;
-    margin: auto;
-}
-
-footer {
-    background-color: #1a1a1a;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
-
-/* Add some hover effects for a more interactive feel */
-.content img:hover {
-    transform: scale(1.1);
-    transition: transform 0.5s ease;
-}
-
-.content img {
-  transition: 0.5s;
-}
-
-/* Apply a futuristic gradient background to the body */
-body {
-    background: linear-gradient(45deg, #2a2a72, #009ffd);
-    background-size: cover;
-}
-
-.content-card {
-  background-color: #1a1a1a;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  transition: 0.5s;
-}
-
-.content-card .main {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  padding-right: 102px;
+  padding-left: 102px;
+  background-color: black;
 }
 
-.content-card h1 {
-  color: green;
-  font-size: 30px;
+nav h1 {
+  margin-right: auto;
+  color: rgb(255, 124, 43);
 }
 
-.content-card img {
-  max-width: 200px;
-  height: auto;
-  margin-right: 20px;
-}
-
-.content-card p {
-  flex: 1;
-}
-
-.content-card:hover {
-    transform: translateY(-5px);
-    background-color: #141414;
-}
-
-.space {
-  content: "     ";
-}
-
-.cool-href {
-  color: orange;
+nav a {
   text-decoration: none;
-  background-color: #F1F1F1;
-  padding: 5px;
-  border-radius: 3px;
-  transition: 0.5s;
+  color: rgb(165, 165, 255);
+  margin-left: 3vh;
 }
 
-.cool-href:hover {
-  border-radius: 5px;
-  transform: 2px;
-  background-color: #F3F3F3;
+main {
+  padding: 20px;
+}
+
+a {
+  color: rgb(165, 165, 255);
+  text-decoration: none;
 }
