@@ -112,3 +112,22 @@ h2 {
     border-left: rgb(111, 246, 111) 5px solid;
     padding-left: 10px;
 }
+
+@media (max-width: 768px) {
+    .largeContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stickyInfo {
+        position: static;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: none;
+    }
+
+    .content {
+        width: 100%;
+        padding: 20px;
+    }
+}
