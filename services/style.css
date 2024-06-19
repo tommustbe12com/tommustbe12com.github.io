@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #121212;
+    color: #f8f8f2;
+    line-height: 1.6;
+}
+
+header {
+    background: #1a1a1a;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #50fa7b;
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.service {
+    background: #282a36;
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 5px solid #50fa7b;
+    transition: transform 0.3s ease-in-out;
+}
+
+.service h2 {
+    font-size: 1.8rem;
+    color: #8be9fd;
+    margin-bottom: 10px;
+}
+
+.service p {
+    font-size: 1.1rem;
+    color: #f1fa8c;
+}
+
+.service:hover {
+    transform: scale(1.05);
+}
+
+footer {
+    background: #1a1a1a;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+footer p {
+    font-size: 1rem;
+    color: #6272a4;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #50fa7b;
+    border-radius: 10px;
+    border: 2px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #37d67a;
+}
+
+/* For Firefox */
+body {
+    scrollbar-width: thin;
+    scrollbar-color: #50fa7b #1a1a1a;
+}
