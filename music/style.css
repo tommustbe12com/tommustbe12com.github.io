@@ -57,49 +57,36 @@ footer {
     text-align: center;
 }
 
-#playlist {
+.playlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
     list-style: none;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 
 .playlist-grid li {
-    width: 250px;
-    margin: 10px;
     text-align: center;
 }
 
 .playlist-grid li audio {
     width: 100%;
     margin-bottom: 10px;
-}
-
-.playlist-grid li p {
-    margin-bottom: 5px;
-}
-
-.playlist-grid li p,
-.playlist-grid li audio {
     background-color: #007bff;
     color: white;
     padding: 10px;
     border-radius: 5px;
-}
-
-.playlist-grid li audio {
     outline: none;
 }
 
 .playlist-grid li audio::-webkit-media-controls-panel {
-    background-color: transparent;
+    background-color: #007bff;
     color: white;
     border-radius: 5px;
 }
 
 .playlist-grid li audio::-webkit-media-controls-play-button {
-    background-color: transparent;
+    background-color: #007bff;
     color: white;
     border-radius: 5px;
 }
