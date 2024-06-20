@@ -44,12 +44,14 @@
         <li>Twist of the Beat - 4:00</li>
         <li>Horizon of Stars - 4:14</li>
         <li>Silent Star Voyage - 3:51</li>
+        <li>Midnight Phantoms - 3:32</li>
+        <li>Shadowed Voyagers - 2:35</li>
       </ol>
       <br><br><br><p>More coming soon!</p>
 
 <script>
   var soundtrack = document.getElementById("soundtrack");
-  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3", "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", "https://tommustbe12.com/assets/music/silent-star-voyage.mp3"];
+  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3", "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", "https://tommustbe12.com/assets/music/silent-star-voyage.mp3", "https://tommustbe12.com/assets/music/midnight-phantoms.mp3", "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3"];
 
   var songTitle = "An error occurred.";
 
@@ -71,6 +73,10 @@ function updateSongTitle() {
     songTitle = "Horizon of Stars"
   } else if(soundtrack.src === "https://tommustbe12.com/assets/music/silent-star-voyage.mp3") {
     songTitle = "Silent Star Voyage"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-phantoms.mp3") {
+    songTitle = "Midnight Phantoms"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3") {
+    songTitle = "Shadowed Voyagers"
   }
 
   }
@@ -97,6 +103,10 @@ function updateSongTitle() {
       songTitle = "Horizon of Stars"
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/silent-star-voyage.mp3") {
       songTitle = "Silent Star Voyage"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-phantoms.mp3") {
+      songTitle = "Midnight Phantoms"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3") {
+      songTitle = "Shadowed Voyagers"
     }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
   }
@@ -121,6 +131,10 @@ function updateSongTitle() {
       songTitle = "Horizon of Stars"
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/silent-star-voyage.mp3") {
       songTitle = "Silent Star Voyage"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-phantoms.mp3") {
+      songTitle = "Midnight Phantoms"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3") {
+      songTitle = "Shadowed Voyagers"
     }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
   }
@@ -148,6 +162,10 @@ function updateSongTitle() {
         songTitle = "Horizon of Stars"
       } else if(soundtrack.src === "https://tommustbe12.com/assets/music/silent-star-voyage.mp3") {
         songTitle = "Silent Star Voyage"
+      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-phantoms.mp3") {
+        songTitle = "Midnight Phantoms"
+      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3") {
+        songTitle = "Shadowed Voyagers"
       }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
     }
