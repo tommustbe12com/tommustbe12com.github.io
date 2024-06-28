@@ -1,58 +1,28 @@
-$(document).ready(function() {
-    var sections = $('section');
-    var currentIndex = 0;
+const cube = document.querySelector('.cube');
+let isDragging = false;
+let previousMousePosition = { x: 0, y: 0 };
+let rotation = { x: -30, y: -45 };
 
-    // Show the initial section
-    sections.eq(currentIndex).fadeIn(500);
+document.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+});
 
-    // Handle left and right arrow key presses
-    $(document).keydown(function(e) {
-        if (e.keyCode === 37) { // Left arrow key
-            showPreviousSection();
-        } else if (e.keyCode === 39) { // Right arrow key
-            showNextSection();
-        }
-    });
-
-    // Show the previous section
-    function showPreviousSection() {
-        sections.eq(currentIndex).fadeOut(500, function() {
-            currentIndex = (currentIndex === 0) ? (sections.length - 1) : (currentIndex - 1);
-            sections.eq(currentIndex).fadeIn(500);
-        });
-    }
-
-    // Show the next section
-    function showNextSection() {
-        sections.eq(currentIndex).fadeOut(500, function() {
-            currentIndex = (currentIndex === sections.length - 1) ? 0 : (currentIndex + 1);
-            sections.eq(currentIndex).fadeIn(500);
-        });
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        const deltaX = e.clientX - previousMousePosition.x;
+        const deltaY = e.clientY - previousMousePosition.y;
+        rotation.x -= deltaY * 0.5;
+        rotation.y += deltaX * 0.5;
+        cube.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+    } else {
+        const x = e.clientX / window.innerWidth - 0.5;
+        const y = e.clientY / window.innerHeight - 0.5;
+        cube.style.transform = `rotateX(${rotation.x + y * 45}deg) rotateY(${rotation.y - x * 45}deg)`;
     }
 });
 
-$(document).ready(function() {
-  var images = [
-    "https://tommustbe12.com/assets/profile.png",
-    "https://tommustbe12.com/assets/endscreenshot.png",
-    "https://tommustbe12.com/assets/endislands.png",
-    "https://tommustbe12.com/assets/mchouse.png"
-  ];
-
-  var textContainer = $("#text-container");
-
-  textContainer.removeClass("show");
-
-  setInterval(function() {
-    var randomIndex = Math.floor(Math.random() * images.length);
-    var randomImage = images[randomIndex];
-
-    textContainer.addClass("show");
-    textContainer.css("background-image", "url('" + randomImage + "')");
-
-    setTimeout(function() {
-      textContainer.removeClass("show");
-    }, 4500);
-
-  }, 5000);
+document.addEventListener('mouseup', () => {
+    isDragging = false;
 });

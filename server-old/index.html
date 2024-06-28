@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TomMustBe12's SMP Server</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://tommustbe12.com/assets/mchouse.png">
+</head>
+<body>
+    <header>
+        <div class="hero">
+            <h1>
+                <span>Welcome to</span>
+                <span>TomMustBe12's SMP Server</span><br><br><br>
+              <span style="font-size: 20px;" class="scrolling-text">See More</span>
+            </h1>
+        </div>      
+    </header>
+    <main>
+      <div class="notification" id="copy-notification">
+        Server IP address copied to clipboard!
+      </div>
+      <p id="text-to-copy" style="display: none;">mc.tommustbe12.com</p>
+    <button class="copy-button" style="text-align: center;position: fixed;top: 93%;left: 1%;transform: translate(-2%, -1%);" onclick="copyToClipboard()">Copy Server IP Address</button>
+        <p style="text-align: center;font-size: 18px;font-weight: bold;">Use the arrow keys to navigate this page.</p>
+      <br><br>
+        <section id="home">
+            <h2>Welcome to TomMustBe12's SMP Server</h2>
+            <p>Experience the fun of an anarchy server where you can be the most powerful person.</p>
+        </section>
+        <section id="about">
+            <h2>About The Server</h2>
+            <p>There's not much to say about this server. This server was created by TomMustBe12. He wanted to have an anarchy server that he saw fit. And now, it came to be this! It already has over 10 players, including TomMustBe12, bontboss, and DaManGamingXD!</p>
+        </section>
+        <section id="features">
+            <h2>Features</h2>
+            <p>Explore the features of this server!</p>
+          <ul>
+            <li>We have a 'Dirt Mined' list - because yes.</li>
+            <li>We have an amazing spawn/lobby built by <a href="https://replit.com/@Rysterio">mcbuilderispro1</a>.</li>
+            <li>One admin who is on most of the time - TomMustBe12.</li>
+            <li>A bossbar at the top of the screen that you can see because why not?</li>
+          </ul>
+          <p>I encourage you to look through the server and become one of the most powerful people. After all - it is an anarchy server!</p>
+        </section>
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Please go to https://tommustbe12.com/contact/ and make sure you make the description descriptive that it's a server question/inquiry.</p>
+        </section>
+        <section id="updates">
+          <h2>Updates</h2>
+          <p>Stay up-to-date on this server!</p>
+          <p>There are no updates that have occurred recently.</p>
+        </section>
+    </main>
+
+  <script>
+    function copyToClipboard() {
+      const textToCopy = document.getElementById("text-to-copy");
+      const text = textToCopy.innerText;
+
+      const el = document.createElement('textarea');
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      showNotification();
+    }
+
+    function showNotification() {
+      const notification = document.getElementById("copy-notification");
+      notification.classList.add("show");
+
+      setTimeout(function() {
+        notification.classList.remove("show");
+      }, 4000); // Hide the notification after 2 seconds (2000 milliseconds)
+    }
+  </script>
+
+  <footer style="padding: 10px;background: darkgray; text-align: center;"><h2 style="text-align: center;">TomMustBe12's SMP Server. 2023-Current.</h2><br><a href="https://tommustbe12.com/" style="text-align: center;">Go to Homepage</a></footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
