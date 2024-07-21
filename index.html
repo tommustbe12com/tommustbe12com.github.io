@@ -2341,6 +2341,28 @@ function popup(textContent, id) {
       });
 
     </script>
+
+    <script>
+      function getUrlParameter(name) {
+          name = name.replace(/[\[\]]/g, "\\$&");
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(name);
+      }
+
+      const broughtFrom = getUrlParameter('broughtFrom');
+
+      if (broughtFrom) {
+          console.log(`The 'broughtFrom' parameter is set to: ${broughtFrom}`);
+          if (broughtFrom === "blackBeltGame") {
+            Popup({
+              title: "Welcome!",
+              content: "I see you've already seen my black belt game. Check out my website, as well as the TomMustBe12 hub to see all of my different projects!"
+            })
+          }
+      } else {
+          console.log("The 'broughtFrom' parameter is not set.");
+      }
+    </script>
   </body>
   
 </html>
