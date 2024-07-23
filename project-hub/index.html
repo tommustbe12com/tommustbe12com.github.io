@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Hub</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1f1f1f;
+            padding: 1em 2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #129912;
+        }
+        header input[type="search"] {
+            padding: 0.5em;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            transition: border-color 0.3s;
+        }
+        header input[type="search"]:focus {
+            border-color: #129912;
+            outline: none;
+        }
+        nav {
+            background-color: #1f1f1f;
+            padding: 1em 2em;
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #333;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            background-color: #333;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        nav a::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: #129912;
+            transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
+            border-radius: 50%;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+        nav a:hover::before {
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 50%;
+        }
+        nav a:hover {
+            color: #1f1f1f;
+        }
+        nav a span {
+            position: relative;
+            z-index: 1;
+        }
+        main {
+            padding: 2em;
+        }
+        .project-categories {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2em;
+        }
+        .project-category {
+            background-color: #333;
+            padding: 1em;
+            border-radius: 8px;
+            flex: 1 1 calc(33% - 2em);
+            max-width: calc(33% - 2em);
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .project-category:hover {
+            transform: translateY(-5px);
+            background-color: #444;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .project-category h2 {
+            margin-top: 0;
+            border-bottom: 1px solid #555;
+            padding-bottom: 0.5em;
+            color: #129912;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Project Hub</h1>
+        <input type="search" placeholder="Search projects..." id="searchInput">
+    </header>
+    <nav>
+        <a href="#" data-category="productivity"><span>Productivity</span></a>
+        <a href="#" data-category="entertainment"><span>Entertainment</span></a>
+        <a href="#" data-category="more"><span>More</span></a>
+    </nav>
+    <main>
+        <div class="project-categories" id="projectCategories">
+            <!-- Project categories will be populated here -->
+        </div>
+    </main>
+    <script>
+        const categories = [
+            {
+                "id": "productivity",
+                "name": "Productivity",
+                "projects": ["Project 1", "Project 2", "Project 3"]
+            },
+            {
+                "id": "entertainment",
+                "name": "Entertainment",
+                "projects": ["Project A", "Project B", "Project C"]
+            },
+            {
+                "id": "more",
+                "name": "More",
+                "projects": ["Project X", "Project Y", "Project Z"]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const projectCategoriesContainer = document.getElementById('projectCategories');
+            categories.forEach(category => {
+                const categorySection = document.createElement('section');
+                categorySection.classList.add('project-category');
+                categorySection.id = category.id;
+
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.textContent = category.name;
+                categorySection.appendChild(categoryTitle);
+
+                category.projects.forEach(project => {
+                    const projectItem = document.createElement('p');
+                    projectItem.textContent = project;
+                    categorySection.appendChild(projectItem);
+                });
+
+                projectCategoriesContainer.appendChild(categorySection);
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+            const projectCategories = document.querySelectorAll('.project-category');
+
+            projectCategories.forEach(category => {
+                const projects = category.querySelectorAll('p');
+                let matches = false;
+
+                projects.forEach(project => {
+                    if (project.textContent.toLowerCase().includes(searchTerm)) {
+                        project.style.display = 'block';
+                        matches = true;
+                    } else {
+                        project.style.display = 'none';
+                    }
+                });
+
+                if (matches) {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+        });
+
+        document.querySelectorAll('nav a').forEach(navLink => {
+            navLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                const category = event.target.getAttribute('data-category');
+                const categorySection = document.getElementById(category);
+                categorySection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
