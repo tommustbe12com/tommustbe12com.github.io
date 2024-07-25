@@ -1,0 +1,125 @@
+{
+    "projects": [
+      {
+        "category": "productivity",
+        "title": "Hire Tom",
+        "description": "An easy way to hire Tom for a website or something else!",
+        "link": "#"
+      },
+      {
+        "category": "entertainment",
+        "title": "Sigma Grindset",
+        "description": "A goofy website where you can copy the sigmas.",
+        "link": "https://sigmagrind.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "Logo Creator",
+        "description": "An easy to use Logo Creator with many customization options.",
+        "link": "https://logocreator.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "Brain Break Time CNR",
+        "description": "An easy timer to check on when brain break time is for CNR.",
+        "link": "https://brainbreaktimecnr.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "Prophetic Phrase",
+        "description": "A text translator to translate your text to texts of olde!",
+        "link": "https://propheticphrase.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "Mobile Games Sim",
+        "description": "Simulation of what mobile games are like when downloaded.",
+        "link": "https://mobile-games.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "Fake NSA Page",
+        "description": "The power of web developing shows in this fake NSA page.",
+        "link": "https://nationalsecurityagency.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "Fake Google Notifs",
+        "description": "A fake google notification page for anything.",
+        "link": "https://googlenotifs.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "Demo Site",
+        "description": "Just a demonstration of TomMustBe12's skills.",
+        "link": "https://newsite.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "My Goals",
+        "description": "An unfinished goal application to help keep track of goals.",
+        "link": "https://mygoals.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "The Online Terminal",
+        "description": "A funny and interesting Online Terminal for you to play with.",
+        "link": "https://onlineterminal.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "Hive Client",
+        "description": "A client for bookmarklets that let you do stuff on sites.",
+        "link": "https://hive-client.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "Windows 10 Box",
+        "description": "Fake Windows 10 Windows for YouTube videos, pranks, etc.",
+        "link": "https://nationalsecurityagency.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "HTML Editor",
+        "description": "Practice your web developing skills with this HTML editor!",
+        "link": "https://htmleditor.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "My Pages",
+        "description": "Contains mini pages I've made that are pretty much useless.",
+        "link": "https://nationalsecurityagency.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "Fake Siri Selector",
+        "description": "A cringe joke of a website for Siri voice selection.",
+        "link": "https://getsiri.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "Test Pages",
+        "description": "Second site with useless mini pages.",
+        "link": "https://testpages.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "KhaHack",
+        "description": "MineKhan hacked client site, now it's useless.",
+        "link": "https://khahack.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "E-Mailer",
+        "description": "A site that can email from any Outlook!",
+        "link": "https://e-mailer.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "GamEngine",
+        "description": "Site with a game engine where you can build a game!",
+        "link": "https://gamengine.replit.app"
+      }
+    ]
+  }
+  
