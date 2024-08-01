@@ -47,12 +47,13 @@
         <li>Midnight Phantoms - 3:32</li>
         <li>Shadowed Voyagers - 2:35</li>
         <li>The Winner of All (Extended) - 2:16</li>
+        <li>Moonlit Shadows - 3:19</li>
       </ol>
       <br><br><br><p>More coming soon!</p>
 
 <script>
   var soundtrack = document.getElementById("soundtrack");
-  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3", "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", "https://tommustbe12.com/assets/music/silent-star-voyage.mp3", "https://tommustbe12.com/assets/music/midnight-phantoms.mp3", "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3", "https://tommustbe12.com/assets/music/winner-of-all.mp3"];
+  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3", "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", "https://tommustbe12.com/assets/music/silent-star-voyage.mp3", "https://tommustbe12.com/assets/music/midnight-phantoms.mp3", "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3", "https://tommustbe12.com/assets/music/winner-of-all.mp3", "https://tommustbe12.com/assets/music/moonlit-shadows.mp3"];
 
   var songTitle = "An error occurred.";
 
@@ -80,6 +81,8 @@ function updateSongTitle() {
     songTitle = "Shadowed Voyagers"
   } else if(soundtrack.src === "https://tommustbe12.com/assets/music/winner-of-all.mp3") {
     songTitle = "The Winner of All (Extended)"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
+    songTitle = "Moonlit Shadows"
   }
 
   }
@@ -112,6 +115,8 @@ function updateSongTitle() {
       songTitle = "Shadowed Voyagers"
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/winner-of-all.mp3") {
       songTitle = "The Winner of All (Extended)"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
+      songTitle = "Moonlit Shadows"
     }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
   }
@@ -142,6 +147,8 @@ function updateSongTitle() {
       songTitle = "Shadowed Voyagers"
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/winner-of-all.mp3") {
       songTitle = "The Winner of All (Extended)"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
+      songTitle = "Moonlit Shadows"
     }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
   }
@@ -175,6 +182,8 @@ function updateSongTitle() {
         songTitle = "Shadowed Voyagers"
       } else if(soundtrack.src === "https://tommustbe12.com/assets/music/winner-of-all.mp3") {
         songTitle = "The Winner of All (Extended)"
+      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
+        songTitle = "Moonlit Shadows"
       }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
     }

@@ -42,5 +42,9 @@
     {
         "title": "The Winner of All (Extended)",
         "source": "audio/winner-of-all.mp3"
+    },
+    {
+        "title": "Moonlit Shadows",
+        "source": "audio/moonlit-shadows.mp3"
     }
 ]
