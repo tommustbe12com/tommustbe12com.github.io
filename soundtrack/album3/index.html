@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TomMustBe12's Soundtrack - TomMustBe12.com</title>
+    <link rel="stylesheet" href="https://tommustbe12.com/server-old/style.css">
+    <link rel="icon" href="https://tommustbe12.com/assets/profile.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <main style="text-align: center;align-items: center;color:#fff;">
+<audio id="soundtrack">
+  <source src="https://tommustbe12.com/assets/music.mp3" type="audio/mpeg">
+  <source src="https://tommustbe12.com/assets/awesome-song.mp3" type="audio/mpeg">
+  <source src="" type="audio/mpeg">
+  <source src="" type="audio/mpeg">
+  <source src="" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+      
+<h1 style="text-align: center;color:#fff;">TomMustBe12's ULTIMATE Soundtrack - Album 3</h1>
+
+      <br>
+      
+<button onclick="back()" class="copy-button">&lt;</button>
+<button onclick="go()" class="copy-button">Play Soundtrack</button>
+<button onclick="no()" class="copy-button">Pause Soundtrack</button>
+<button onclick="forward()" class="copy-button">&gt;</button>
+
+      <br><br><span id="status">Status will appear here when you click play or pause.</span><br><br>
+
+      <p style="color:#f1f1f1;">This is album 3 of the TomMustBe12 soundtrack.</p>
+      <br>
+      <p style="color:#f1f1f1;">This is the Hacker Album. Most songs in this album sound like a hackers' beat, and it's awesome to listen to when you're coding.</p>
+      <br><br><br>
+      <h2 style="color: whitesmoke;">Soundtrack Songs:</h2>
+      <ol>
+        <li>Red Hacker - 5:29</li>
+      </ol>
+      <br><br><br><p>More coming soon!</p>
+
+<script>
+  var soundtrack = document.getElementById("soundtrack");
+  var audioFiles = ["https://tommustbe12.com/assets/music/red-hacker.mp3"];
+
+  var songTitle = "An error occurred.";
+
+function updateSongTitle() {
+
+  if(soundtrack.src === "https://tommustbe12.com/assets/music/red-hacker.mp3") {
+    songTitle = "Red Hacker"
+  }
+
+  }
+  setInterval(() => updateSongTitle(), 1)
+
+  var currentIndex = 0;
+  function back() {
+    currentIndex--;
+    soundtrack.src = audioFiles[currentIndex];
+    soundtrack.play();
+    if(soundtrack.src === "https://tommustbe12.com/assets/music/red-hacker.mp3") {
+      songTitle = "Red Hacker"
+    }
+      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
+  }
+
+  function forward() {
+    currentIndex++;
+    soundtrack.src = audioFiles[currentIndex];
+    soundtrack.play();
+    if(soundtrack.src === "https://tommustbe12.com/assets/music/red-hacker.mp3") {
+      songTitle = "Red Hacker"
+    }
+      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
+  }
+  
+  soundtrack.src = audioFiles[currentIndex];
+
+  soundtrack.onended = function() {
+    currentIndex++;
+    if (currentIndex < audioFiles.length) {
+      soundtrack.src = audioFiles[currentIndex];
+      soundtrack.play();
+      if(soundtrack.src === "https://tommustbe12.com/assets/music/red-hacker.mp3") {
+        songTitle = "Red Hacker"
+      }
+      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
+    }
+  };
+  function go() {
+  soundtrack.play();
+  document.getElementById("status").innerHTML="Currently playing: " + songTitle;
+  }
+  function no() {
+  soundtrack.pause();
+  document.getElementById("status").innerHTML="Currently paused: " + songTitle;
+  }
+</script>
+    </main>
+  </body>
+</html>
