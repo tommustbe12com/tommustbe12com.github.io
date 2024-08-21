@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TomInteractive REDIRECT</title>
+    <script>
+        async function searchAndRedirect() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+
+            if (id) {
+                try {
+                    const response = await fetch('data.json');
+                    const data = await response.json();
+
+                    const result = data.find(item => item.id === id);
+
+                    if (result) {
+                        window.location.href = result.url;
+                    } else {
+                        document.body.innerHTML = `<p>Thomas made an error adding the ID. You can mark him as a 0.</p>`;
+                    }
+                } catch (error) {
+                    console.error('Error fetching JSON:', error);
+                    document.body.innerHTML = `<p>There was an error loading. You can mark Thomas as a 0.</p>`;
+                }
+            } else {
+                document.body.innerHTML = `<p>Thomas forgot to add an ID. You can mark him as a 0.</p>`;
+            }
+        }
+
+        window.onload = searchAndRedirect;
+    </script>
+</head>
+<body>
+</body>
+</html>
