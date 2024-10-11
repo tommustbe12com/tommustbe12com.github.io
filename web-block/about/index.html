@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>About WebBlock</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <style>
+            body {
+                background-color: #1c1c1c;
+                font-family: Lato;
+                color: white;
+                padding: 10px;
+            }
+
+            strong {
+                color: rgb(87, 139, 87);
+            }
+        </style>
+    </head>
+    <body>
+        <a href="../">Back</a>
+        <h1>How WebBlock Works</h1>
+        <p>WebBlock edits the Windows hosts file in C:/Windows/System32/drivers/etc to make a website, instead of routing to its IP/web server, route to 127.0.0.1 (localhost). This will show a 127.0.0.1 page instead of the address expected. Usually, 127.0.0.1 has nothing on it. If the computer user is a developer, it may have some developing page open. However, it is not possible for the website to be accessed from that page because any time any browser, iframe, or get request accesses the website, it will return localhost.</p>
+        <p>Please note that WebBlock's actions can be undone if the user has administrator privileges. However, it is highly unlikely that they know about this file, let alone how to use it.</p>
+        <p>If you would like to view the currently blocked sites, WebBlock V1.5 allows you to see all of the blocked entries. Please note: the Show Blocked Sites button shows both entries, the site and the www.site entry. This is to ensure that the user cannot connect to the site with using www.sitename.tld.</p>
+        <h1>Is WebBlock traceable? Also, Will Deleting WebBlock Delete My Previous Blocking Entries?</h1>
+        <p>WebBlock is <strong>not</strong> traceable! This means that you can download it, use it, delete it, and there will be no trace except for the hosts file changes. If you delete WebBlock your hosts file <strong>will NOT be returned to its original state</strong>! Please note that if you are deleting WebBlock to undo website blocking, this will do nothing and you should either use the 'Unblock' feature or navigate and change the entries yourself.</p>
+        <p>That's it for the program documentation. If you need more help, feel free with contacting TomMustBe12 at <a href="https://tommustbe12.com/contact/">this site</a> and asking him a question. He will respond to your email within 24 hours.</p>
+    </body>
+</html>

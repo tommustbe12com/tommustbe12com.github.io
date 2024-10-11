@@ -1,0 +1,133 @@
+body {
+    background-color: #141414;
+    padding: 0;
+    margin: 0;
+    color: #cecece;
+    text-shadow: 0.5px 0.5px 0.5px 0.5px blue;
+    font-family: 'Inter', sans-serif;
+}
+
+main {
+    padding: 20px;
+}
+
+.largeContainer {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 1200px;
+}
+
+.stickyInfo {
+    position: sticky;
+    top: 20px;
+    padding: 20px;
+    min-width: 200px;
+    max-width: 200px;
+    background-color: #1f1f1f;
+    border-radius: 5px;
+    margin-right: 20px;
+    border-top: rgb(110, 172, 110) 5px solid;
+}
+
+.stickyInfo .author,
+.stickyInfo .date {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.title {
+    padding: 20px;
+}
+
+.title h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.title sub {
+    font-size: 20px;
+    display: block;
+    margin-top: 10px;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #1f1f1f;
+    border-radius: 5px;
+    border-top: rgb(110, 172, 110) 5px solid;
+}
+
+.image {
+    padding: 20px;
+}
+
+.image img {
+    border-radius: 5px;
+    border: 1px darkgreen solid;
+}
+
+.warning {
+    color: red;
+    padding: 7.5px;
+    border-radius: 5px;
+    background-color: rgba(137, 139, 12, 0.3);
+}
+
+p {
+    max-width: 100%;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: #1f1f1f;
+    margin-bottom: 20px;
+}
+
+nav h3 {
+    margin-right: auto;
+}
+
+nav a {
+    margin: 0 10px 0 0;
+    color: lightgreen;
+    text-decoration: none;
+    transition: 0.25s;
+}
+
+nav a:hover {
+    color: rgb(110, 172, 110);
+}
+
+h2 {
+    border-left: rgb(111, 246, 111) 5px solid;
+    padding-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .largeContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stickyInfo {
+        position: static;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: none;
+    }
+
+    .content {
+        width: 100%;
+        padding: 20px;
+    }
+}

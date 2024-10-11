@@ -1,0 +1,822 @@
+
+#stats-container {
+    margin: 0px 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .stats-card {
+    margin: 2.5%;
+    padding: 20px 20px;
+    width: 45%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    text-align: center;
+  }
+
+  .stats-number {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: max(6vw, 40px);
+    width: 100%;
+  }
+
+  .stats-title {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  .stats-desc {
+    color: #373945aa;
+    font-weight: 600;
+  }
+
+  .stats-card:last-of-type {
+    border-radius: 10px;
+    box-shadow: 0px 0px 30px #00000033;
+    transform: scale(1.1);
+  }
+
+  #promo-container {
+    margin: 0px 25px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  #promo-title {
+    text-align: center;
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .promo-item {
+    margin: 2.5%;
+    width: 45%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .promo-pic {
+    width: min(200px, 100%);
+    aspect-ratio: 1/1;
+    height: auto;
+    background: red;
+    clip-path: ellipse(47% 50% at 50% 50%);
+    animation: squishy 5s infinite ease-in-out;
+    margin-bottom: 10px;
+  }
+
+  @keyframes squishy {
+    50% {
+      clip-path: ellipse(50% 47% at 50% 50%);
+    }
+  }
+
+  .promo-title {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 1.5rem;
+    width: 100%;
+  }
+
+  .promo-text {
+    font-weight: 600;
+    color: #373945aa;
+    margin: 0px 20px;
+  }
+
+  #html5posting {
+    background: linear-gradient(120deg, #345cebbb, #4a8da7bb), url('assets/html5posting.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 0s;
+  }
+
+  #photosperk {
+    background: linear-gradient(120deg, #345cebbb, #4a8da7bb), url('assets/photosperk.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 1s;
+  }
+
+  #linkspost {
+    background: linear-gradient(120deg, #345cebbb, #4a8da7bb), url('assets/linkspost.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 2s;
+  }
+
+  #more {
+    background: linear-gradient(120deg, #345cebbb, #4a8da7bb), url('assets/more.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 0s;
+  }
+
+  #partnerships-container {
+    background: linear-gradient(120deg, #19342bcc, #3a7d97cc), url('https://upload.wikimedia.org/wikipedia/commons/1/12/Long_exposure_shot_on_Inorbit_Mall_Road%2C_Hyderabad.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--background-color);
+    padding: 30px 50px;
+    text-align: center;
+    box-shadow: 0px 0px 30px #00000055;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  #partnerships-title {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    width: 100%;
+  }
+
+  .highlight {
+    text-shadow: 0px 0px 10px var(--lblue-color);
+    color: var(--vlblue-color);
+  }
+
+  #icons-container {
+    margin: 2.5%;
+    width: 20%;
+  }
+
+  .partner-img {
+    width: 100%;
+    aspect-ratio: 2/1;
+    object-fit: contain;
+    height: auto;
+    filter: brightness(0) invert(0.85) drop-shadow(0px 0px 10px #00000055);
+  }
+
+  #partnerships-disclaimer {
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+    font-size: 0.9rem;
+    color: #DCDDE1aa;
+    font-weight: 600;
+  }
+
+  #hotels-container {
+    margin: 0px 25px;
+  }
+
+  #hotels-title {
+    text-align: center;
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .hotels-section {
+    width: 100%;
+    display: flex;
+
+  }
+
+  .hotels-title {
+    text-align: center;
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 2.5%;
+    width: 35%;
+    padding-top: 50px;
+  }
+
+  .hotels-subtitle {
+    font-size: 1rem;
+    color: #373945aa;
+    font-family: var(--text-font);
+  }
+
+  .hotel-cards-container {
+    margin: 2.5%;
+    width: 55%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .hotel-card {
+    margin: 2.5%;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hotel-card-img {
+    width: min(100%, 200px);
+    aspect-ratio: 1/1;
+    height: auto;
+    background: red;
+    clip-path: ellipse(47% 50% at 50% 50%);
+    animation: squishy 6s infinite ease-in-out;
+  }
+
+  .hotel-name {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: 600;
+    width: 100%;
+  }
+
+  #al-arab {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Burj_Al_Arab_%40_Madinat_Jumeirah_%40_Dubai_%2815851725086%29.jpg/320px-Burj_Al_Arab_%40_Madinat_Jumeirah_%40_Dubai_%2815851725086%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 0s;
+  }
+
+  #palms {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/9/98/Palms_Casino_Resort.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 1s;
+  }
+
+  #ritz {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ritz-Carlton%2C_Wolfsburg_%28P1100712%29.jpg/320px-Ritz-Carlton%2C_Wolfsburg_%28P1100712%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 2s;
+  }
+
+  #plaza {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Plaza_Hotel_NYC.jpg/306px-Plaza_Hotel_NYC.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 3s;
+  }
+
+  #rancho {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/2000_0820_TowncenterFountain.jpg/640px-2000_0820_TowncenterFountain.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #mandarin {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Singapore_Mandarin-Oriental-01.jpg/311px-Singapore_Mandarin-Oriental-01.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 5s;
+  }
+
+  #westin {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/The_Westin_Resort%2C_Costa_Navarino.jpg/320px-The_Westin_Resort%2C_Costa_Navarino.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 0s;
+  }
+
+  #langham {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Langham_london.jpg/304px-Langham_london.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 1s;
+  }
+
+  #sofitel {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Sofitel_Legend_Metropole_Hotel%2C_Hanoi%2C_1901_%281%29_%2837610180365%29.jpg/320px-Sofitel_Legend_Metropole_Hotel%2C_Hanoi%2C_1901_%281%29_%2837610180365%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 2s;
+  }
+
+  #four-seasons {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Cairo_-_Garden_City_-_Four_Seasons_Hotel_from_the_Nile.JPG/253px-Cairo_-_Garden_City_-_Four_Seasons_Hotel_from_the_Nile.JPG');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 3s;
+  }
+
+  #rosewood {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Rosewood_Hotel_Georgia_%2833961093775%29.jpg/320px-Rosewood_Hotel_Georgia_%2833961093775%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #peninsula {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/USA-NYC-The_Peninsula.JPG/320px-USA-NYC-The_Peninsula.JPG');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 5s;
+  }
+
+  #barn-lol {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Zalmon_Read_Barn_back_view.jpg/320px-Zalmon_Read_Barn_back_view.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 2s;
+  }
+
+  #attic-lol {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Joseph_Schneider_Haus_%28attic%29.jpg/320px-Joseph_Schneider_Haus_%28attic%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #hive-lol {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/A_natural_beehive_in_Chandigarh.jpg/319px-A_natural_beehive_in_Chandigarh.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 0s;
+  }
+
+  #mars-lol {
+    background: linear-gradient(10deg, #29443bbb, #4a8da7bb), url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Mars_Ice_Home_concept.jpg/240px-Mars_Ice_Home_concept.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 3s;
+  }
+
+  #broke-clarification {
+    text-align: center;
+    color: #373945aa;
+    font-weight: 600;
+  }
+
+  #custom-plans-container {
+    background-color: var(--text-color);
+    color: var(--background-color);
+    padding: 30px 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    box-shadow: 0px 0px 30px #00000077;
+  }
+
+  #custom-plans-title {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 1.5rem;
+    width: 35%;
+    margin: 2.5%;
+  }
+
+  #custom-plans-desc {
+    font-family: var(--text-font);
+    font-weight: 600;
+    color: #DCDDE1aa;
+    font-size: 1rem;
+    width: 100%;
+    margin: 2.5%;
+  }
+
+  #plan-cards-container {
+    width: 55%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  #custom-plans-button {
+    padding: 7px 20px;
+    margin-top: 10px;
+    font-family: var(--heading-font);
+    color: var(--background-color);
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    background: linear-gradient(65deg, var(--lblue-color), var(--dblue-color));
+    box-shadow: 0px 0px 30px #00000055;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  #custom-plans-button:hover {
+    transform: scale(1.1);
+  }
+
+  .plan-card {
+    width: min(100%, 150px);
+    aspect-ratio: 1/1;
+    box-shadow: 0px 0px 30px #000000aa;
+    border-radius: 50%;
+  }
+
+  #plan-card-1 {
+    position: relative;
+    left: 0;
+    background: url('assets/guy.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 0s;
+  }
+
+  #plan-card-2 {
+    position: absolute;
+    left: 15%;
+    background: url('assets/randomdude.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 1s;
+  }
+
+  #plan-card-3 {
+    position: absolute;
+    left: 30%;
+    background: url('assets/gal.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 2s;
+  }
+
+  #plan-card-4 {
+    position: absolute;
+    left: 45%;
+    background: url('assets/useranon.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 3s;
+  }
+
+  #plan-card-5 {
+    position: absolute;
+    left: 60%;
+    background: url('assets/idkman.jpeg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #membership-title {
+    margin: 0px 30px;
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  #membership-cards-container {
+    margin: 25px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .membership-card {
+    margin: 1.66667%;
+    width: 30%;
+    text-align: center;
+    padding: 30px 0px;
+  }
+
+  .mem-title {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 1.25rem;
+  }
+
+  .mem-price {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  .per {
+    font-size: 1rem;
+  }
+
+  .mem-perks {
+    font-weight: 600;
+    color: #373945dd;
+    margin-bottom: 20px;
+  }
+
+  .mem-buy {
+    width: 80%;
+    font-size: 1rem;
+    font-family: var(--heading-font);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: linear-gradient(45deg, var(--green-color), var(--dblue-color));
+    color: var(--background-color);
+    box-shadow: 0px 0px 20px #00000033;
+    cursor: pointer;
+    transition-duration: 0.3s;
+  }
+
+  .mem-buy:hover {
+    transform: scale(1.05);
+  }
+
+  .membership-card:nth-of-type(2) {
+    box-shadow: 0px 0px 30px #00000055;
+    border-radius: 10px;
+    transform: scale(1.1);
+  }
+
+  #em-mem-buy {
+    background: linear-gradient(45deg, var(--dblue-color), var(--lblue-color));
+    box-shadow: 0px 0px 20px #00000055;
+  }
+
+  #memberhip-payment {
+    font-weight: 600;
+    color: #373945aa;
+    text-align: center;
+    margin: 0 20%;
+  }
+
+  #reviews-title {
+    margin: 0px 30px;
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  #review-cards-container {
+    margin: 0px 30px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .small-reviews-container {
+    width: 90%;
+    margin: 20px 5%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .small-review-card {
+    margin: 0px 2.5%;
+    width: 15%;
+    aspect-ratio: 1/1;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clip-path: ellipse(47% 50% at 50% 50%);
+    animation: squishy 5s infinite ease-in-out;
+  }
+
+  .small-review-text {
+    font-weight: 600;
+    color: #dcdde1cc;
+    font-size: 1.5rem;
+  }
+
+  #small-card-1 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Shot_a_Homeless_Man_in_Joy.jpg/153px-Shot_a_Homeless_Man_in_Joy.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 0s;
+  }
+
+  #small-card-2 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Kevin_Rose.jpg/187px-Kevin_Rose.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 1s;
+  }
+
+  #small-card-3 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Hayley_McFarland.jpg/320px-Hayley_McFarland.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 2s;
+  }
+
+  #small-card-4 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Dr_Karthik_Ram.jpg/320px-Dr_Karthik_Ram.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 3s;
+  }
+
+  #small-card-5 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tom_Holland_MTV_2018_%2802%29.jpg/160px-Tom_Holland_MTV_2018_%2802%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #small-card-6 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Deadpool_2_Japan_Premiere_Red_Carpet_Ryan_Reynolds_%2827587356547%29.jpg/160px-Deadpool_2_Japan_Premiere_Red_Carpet_Ryan_Reynolds_%2827587356547%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #small-card-7 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Ryan_Gosling_in_2018.jpg/167px-Ryan_Gosling_in_2018.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #small-card-8 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Cillian_Murphy_Press_Conference_The_Party_Berlinale_2017_02cr.jpg/180px-Cillian_Murphy_Press_Conference_The_Party_Berlinale_2017_02cr.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #small-card-9 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Margot_Robbie_%2828316659170%29_%28cropped%29.jpg/176px-Margot_Robbie_%2828316659170%29_%28cropped%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #small-card-10 {
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg/230px-Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg');
+    background-size: cover;
+    background-position: center;
+    animation-delay: 4s;
+  }
+
+  #large-reviews-container {
+    margin: 0px 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .large-review-card {
+    margin: 2.5%;
+    width: 45%;
+    border-radius: 15px;
+    box-shadow: 0px 0px 30px #00000055;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    color: var(--background-color);
+    font-weight: 600;
+    background: linear-gradient(40deg, #29443Bdd 40%, #074d66dd), url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg/230px-Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .large-review-stars {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #F1C40Faa;
+    border-bottom: 2px solid;
+    width: 100%;
+  }
+
+  .large-review-text {
+    margin: 5px 10px 20px;
+  }
+
+  .large-review-by {
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #dcdde1aa;
+  }
+
+  #gallery-title {
+    margin: 0px 30px;
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  #gallery-pics-container {
+    width: 90%;
+    margin: 30px 5%;
+    padding: 5px 0px;
+    height: 510px;
+    background: linear-gradient(45deg, var(--green-color), var(--lblue-color));
+    border-radius: 10px;
+    box-shadow: 0px 0px 30px #00000077;
+  }
+
+  .gallery-pics-section-100px {
+    height: 100px;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+  }
+
+  .gallery-pics-section-200px {
+    height: 200px;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+  }
+
+  .gallery-pic {
+    height: calc(100% - 10px);
+    margin: 5px;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #00000055;
+    transition: 0.2s;
+    filter: contrast(70%) brightness(50%);
+  }
+
+  .gallery-pic:hover {
+    filter: contrast(100%);
+  }
+
+  #view-gallery-button {
+    text-align: center;
+    margin: 0 auto;
+    width: fit-content;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: var(--heading-font);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  #view-gallery-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 30px #00000022;
+  }
+
+  #thanks-container {
+    margin: 50px 30px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  #thanks-content {
+    margin: 2.5%;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  #thanks-image-container {
+    margin: 2.5%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+  }
+
+  #thanks-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    height: auto;
+    background: linear-gradient(40deg, #29443Baa 40%, #074d66aa), url('https://upload.wikimedia.org/wikipedia/hi/a/a3/Lordvoldemort.jpg');
+    background-size: cover;
+    background-position: center;
+    clip-path: ellipse(47% 50% at 50% 50%);
+    animation: squishy 5s infinite ease-in-out;
+  }
+
+  #thanks-title {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    width: 100%;
+    text-shadow: 0px 0px 30px #00000055;
+  }
+
+  #thanks-text {
+    font-weight: 600;
+    width: 100%;
+  }
+

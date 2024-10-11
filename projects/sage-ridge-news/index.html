@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" href="assets/logo.png">
+    <title>Sage Ridge News | Homepage</title>
+</head>
+<body>
+    <header>
+        <h1>News Station</h1>
+        <nav>
+            <ul>
+                <li><a href="changePage" class="nav-link" onclick="changePage(1)">Home</a></li>
+                <li><a href="#" class="nav-link" onclick="changePage(2)">Politics</a></li>
+                <li><a href="#" class="nav-link" onclick="changePage(3)">Business</a></li>
+                <li><a href="#" class="nav-link" onclick="changePage(4)">Entertainment</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div id="content-container">
+        <div id="page1" class="page">
+            <h2>Welcome to our News Station!</h2>
+            <p>This is the home page content.</p>
+        </div>
+
+        <div id="page2" class="page">
+            <h2>Politics Page</h2>
+            <p>Politics-related content goes here.</p>
+        </div>
+
+        <div id="page3" class="page">
+            <h2>Business Page</h2>
+            <p>Business-related content goes here.</p>
+        </div>
+
+        <div id="page4" class="page">
+            <h2>Entertainment Page</h2>
+            <p>Entertainment-related content goes here.</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+@font-face {
+    font-family: 'Minecraft';
+    src: url('mojangles.ttf') format('truetype');
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #282c34;
+    color: white;
+    flex-direction: column;
+    font-family: 'Minecraft', sans-serif;
+}
+
+.scene {
+    width: 200px;
+    height: 200px;
+    perspective: 600px;
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-30deg) rotateY(-45deg);
+    transition: transform 0.5s;
+    cursor: grab;
+}
+
+.cube:active {
+    cursor: grabbing;
+}
+
+.face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    border: 1px solid #ccc;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.face:hover {
+    opacity: 1;
+}
+
+.front  { transform: rotateY(  0deg) translateZ(100px); background-image: url('cube/side.png'); }
+.back   { transform: rotateY(180deg) translateZ(100px); background-image: url('cube/side.png'); }
+.right  { transform: rotateY( 90deg) translateZ(100px); background-image: url('cube/side.png'); }
+.left   { transform: rotateY(-90deg) translateZ(100px); background-image: url('cube/side.png'); }
+.top    { transform: rotateX( 90deg) translateZ(100px); background-image: url('cube/top.png'); }
+.bottom { transform: rotateX(-90deg) translateZ(100px); background-image: url('cube/bottom.png'); }
+
+.title {
+    margin: 5px;
+    color: orange;
+    font-size: 50px;
+}
+
+.subtitle {
+    color: lightblue;
+    font-size: 20px;
+}
+
+p {
+    max-width: 800px;
+    line-height: 1.5;
+}
+
+a {
+    color: rgb(70, 189, 228);
+    text-decoration: none;
+}
+
+.divide {
+    color: red;
+}

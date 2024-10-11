@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebBlock - Block Sites on Windows Computers</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #000; 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                font-family: Lato;
+            }
+
+            .background-animation {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+
+            .falling-digit {
+                position: fixed;
+                color: rgb(0, 255, 0);
+                font-family: Monospace;
+            }
+
+            .container {
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                margin: 0 auto;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 20px;
+                border-radius: 5px;
+                z-index: 1;
+            }
+        </style>
+    </head>
+    <body class="background-animation">
+        <div class="container">
+            <h1>WebBlock V1.5</h1>
+            <p>The easiest way to block websites.</p>
+            <br>
+            <p>More about WebBlock can be found <a href="about/">here</a>.</p>
+            <br>
+            <br>
+            <a href="WebBlock-Official-1.5.exe" download>Download EXE Now (x64) [~1MB]</a>
+            <br>
+            <small>Note: This is not an installer. This is the full program.</small>
+            <br>
+            <small><a href="all-ver">See all WebBlock versions</a></small>
+        </div>
+        <script>
+            function getRandomBinary() {
+              return Math.floor(Math.random() * 2);
+            }
+      
+            function getRandomX() {
+              return Math.random() * window.innerWidth;
+            }
+      
+            class FallingDigit {
+              constructor() {
+                this.digit = getRandomBinary();
+                this.x = getRandomX();
+                this.y = 0;
+                this.speed = Math.random() * 5 + 2;
+                this.element = document.createElement('span');
+                this.element.innerText = this.digit;
+                this.element.style.position = 'fixed';
+                this.element.classList.add('falling-digit');
+                this.element.style.left = this.x + 'px';
+                this.element.style.top = this.y + 'px';
+                document.body.appendChild(this.element);
+              }
+      
+              update() {
+                this.y += this.speed;
+                this.element.style.top = this.y + 'px';
+              }
+      
+              isOutOfScreen() {
+                return this.y > window.innerHeight;
+              }
+      
+              remove() {
+                document.body.removeChild(this.element);
+              }
+            }
+      
+            const fallingDigits = [];
+      
+            function startAnimation() {
+              setInterval(function () {
+                const digit = new FallingDigit();
+                fallingDigits.push(digit);
+              }, 10);
+      
+              requestAnimationFrame(updateAnimation);
+            }
+      
+            function updateAnimation() {
+              fallingDigits.forEach(function (digit) {
+                digit.update();
+      
+                if (digit.isOutOfScreen()) {
+                  digit.remove();
+                  const index = fallingDigits.indexOf(digit);
+                  fallingDigits.splice(index, 1);
+                }
+              });
+      
+              requestAnimationFrame(updateAnimation);
+            }
+      
+            if (document.body.classList.contains('background-animation')) {
+              startAnimation();
+            }
+          </script>
+          <canvas id="background"></canvas>
+    </body>
+</html>

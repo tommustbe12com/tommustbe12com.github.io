@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TomMustBe12 App Home</title>
+    <link rel="icon" href="assets/profile.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: Montserrat;
+        text-align: center;
+      }
+      body {
+        background: #2f2f2f;
+        color: #f2f2f2;
+      }
+      h3 {
+        font-weight: 15;
+      }
+      button {
+        color: #f3f3f3;
+        background: #3f3f3f;
+        border: none;
+        border-radius: 2.5px;
+        padding: 10px;
+        transition: 0.25s;
+      }
+      button:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>404</h1>
+    <p>The page you requested couldn't be found. If you think this is a mistake, click the button below.</p><br>
+    <button onclick="mistake404()">This 404 page is a mistake</button>
+    <script src="scripts/popup.js"></script>
+    <script>
+      let url = window.location.href;
+      function mistake404() {
+        const webhook ="https://discord.com/api/webhooks/1263939343240921181/yrRqoP0vVdZq2v3QITYG_UQvARtDVR17Vqtymj42XFRK4mODpeBbOH-T4gT_YUhEB7JT"; //Don't use this to spam, please.
+      
+        const contents = `There is an error with the tommustbe12.com site.\n\n ${url} has been marked as a mistake 404 url by someone. Please review or fix @TomMustBe12.`;
+        const request = new XMLHttpRequest();
+        request.open("POST", webhook);
+        request.setRequestHeader('Content-type', 'application/json');
+        const params = {
+            username: 'TomMustBe12.com Site 404',
+            content: contents
+        }
+        request.send(JSON.stringify(params));
+      }
+    </script>
+  </body>
+</html>

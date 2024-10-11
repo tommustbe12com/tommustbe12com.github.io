@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>TomMustBe12's School Projects | TomMustBe12.com</title>
+    <link rel="icon" href="assets/icon.png">
+    
+    <!-- Icon -->
+    <link rel="icon" href="assets/icon.png">
+
+    <!-- Styles (OVER 1400 LINES SHEEEEEEEEEEEESH) -->
+    <link rel="stylesheet" href="gen.css">
+    <link rel="stylesheet" href="head.css">
+    <link rel="stylesheet" href="content.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="responsiveness.css">
+    <!-- yes that much css ik -->
+  </head>
+
+  <body>
+
+    
+      <div id="nav-bar" style="background-color: #34533b;">
+        <div id="nav-links-container">
+          <a class="nav-link" href="../index.html">main site</a>
+        </div>
+        <div id="nav-promo">
+          <a href="../index.html">TomMustBe12.com</a>
+        </div>
+      </div>
+    
+
+    <div class="whitespace"></div>
+    <div class="whitespace"></div>
+    <p style="font-family: 'Quicksand'; text-align: center; font-weight: bold;">Welcome! This is TomMustBe12's school page. This is where all of his projects<br>are for school. You can look around and explore if you like!.</p>
+    <div id="footer-other">
+      <div class="js-scroll fade-in" id="footer-brand">
+        <div id="footer-brand-title">TomMustBe12's School Projects</div>
+        <div id="footer-brand-copyright">&copy; TomMustBe12, 2023-current.</div>
+      </div>
+      <div id="footer-links">
+        <a class='nav-link' id="back-to-top" href="index.html">Home</a>
+        <div id="links-info">TomMustBe12.com</div>
+      </div>
+    </div>
+
+    <script type>
+      function slightScroll() {
+        window.scrollTo({
+          top: 500,
+          behavior: "smooth"
+        });
+      };
+
+      function backToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      };
+
+    </script> <!-- Page scrolling -->
+    <script type>
+      // Does anyone have any idea why there's a scrollbar skeleton / phantom scrollbar in most HTML programs nowadays?
+      parent.document.body.style.overflowY = 'hidden'
+
+    </script> <!-- Fix to get rid of the scrollbar skeleton -->
+    <script type>
+      (function () {
+        const scrollElements = document.querySelectorAll(
+          ".js-scroll");
+
+        function elementIsInView(el, divisor = 1) {
+          const elementTop = el.getBoundingClientRect().top;
+
+          return elementTop <= window.innerHeight / divisor;
+        }
+
+        function handleScrollAnimation() {
+          scrollElements.forEach((el) => {
+            if (elementIsInView(el, 1)) {
+              el.classList.add("scrolled");
+            } else if (!elementIsInView(el)) {
+              el.classList.remove("scrolled");
+            }
+          });
+        }
+
+        window.addEventListener("scroll", handleScrollAnimation);
+      })();
+
+    </script> <!-- On-scroll animations -->
+  </body>
+
+</html>

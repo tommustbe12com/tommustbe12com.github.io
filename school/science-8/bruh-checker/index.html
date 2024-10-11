@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Science Bruh Checker</title>
+        <style>
+            .bruh {
+                border: 1px solid black;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <p>TomMustBe12 is in Science for 8th grade. He's noticed something.<br>THE TEACHER IS PLAGIARIZING EVERYTHING!</p>
+        <p>Here is the science bruh checker, which will open up the real page where the teacher plagiarized the content.</p>
+        <div class="bruh">
+            <p><b>Concept number & chapter:</b></p>
+            <br>
+            <br>
+            <p>Concept number:</p>
+            <input type="text" placeholder="ex. '29.3'" id="bruh1">
+            <br>
+            <p>Chapter number:</p>
+            <input type="text" placeholder="ex. '29'" id="bruh12">
+            <br>
+            <button onclick="bruh1(document.getElementById('bruh1').value, document.getElementById('bruh12').value)">Check</button>
+            <br>
+            <img src="bruh1.png">
+        </div>
+        <div class="bruh">
+            <p><b>Chapter number:</b></p>
+            <br>
+            <br>
+            <p>Chapter number:</p>
+            <br>
+            <input type="text" placeholder="ex. '29'" id="bruh2">
+            <br>
+            <button onclick="bruh2(document.getElementById('bruh2').value)">Check</button>
+            <br>
+            <img src="bruh2.png">
+        </div>
+        <script>
+            function bruh1(num, num2) {
+                // bruh
+                window.open('https://bodell.mtchs.org/OnlineBio/BIOCD/text/chapter' + num2 + '/concept' + num + '.html')
+            }
+
+            function bruh2(num) {
+                // bruh
+                window.open('https://bodell.mtchs.org/OnlineBio/BIOCD/text/chapter' + num);
+            }
+        </script>
+    </body>
+</html>

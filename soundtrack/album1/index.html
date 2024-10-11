@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TomMustBe12's Soundtrack - TomMustBe12.com</title>
+    <link rel="stylesheet" href="https://tommustbe12.com/server-old/style.css">
+    <link rel="icon" href="https://tommustbe12.com/assets/profile.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <main style="text-align: center;align-items: center;color:#fff;">
+<audio id="soundtrack">
+  <source src="https://tommustbe12.com/assets/music.mp3" type="audio/mpeg">
+  <source src="https://tommustbe12.com/assets/awesome-song.mp3" type="audio/mpeg">
+  <source src="" type="audio/mpeg">
+  <source src="" type="audio/mpeg">
+  <source src="" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+      
+<h1 style="text-align: center;color:#fff;">TomMustBe12's ULTIMATE Soundtrack - Album 1</h1>
+
+      <br>
+      
+<button onclick="back()" class="copy-button">&lt;</button>
+<button onclick="go()" class="copy-button">Play Soundtrack</button>
+<button onclick="no()" class="copy-button">Pause Soundtrack</button>
+<button onclick="forward()" class="copy-button">&gt;</button>
+
+      <br><br><span id="status">Status will appear here when you click play or pause.</span><br><br>
+
+      <p style="color:#f1f1f1;">This is album 1 of the music soundtrack.</p>
+      <br>
+      <p style="color:#f1f1f1;">Most of it is like movie trailers or movie type of music. Don't worry about listening to the songs after the first one, it will automatically play.</p>
+      <br><br><br>
+      <h2 style="color: whitesmoke;">Soundtrack Songs:</h2>
+      <ol>
+        <li>The Realization - 2:29</li>
+        <li>The Darkness Is Near - 3:03</li>
+        <li>The Chase - 1:40</li>
+        <li>Starship Coming For You - 2:03</li>
+        <li>Learned The Hard Way - 1:55</li>
+        <li>The Tension in the Air - 2:06</li>
+        <li>Can't Fail - 2:50</li>
+        <li>The Winner of All - 0:24</li>
+      </ol>
+      <br><br><br><p>More coming soon!</p>
+
+<script>
+  var soundtrack = document.getElementById("soundtrack");
+  var audioFiles = ["https://tommustbe12.com/assets/music.mp3", "https://tommustbe12.com/assets/awesome-song.mp3", "https://tommustbe12.com/assets/epic-dramatic-song.mp3", "https://tommustbe12.com/assets/space.mp3", "https://tommustbe12.com/assets/thewait.mp3", "https://tommustbe12.com/assets/trailer1.mp3", "https://tommustbe12.com/assets/trailer2.mp3", "https://tommustbe12.com/assets/woodlands.wav",
+"https://tommustbe12.com/assets/amazing.mp3"];
+
+  var songTitle = "An error occurred.";
+
+function updateSongTitle() {
+
+  if(soundtrack.src === "https://tommustbe12.com/assets/space.mp3") {
+    songTitle = "Starship Coming For You"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/awesome-song.mp3") {
+    songTitle = "The Darkness Is Near"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/epic-dramatic-song.mp3") {
+    songTitle = "The Chase"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music.mp3") {
+    songTitle = "The Realization"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/thewait.mp3") {
+    songTitle = "Learned the Hard Way"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/trailer1.mp3") {
+    songTitle = "The Tension in the Air"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/trailer2.mp3") {
+    songTitle = "Can't Fail"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/woodlands.wav") {
+    songTitle = "The Winner of All"
+  } 
+
+  }
+  setInterval(() => updateSongTitle(), 1)
+
+  var currentIndex = 0;
+  function back() {
+    currentIndex--;
+    soundtrack.src = audioFiles[currentIndex];
+    soundtrack.play();
+    if(soundtrack.src === "https://tommustbe12.com/assets/space.mp3") {
+    songTitle = "Starship Coming For You"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/awesome-song.mp3") {
+    songTitle = "The Darkness Is Near"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/epic-dramatic-song.mp3") {
+    songTitle = "The Chase"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music.mp3") {
+    songTitle = "The Realization"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/thewait.mp3") {
+    songTitle = "Learned the Hard Way"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/trailer1.mp3") {
+    songTitle = "The Tension in the Air"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/trailer2.mp3") {
+    songTitle = "Can't Fail"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/woodlands.wav") {
+    songTitle = "The Winner of All"
+  } 
+      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
+  }
+
+  function forward() {
+    currentIndex++;
+    soundtrack.src = audioFiles[currentIndex];
+    soundtrack.play();
+    if(soundtrack.src === "https://tommustbe12.com/assets/space.mp3") {
+    songTitle = "Starship Coming For You"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/awesome-song.mp3") {
+    songTitle = "The Darkness Is Near"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/epic-dramatic-song.mp3") {
+    songTitle = "The Chase"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music.mp3") {
+    songTitle = "The Realization"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/thewait.mp3") {
+    songTitle = "Learned the Hard Way"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/trailer1.mp3") {
+    songTitle = "The Tension in the Air"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/trailer2.mp3") {
+    songTitle = "Can't Fail"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/woodlands.wav") {
+    songTitle = "The Winner of All"
+  } 
+      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
+  }
+  
+  soundtrack.src = audioFiles[currentIndex];
+
+  soundtrack.onended = function() {
+    currentIndex++;
+    if (currentIndex < audioFiles.length) {
+      soundtrack.src = audioFiles[currentIndex];
+      soundtrack.play();
+      if(soundtrack.src === "https://tommustbe12.com/assets/space.mp3") {
+    songTitle = "Starship Coming For You"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/awesome-song.mp3") {
+    songTitle = "The Darkness Is Near"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/epic-dramatic-song.mp3") {
+    songTitle = "The Chase"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music.mp3") {
+    songTitle = "The Realization"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/thewait.mp3") {
+    songTitle = "Learned the Hard Way"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/trailer1.mp3") {
+    songTitle = "The Tension in the Air"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/trailer2.mp3") {
+    songTitle = "Can't Fail"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/woodlands.wav") {
+    songTitle = "The Winner of All"
+  } 
+      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
+    }
+  };
+  function go() {
+  soundtrack.play();
+  document.getElementById("status").innerHTML="Currently playing: " + songTitle;
+  }
+  function no() {
+  soundtrack.pause();
+  document.getElementById("status").innerHTML="Currently paused: " + songTitle;
+  }
+</script>
+    </main>
+  </body>
+</html>

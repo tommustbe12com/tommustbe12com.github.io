@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+<title>Server Rules - TomMustBe12.com</title>
+    <link rel="icon" href="https://tommustbe12.com/assets/profile.png">
+  </head>
+  <style>
+  @font-face{
+    src:url(../assets/mojangles.ttf);
+    font-family:font;
+  }
+  body{
+    font-family:font;
+    color:whitesmoke;
+  }
+  #bg{
+    background-image:url(../assets/dirt.png);
+    image-rendering: pixelated;
+    filter:brightness(0.4);
+    z-index:-1;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+  }
+</style>
+<div id="bg"></div>
+<h1>Server Rules</h1>
+<p>Please follow these server rules so you don't get banned from the TomMustBe12 Public SMP Server:</p>
+<br>
+<ol>
+  <li>You have to listen to what TomMustBe12 or any [upcoming] admins will say.</li>
+  <li>No spawn killing</li>
+  <li>No spawn trapping or portal trapping</li>
+  <li>No bad words</li>
+  <li>No innappropriate content</li>
+  <li>Griefing is allowed, but to a certain extent. Do not continuously grief or do it exceedingly.</li>
+  <li>Don't target anybody.</li>
+  <li>Have fun!</li>
+</ol>
+<br>
+  <p>Keep in mind that if you do not follow these rules, you may get banned from the server for a long time. You will get a warning (a kick) the first time you are caught disobeying the rules. The second time, you will be given a more severe punishment.</p>
+<p>Click <a href="https://tommustbe12.com/" style="color:orange">here</a> to go back to the homepage.</p>
+<script>
+  var bg = document.querySelector("#bg")
+  onresize = function(){
+    let aspect = innerWidth / innerHeight
+    let stack = innerHeight / 96
+    var w = (stack*aspect)
+    var h = stack
+    w = innerWidth / w
+    h = innerHeight / h
+    bg.style.backgroundSize = w+"px " + h+"px"
+  }
+  onresize()
+</script>
+</html>

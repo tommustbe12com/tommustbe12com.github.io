@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="UTF-8">
+        <title>HTML Editor</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/codemirror.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/theme/gruvbox-dark.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/fold/foldgutter.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/dialog/dialog.css">
+
+        <style>
+            /* Base styling. */
+            :root {
+                box-sizing: border-box;
+            }
+
+            *, *::before, *::after {
+                box-sizing: inherit;
+            }
+
+            body {
+                background: #212121;
+                margin: 0.5rem;
+                font-family: sans-serif;
+            }
+
+            /* CodeMirror-related styling. */
+            .CodeMirror {
+                border-radius: 0.25rem;
+                box-shadow: 0 0 0.5rem black;
+                flex: 1;
+                flex-basis: 60%;
+                font-family: Cousine, "Fira Code", "Cascadia Code", "Courier New", monospace;
+                font-size: 0.85rem;
+                height: 100%;
+            }
+
+            .CodeMirror--hidden {
+                display: none;
+            }
+
+            .cm-s-gruvbox-dark span.cm-comment {
+                color: #c6b7a8;
+            }
+
+            .cm-tab {
+                overflow: hidden;
+                position: relative;
+                vertical-align: bottom;
+            }
+
+            .cm-tab::after {
+                box-sizing: border-box;
+                color: #fafafa44;
+                content: "→";
+                display: block;
+                height: 100%;
+                padding-right: 0.25em;
+                position: absolute;
+                right: -0.75em;
+                text-align: right;
+                top: -0.1em;
+                transform: scaleX(3.45) scaleY(1.5);
+                transform-origin: right center;
+                width: 100%;
+            }
+
+            .cm-matchhighlight {
+                background: #fe801944;
+            }
+
+            /* Rest of styling. */
+            .editor__output {
+                display: block;
+                flex: 1;
+                flex-basis: 40%;
+                border: none;
+                background: #e0e0e0;
+                box-shadow: 0 0 0.5rem black;
+                border-radius: 0.25rem;
+                min-width: 0;
+            }
+
+            .editor {
+                display: flex;
+                height: calc(100vh - 3.5rem);
+                margin-bottom: 0.5rem;
+            }
+
+            .editor__textarea {
+                display: none;
+            }
+
+            .editor__resizer {
+                cursor: ew-resize;
+                width: 0.5em;
+            }
+
+            .CodeMirror--hidden + .editor__resizer {
+                display: none;
+            }
+
+            .icon {
+                height: 1em;
+                vertical-align: bottom;
+                width: 1em;
+            }
+
+            .icon-play {
+                height: 1.2em;
+                width: 1.2em;
+            }
+
+
+            .icon-arrows-fullscreen {
+                margin-right: 0.4em;
+                position: relative;
+                top: -0.1em;
+            }
+
+            .button {
+                border: none;
+                border-radius: 0.25rem;
+                box-shadow: 0 0 0.25rem #f5f5f555,
+                    inset 0 0 0.1rem #212121bb;
+                color: #eeeeee;
+                cursor: pointer;
+                font-family: "Segoe UI", sans-serif;
+                font-size: 0.85rem;
+                font-weight: 600;
+                height: 2rem;
+                letter-spacing: 0.025rem;
+                margin-right: 0.5rem;
+                padding: 0.1em 1em;
+                text-shadow: 0 0 0.125rem #21212188;
+                transition-duration: 0.3s;
+                transition-property: box-shadow, background;
+                transition-timing-function: ease;
+                vertical-align: middle;
+            }
+
+            .button:active {
+                padding: 0.1em 1em;
+            }
+
+            .button:focus {
+                box-shadow: 0 0 0.25rem #f5f5f577,
+                    inset 0 0 0.1rem #212121bb,
+                    0 0 0 0.225rem var(--focus-ring-color);
+                outline: none;
+            }
+
+            .button--blue {
+                --focus-ring-color: #2196f388;
+                background: #2196f3;
+            }
+
+            .button--blue:hover {
+                background: #1e88e5;
+            }
+
+            .button--blue:active {
+                background: #1565c0;
+            }
+
+            .button--green {
+                --focus-ring-color: #4caf5088;
+                background: #4caf50;
+            }
+
+            .button--green:hover {
+                background: #43a047;
+            }
+
+            .button--green:active {
+                background: #2e7d32;
+            }
+
+            .button--invisible {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="editor">
+            <textarea class="editor__textarea">&lt;!DOCTYPE html>
+&lt;html>
+    &lt;head>
+        &lt;meta charset="UTF-8">
+    &lt;/head>
+    &lt;body>
+
+    &lt;/body>
+&lt;/html></textarea>
+            <div class="editor__resizer"></div>
+        </div>
+        <button id="button-update" class="button button--green">
+            <svg class="icon icon-play" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.804 8L5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+            </svg>Update
+        </button>
+        <button id="button-toggle-editor" class="button button--blue">
+            Toggle Editor
+        </button>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/codemirror.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/mode/javascript/javascript.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/mode/css/css.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/mode/xml/xml.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/mode/htmlmixed/htmlmixed.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/fold/foldcode.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/fold/brace-fold.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/fold/indent-fold.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/fold/xml-fold.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/fold/foldgutter.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/edit/matchtags.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/edit/closetag.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/edit/matchbrackets.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/edit/closebrackets.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/dialog/dialog.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/search/searchcursor.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/search/search.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/keymap/sublime.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/comment/comment.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/addon/search/match-highlighter.min.js" crossorigin="anonymous"></script>
+
+        <script type="application/javascript">
+        function startEditor() {
+            const $ = document.querySelector.bind(document);
+
+            const editorContainerEl = $(".editor");
+            const editorTextArea = $(".editor__textarea");
+            const originalContent = localStorage.getItem("code") ||
+                editorTextArea.textContent;
+            const editor = CodeMirror.fromTextArea(editorTextArea, {
+                lineNumbers: true,
+                tabSize: 4,
+                indentWithTabs: false,
+                indentUnit: 4,
+                theme: "gruvbox-dark",
+
+                mode: {
+                    name: "htmlmixed",
+                    tags: {
+                        script: [[null, null, "javascript"]]
+                    }
+                },
+                htmlMode: true,
+
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                matchTags: true,
+                autoCloseTags: true,
+                highlightSelectionMatches: true,
+
+                keyMap: "sublime",
+                extraKeys: {
+                    Tab: (editor) => {
+                        editor.execCommand(
+                            editor.doc.somethingSelected() ? "indentMore"
+                                : "insertSoftTab"
+                        );
+                    },
+                    "Shift-Tab": (editor) => {
+                        editor.execCommand("indentLess");
+                    },
+                    "Ctrl-Enter": () => {
+                        update();
+                    },
+                    "Shift-Ctrl-Enter": () => {
+                      
+                    },
+                    "Ctrl-V": () => {
+                      PopupDark({
+                        title: "Plagiarizing isn\'t ethical hacking",
+                        content: "You can\'t just copy and paste code from the internet. You need to learn."
+                      })
+                    },
+                    "Ctrl-Alt-T": (editor) => {
+                        const primaryCursor = editor.doc.getCursor();
+                        const scrollInfo = editor.getScrollInfo();
+                        const trimmed = editor.doc.getValue()
+                            .split("\n")
+                            .map((line) => line.trimEnd())
+                            .join("\n");
+                        editor.doc.setValue(trimmed);
+                        editor.doc.setCursor(primaryCursor);
+                        editor.scrollTo(scrollInfo.left, scrollInfo.top);
+                    }
+                }
+            });
+            editor.doc.setValue(originalContent);
+
+            let outputFrame = document.createElement("iframe"),
+                outputFrameWidth = "40%";
+            outputFrame.style.setProperty("flex-basis", outputFrameWidth);
+            outputFrame.classList.add("editor__output");
+            editorContainerEl.append(outputFrame);
+            function update() {
+                if (outputFrame) outputFrame.remove();
+
+                outputFrame = document.createElement("iframe");
+                outputFrame.setAttribute("allow", "fullscreen");
+                outputFrame.srcdoc = editor.doc.getValue();
+                outputFrame.style.setProperty("flex-basis", outputFrameWidth);
+                outputFrame.classList.add("editor__output");
+
+                editorContainerEl.append(outputFrame);
+            }
+
+            $("#button-update").addEventListener("click", () => {
+                update();
+            });
+
+            $("#button-toggle-editor").addEventListener("click", () => {
+                editor.display.wrapper.classList.toggle("CodeMirror--hidden");
+            });
+
+            function removeSpaces(string) {
+                return string.replace(/\s+/g, "");
+            }
+
+            window.addEventListener("beforeunload", (event) => {
+                event.preventDefault();
+                event.returnValue = "";
+              
+                try {
+                    localStorage.setItem("code", editor.doc.getValue());
+                } catch (error) {}
+            });
+
+            let resizingEditor = false;
+            $(".editor__resizer").addEventListener("mousedown", (event) => {
+                resizingEditor = true;
+
+                editor.display.wrapper.style.setProperty("pointer-events", "none");
+                outputFrame.style.setProperty("pointer-events", "none");
+            });
+            document.documentElement.addEventListener("mousemove", (event) => {
+                if (!resizingEditor) return;
+
+                const containerRect = editorContainerEl.getBoundingClientRect();
+                const percentageWidth = (event.clientX - containerRect.x) / containerRect.width * 100;
+                editor.display.wrapper.style.setProperty(
+                    "flex-basis",
+                    percentageWidth + "%"
+                );
+
+                outputFrameWidth = (100 - percentageWidth) + "%";
+                outputFrame.style.setProperty("flex-basis", outputFrameWidth);
+                editor.refresh();
+            });
+            document.documentElement.addEventListener("mouseup", () => {
+                resizingEditor = false;
+
+                editor.display.wrapper.style.removeProperty("pointer-events");
+                outputFrame.style.removeProperty("pointer-events");
+            });
+          
+            setInterval(() => {
+                try {
+                    localStorage.setItem("code", editor.doc.getValue());
+                } catch (error) {}
+            }, 500);
+        }
+
+        setTimeout(() => {
+            startEditor();
+        }, 0);
+
+          
+                    var ctrlDown = false;
+                    var ctrlKey = 17, vKey = 86;
+                    document.onkeydown = function(e) {
+                        if (e.keyCode == ctrlKey) ctrlDown = true;
+                    };
+                    document.onkeyup = function(e) {
+                        if (e.keyCode == ctrlKey) ctrlDown = false;
+                    };
+                    document.onkeydown = function(e) {
+                        if (ctrlDown && (e.keyCode == vKey)) {
+                            e.preventDefault();
+                            PopupDark({
+                              title: 'Don\'t copy code!',
+                              content: 'That is not ethical coding. Plagiarizing is not ok.'
+                            })
+                        }
+                    };
+        </script>
+        <script src="https://tommustbe12.com/scripts/popup.js"></script>
+    </body>
+</html>
