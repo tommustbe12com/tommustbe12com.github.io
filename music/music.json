@@ -46,5 +46,9 @@
     {
         "title": "Moonlit Shadows",
         "source": "audio/moonlit-shadows.mp3"
+    },
+    {
+        "title": "World of Dread",
+        "source": "audio/world-of-dread.mp3"
     }
 ]
