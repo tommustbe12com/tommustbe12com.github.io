@@ -48,7 +48,11 @@
         "source": "audio/moonlit-shadows.mp3"
     },
     {
-        "title": "World of Dread",
+        "title": "World of Hope",
         "source": "audio/world-of-dread.mp3"
+    },
+    {
+        "title": "Backward View",
+        "source": "audio/backward-view.mp3"
     }
 ]

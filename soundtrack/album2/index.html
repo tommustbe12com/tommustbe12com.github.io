@@ -48,12 +48,14 @@
         <li>Shadowed Voyagers - 2:35</li>
         <li>The Winner of All (Extended) - 2:16</li>
         <li>Moonlit Shadows - 3:19</li>
+        <li>World of Hope - 2:19</li>
+        <li>Backward View - 4:00</li>
       </ol>
       <br><br><br><p>More coming soon!</p>
 
 <script>
   var soundtrack = document.getElementById("soundtrack");
-  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3", "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", "https://tommustbe12.com/assets/music/silent-star-voyage.mp3", "https://tommustbe12.com/assets/music/midnight-phantoms.mp3", "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3", "https://tommustbe12.com/assets/music/winner-of-all.mp3", "https://tommustbe12.com/assets/music/moonlit-shadows.mp3", "https://tommustbe12.com/assets/music/world-of-dread.mp3"];
+  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3", "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", "https://tommustbe12.com/assets/music/silent-star-voyage.mp3", "https://tommustbe12.com/assets/music/midnight-phantoms.mp3", "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3", "https://tommustbe12.com/assets/music/winner-of-all.mp3", "https://tommustbe12.com/assets/music/moonlit-shadows.mp3", "https://tommustbe12.com/assets/music/world-of-dread.mp3", "https://tommustbe12.com/assets/music/backward-view.mp3"];
 
   var songTitle = "An error occurred.";
 
@@ -84,7 +86,9 @@ function updateSongTitle() {
   } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
     songTitle = "Moonlit Shadows"
   } else if(soundtrack.src === "https://tommustbe12.com/assets/music/world-of-dread.mp3") {
-    songTitle = "World of Dread"
+    songTitle = "World of Hope"
+  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/backward-view.mp3") {
+    songTitle = "Backward View"
   }
 
   }
@@ -120,7 +124,9 @@ function updateSongTitle() {
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
       songTitle = "Moonlit Shadows"
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/world-of-dread.mp3") {
-      songTitle = "World of Dread"
+      songTitle = "World of Hope"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/backward-view.mp3") {
+      songTitle = "Backward View"
     }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
   }
@@ -154,7 +160,9 @@ function updateSongTitle() {
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
       songTitle = "Moonlit Shadows"
     } else if(soundtrack.src === "https://tommustbe12.com/assets/music/world-of-dread.mp3") {
-      songTitle = "World of Dread"
+      songTitle = "World of Hope"
+    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/backward-view.mp3") {
+      songTitle = "Backward View"
     }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
   }
@@ -191,7 +199,9 @@ function updateSongTitle() {
       } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
         songTitle = "Moonlit Shadows"
       } else if(soundtrack.src === "https://tommustbe12.com/assets/music/world-of-dread.mp3") {
-        songTitle = "World of Dread"
+        songTitle = "World of Hope"
+      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/backward-view.mp3") {
+        songTitle = "Backward View"
       }
       document.getElementById("status").innerHTML="Currently playing: " + songTitle;
     }
