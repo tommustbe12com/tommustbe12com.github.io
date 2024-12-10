@@ -5,34 +5,29 @@
     <link rel="stylesheet" href="https://tommustbe12.com/server-old/style.css">
     <link rel="icon" href="https://tommustbe12.com/assets/profile.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   </head>
   <body>
-    <main style="text-align: center;align-items: center;color:#fff;">
-<audio id="soundtrack">
-  <source src="https://tommustbe12.com/assets/music.mp3" type="audio/mpeg">
-  <source src="https://tommustbe12.com/assets/awesome-song.mp3" type="audio/mpeg">
-  <source src="" type="audio/mpeg">
-  <source src="" type="audio/mpeg">
-  <source src="" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-      
-<h1 style="text-align: center;color:#fff;">TomMustBe12's ULTIMATE Soundtrack - Album 2</h1>
+    <main style="text-align: center; align-items: center; color: #fff;">
+      <audio id="soundtrack" preload="auto"></audio>
 
+      <h1 style="text-align: center; color: #fff;">TomMustBe12's ULTIMATE Soundtrack - Album 2</h1>
       <br>
       
-<button onclick="back()" class="copy-button">&lt;</button>
-<button onclick="go()" class="copy-button">Play Soundtrack</button>
-<button onclick="no()" class="copy-button">Pause Soundtrack</button>
-<button onclick="forward()" class="copy-button">&gt;</button>
-
-      <br><br><span id="status">Status will appear here when you click play or pause.</span><br><br>
-
-      <p style="color:#f1f1f1;">This is album 2 of the TomMustBe12 soundtrack.</p>
+      <button onclick="changeSong(-1)" class="copy-button">&lt;</button>
+      <button onclick="playSong()" class="copy-button">Play Soundtrack</button>
+      <button onclick="pauseSong()" class="copy-button">Pause Soundtrack</button>
+      <button onclick="changeSong(1)" class="copy-button">&gt;</button>
+      
+      <br><br>
+      <span id="status">Status will appear here when you click play or pause.</span>
+      <br><br>
+      <p style="color: #f1f1f1;">This is album 2 of the TomMustBe12 soundtrack.</p>
       <br>
-      <p style="color:#f1f1f1;">Most of it is like movie trailers or movie type of music. Don't worry about listening to the songs after the first one, it will automatically play.</p>
+      <p style="color: #f1f1f1;">
+        Most of it is like movie trailers or movie-type music. Don't worry about listening to the songs after the first one, it will automatically play.
+      </p>
       <br><br><br>
       <h2 style="color: whitesmoke;">Soundtrack Songs:</h2>
       <ol>
@@ -51,170 +46,55 @@
         <li>World of Hope - 2:19</li>
         <li>Backward View - 4:00</li>
       </ol>
-      <br><br><br><p>More coming soon!</p>
+      <br><br><br>
+      <p>More coming soon!</p>
 
-<script>
-  var soundtrack = document.getElementById("soundtrack");
-  var audioFiles = ["https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", "https://tommustbe12.com/assets/music/midnight-solace.mp3", "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", "https://tommustbe12.com/assets/music/silent-star-voyage.mp3", "https://tommustbe12.com/assets/music/midnight-phantoms.mp3", "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3", "https://tommustbe12.com/assets/music/winner-of-all.mp3", "https://tommustbe12.com/assets/music/moonlit-shadows.mp3", "https://tommustbe12.com/assets/music/world-of-dread.mp3", "https://tommustbe12.com/assets/music/backward-view.mp3"];
+      <script>
+        const soundtrack = document.getElementById("soundtrack");
+        const status = document.getElementById("status");
+        const songs = [
+          { url: "https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", title: "Echoes of Solitude" },
+          { url: "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", title: "Fragments of Solitude" },
+          { url: "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", title: "Lost in Reflection" },
+          { url: "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", title: "Shadows of Existence" },
+          { url: "https://tommustbe12.com/assets/music/midnight-solace.mp3", title: "Midnight Solace" },
+          { url: "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", title: "Twist of the Beat" },
+          { url: "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", title: "Horizon of Stars" },
+          { url: "https://tommustbe12.com/assets/music/silent-star-voyage.mp3", title: "Silent Star Voyage" },
+          { url: "https://tommustbe12.com/assets/music/midnight-phantoms.mp3", title: "Midnight Phantoms" },
+          { url: "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3", title: "Shadowed Voyagers" },
+          { url: "https://tommustbe12.com/assets/music/winner-of-all.mp3", title: "The Winner of All (Extended)" },
+          { url: "https://tommustbe12.com/assets/music/moonlit-shadows.mp3", title: "Moonlit Shadows" },
+          { url: "https://tommustbe12.com/assets/music/world-of-dread.mp3", title: "World of Hope" },
+          { url: "https://tommustbe12.com/assets/music/backward-view.mp3", title: "Backward View" }
+        ];
 
-  var songTitle = "An error occurred.";
+        let currentIndex = 0;
 
-function updateSongTitle() {
+        const updateStatus = () => {
+          status.textContent = `Currently playing: ${songs[currentIndex].title}`;
+        };
 
-  if(soundtrack.src === "https://tommustbe12.com/assets/music/echoes-of-solitude.mp3") {
-    songTitle = "Echoes of Solitude"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3") {
-    songTitle = "Fragments of Solitude"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/lost-in-reflection.mp3") {
-    songTitle = "Lost in Reflection"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadows-of-existence.mp3") {
-    songTitle = "Shadows of Existence"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-solace.mp3") {
-    songTitle = "Midnight Solace"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3") {
-    songTitle = "Twist of the Beat"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/horizon-of-stars.mp3") {
-    songTitle = "Horizon of Stars"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/silent-star-voyage.mp3") {
-    songTitle = "Silent Star Voyage"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-phantoms.mp3") {
-    songTitle = "Midnight Phantoms"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3") {
-    songTitle = "Shadowed Voyagers"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/winner-of-all.mp3") {
-    songTitle = "The Winner of All (Extended)"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
-    songTitle = "Moonlit Shadows"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/world-of-dread.mp3") {
-    songTitle = "World of Hope"
-  } else if(soundtrack.src === "https://tommustbe12.com/assets/music/backward-view.mp3") {
-    songTitle = "Backward View"
-  }
+        const playSong = () => {
+          soundtrack.src = songs[currentIndex].url;
+          soundtrack.play();
+          updateStatus();
+        };
 
-  }
-  setInterval(() => updateSongTitle(), 1)
+        const pauseSong = () => {
+          soundtrack.pause();
+          status.textContent = `Currently paused: ${songs[currentIndex].title}`;
+        };
 
-  var currentIndex = 0;
-  function back() {
-    currentIndex--;
-    soundtrack.src = audioFiles[currentIndex];
-    soundtrack.play();
-    if(soundtrack.src === "https://tommustbe12.com/assets/music/echoes-of-solitude.mp3") {
-      songTitle = "Echoes of Solitude"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3") {
-      songTitle = "Fragments of Solitude"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/lost-in-reflection.mp3") {
-      songTitle = "Lost in Reflection"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadows-of-existence.mp3") {
-      songTitle = "Shadows of Existence"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-solace.mp3") {
-      songTitle = "Midnight Solace"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3") {
-      songTitle = "Twist of the Beat"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/horizon-of-stars.mp3") {
-      songTitle = "Horizon of Stars"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/silent-star-voyage.mp3") {
-      songTitle = "Silent Star Voyage"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-phantoms.mp3") {
-      songTitle = "Midnight Phantoms"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3") {
-      songTitle = "Shadowed Voyagers"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/winner-of-all.mp3") {
-      songTitle = "The Winner of All (Extended)"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
-      songTitle = "Moonlit Shadows"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/world-of-dread.mp3") {
-      songTitle = "World of Hope"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/backward-view.mp3") {
-      songTitle = "Backward View"
-    }
-      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
-  }
+        const changeSong = (direction) => {
+          currentIndex = (currentIndex + direction + songs.length) % songs.length;
+          playSong();
+        };
 
-  function forward() {
-    currentIndex++;
-    soundtrack.src = audioFiles[currentIndex];
-    soundtrack.play();
-    if(soundtrack.src === "https://tommustbe12.com/assets/music/echoes-of-solitude.mp3") {
-      songTitle = "Echoes of Solitude"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3") {
-      songTitle = "Fragments of Solitude"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/lost-in-reflection.mp3") {
-      songTitle = "Lost in Reflection"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadows-of-existence.mp3") {
-      songTitle = "Shadows of Existence"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-solace.mp3") {
-      songTitle = "Midnight Solace"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3") {
-      songTitle = "Twist of the Beat"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/horizon-of-stars.mp3") {
-      songTitle = "Horizon of Stars"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/silent-star-voyage.mp3") {
-      songTitle = "Silent Star Voyage"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-phantoms.mp3") {
-      songTitle = "Midnight Phantoms"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3") {
-      songTitle = "Shadowed Voyagers"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/winner-of-all.mp3") {
-      songTitle = "The Winner of All (Extended)"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
-      songTitle = "Moonlit Shadows"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/world-of-dread.mp3") {
-      songTitle = "World of Hope"
-    } else if(soundtrack.src === "https://tommustbe12.com/assets/music/backward-view.mp3") {
-      songTitle = "Backward View"
-    }
-      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
-  }
-  
-  soundtrack.src = audioFiles[currentIndex];
-
-  soundtrack.onended = function() {
-    currentIndex++;
-    if (currentIndex < audioFiles.length) {
-      soundtrack.src = audioFiles[currentIndex];
-      soundtrack.play();
-      if(soundtrack.src === "https://tommustbe12.com/assets/music/echoes-of-solitude.mp3") {
-        songTitle = "Echoes of Solitude"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3") {
-        songTitle = "Fragments of Solitude"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/lost-in-reflection.mp3") {
-        songTitle = "Lost in Reflection"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadows-of-existence.mp3") {
-        songTitle = "Shadows of Existence"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-solace.mp3") {
-        songTitle = "Midnight Solace"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3") {
-        songTitle = "Twist of the Beat"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/horizon-of-stars.mp3") {
-        songTitle = "Horizon of Stars"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/silent-star-voyage.mp3") {
-        songTitle = "Silent Star Voyage"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/midnight-phantoms.mp3") {
-        songTitle = "Midnight Phantoms"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3") {
-        songTitle = "Shadowed Voyagers"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/winner-of-all.mp3") {
-        songTitle = "The Winner of All (Extended)"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/moonlit-shadows.mp3") {
-        songTitle = "Moonlit Shadows"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/world-of-dread.mp3") {
-        songTitle = "World of Hope"
-      } else if(soundtrack.src === "https://tommustbe12.com/assets/music/backward-view.mp3") {
-        songTitle = "Backward View"
-      }
-      document.getElementById("status").innerHTML="Currently playing: " + songTitle;
-    }
-  };
-  function go() {
-  soundtrack.play();
-  document.getElementById("status").innerHTML="Currently playing: " + songTitle;
-  }
-  function no() {
-  soundtrack.pause();
-  document.getElementById("status").innerHTML="Currently paused: " + songTitle;
-  }
-</script>
+        soundtrack.onended = () => {
+          changeSong(1);
+        };
+      </script>
     </main>
   </body>
 </html>
