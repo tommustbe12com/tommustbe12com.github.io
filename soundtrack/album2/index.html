@@ -1,100 +1,258 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>TomMustBe12's Soundtrack - TomMustBe12.com</title>
-    <link rel="stylesheet" href="https://tommustbe12.com/server-old/style.css">
-    <link rel="icon" href="https://tommustbe12.com/assets/profile.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <main style="text-align: center; align-items: center; color: #fff;">
-      <audio id="soundtrack" preload="auto"></audio>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundtrack Album 2 - TomMustBe12</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+  <link rel="icon" href="../../assets/profile.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: black;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-      <h1 style="text-align: center; color: #fff;">TomMustBe12's ULTIMATE Soundtrack - Album 2</h1>
-      <br>
-      
-      <button onclick="changeSong(-1)" class="copy-button">&lt;</button>
-      <button onclick="playSong()" class="copy-button">Play Soundtrack</button>
-      <button onclick="pauseSong()" class="copy-button">Pause Soundtrack</button>
-      <button onclick="changeSong(1)" class="copy-button">&gt;</button>
-      
-      <br><br>
-      <span id="status">Status will appear here when you click play or pause.</span>
-      <br><br>
-      <p style="color: #f1f1f1;">This is album 2 of the TomMustBe12 soundtrack.</p>
-      <br>
-      <p style="color: #f1f1f1;">
-        Most of it is like movie trailers or movie-type music. Don't worry about listening to the songs after the first one, it will automatically play.
-      </p>
-      <br><br><br>
-      <h2 style="color: whitesmoke;">Soundtrack Songs:</h2>
-      <ol>
-        <li>Echoes of Solitude - 2:00</li>
-        <li>Fragments of Solitude - 2:55</li>
-        <li>Lost in Reflection - 2:56</li>
-        <li>Shadows of Existence - 2:58</li>
-        <li>Midnight Solace - 4:15</li>
-        <li>Twist of the Beat - 4:00</li>
-        <li>Horizon of Stars - 4:14</li>
-        <li>Silent Star Voyage - 3:51</li>
-        <li>Midnight Phantoms - 3:32</li>
-        <li>Shadowed Voyagers - 2:35</li>
-        <li>The Winner of All (Extended) - 2:16</li>
-        <li>Moonlit Shadows - 3:19</li>
-        <li>World of Hope - 2:19</li>
-        <li>Backward View - 4:00</li>
-      </ol>
-      <br><br><br>
-      <p>More coming soon!</p>
+    .visualizer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      z-index: 1;
+    }
 
-      <script>
-        const soundtrack = document.getElementById("soundtrack");
-        const status = document.getElementById("status");
-        const songs = [
-          { url: "https://tommustbe12.com/assets/music/echoes-of-solitude.mp3", title: "Echoes of Solitude" },
-          { url: "https://tommustbe12.com/assets/music/fragments-of-solitude.mp3", title: "Fragments of Solitude" },
-          { url: "https://tommustbe12.com/assets/music/lost-in-reflection.mp3", title: "Lost in Reflection" },
-          { url: "https://tommustbe12.com/assets/music/shadows-of-existence.mp3", title: "Shadows of Existence" },
-          { url: "https://tommustbe12.com/assets/music/midnight-solace.mp3", title: "Midnight Solace" },
-          { url: "https://tommustbe12.com/assets/music/twist-of-the-beat.mp3", title: "Twist of the Beat" },
-          { url: "https://tommustbe12.com/assets/music/horizon-of-stars.mp3", title: "Horizon of Stars" },
-          { url: "https://tommustbe12.com/assets/music/silent-star-voyage.mp3", title: "Silent Star Voyage" },
-          { url: "https://tommustbe12.com/assets/music/midnight-phantoms.mp3", title: "Midnight Phantoms" },
-          { url: "https://tommustbe12.com/assets/music/shadowed-voyagers.mp3", title: "Shadowed Voyagers" },
-          { url: "https://tommustbe12.com/assets/music/winner-of-all.mp3", title: "The Winner of All (Extended)" },
-          { url: "https://tommustbe12.com/assets/music/moonlit-shadows.mp3", title: "Moonlit Shadows" },
-          { url: "https://tommustbe12.com/assets/music/world-of-dread.mp3", title: "World of Hope" },
-          { url: "https://tommustbe12.com/assets/music/backward-view.mp3", title: "Backward View" }
-        ];
+    .bar {
+      background: linear-gradient(180deg, #00ffcc, #0066ff);
+      width: 2%;
+      height: 10%;
+      transition: height 0.1s;
+    }
 
-        let currentIndex = 0;
+    header {
+      z-index: 2;
+      text-align: center;
+      padding: 10px;
+    }
 
-        const updateStatus = () => {
-          status.textContent = `Currently playing: ${songs[currentIndex].title}`;
-        };
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
 
-        const playSong = () => {
-          soundtrack.src = songs[currentIndex].url;
-          soundtrack.play();
-          updateStatus();
-        };
+    .container {
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+      max-width: 800px;
+    }
 
-        const pauseSong = () => {
-          soundtrack.pause();
-          status.textContent = `Currently paused: ${songs[currentIndex].title}`;
-        };
+    .song-list {
+      width: 100%;
+      max-height: 50vh;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid white;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 20px 0;
+    }
+
+    .song {
+      padding: 10px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .song:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #00ffcc;
+      border: none;
+      color: black;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #00cc99;
+    }
+
+    .download {
+      background: #0066ff;
+    }
+
+    .download:hover {
+      background: #0052cc;
+    }
+  </style>
+</head>
+<body>
+  <div class="visualizer" id="visualizer"></div>
+
+  <header>
+    <h1>TomMustBe12's Soundtrack - Album 2</h1>
+  </header>
+
+  <div class="container">
+    <div class="song-list" id="songs-list"></div>
+
+    <div class="controls">
+      <button onclick="changeSong(-1)">&lt; Prev</button>
+      <button onclick="togglePlay()" id="play-button">Play</button>
+      <button onclick="changeSong(1)">Next &gt;</button>
+    </div>
+    
+    <div class="controls">
+      <button onclick="location.replace('../album3/index.html')">&gt; Album 3</button>
+    </div>
+  </div>
+
+  <audio id="audio" crossorigin="anonymous"></audio>
+
+  <script>
+    const songs = [
+      { url: "../../assets/music/echoes-of-solitude.mp3", title: "Echoes of Solitude" },
+      { url: "../../assets/music/fragments-of-solitude.mp3", title: "Fragments of Solitude" },
+      { url: "../../assets/music/lost-in-reflection.mp3", title: "Lost in Reflection" },
+      { url: "../../assets/music/shadows-of-existence.mp3", title: "Shadows of Existence" },
+      { url: "../../assets/music/midnight-solace.mp3", title: "Midnight Solace" },
+      { url: "../../assets/music/twist-of-the-beat.mp3", title: "Twist of the Beat" },
+      { url: "../../assets/music/horizon-of-stars.mp3", title: "Horizon of Stars" },
+      { url: "../../assets/music/silent-star-voyage.mp3", title: "Silent Star Voyage" },
+      { url: "../../assets/music/midnight-phantoms.mp3", title: "Midnight Phantoms" },
+      { url: "../../assets/music/shadowed-voyagers.mp3", title: "Shadowed Voyagers" },
+      { url: "../../assets/music/winner-of-all.mp3", title: "The Winner of All (Extended)" },
+      { url: "../../assets/music/moonlit-shadows.mp3", title: "Moonlit Shadows" },
+      { url: "../../assets/music/world-of-dread.mp3", title: "World of Hope" },
+      { url: "../../assets/music/backward-view.mp3", title: "Backward View" }
+    ];
+
+    const audio = document.getElementById("audio");
+    const visualizer = document.getElementById("visualizer");
+    const songsList = document.getElementById("songs-list");
+    const playButton = document.getElementById("play-button");
+
+    let currentIndex = 0;
+    let isPlaying = false;
+
+    // Create visualizer bars
+    const bars = Array.from({ length: 50 }, () => {
+      const bar = document.createElement("div");
+      bar.classList.add("bar");
+      visualizer.appendChild(bar);
+      return bar;
+    });
+
+    // Populate song list
+    songs.forEach((song, index) => {
+      const songElement = document.createElement("div");
+      songElement.classList.add("song");
+
+      const title = document.createElement("span");
+      title.textContent = song.title;
+
+      const downloadButton = document.createElement("button")
+      downloadButton.textContent = "Download";
+      downloadButton.classList.add("download");
+      downloadButton.onclick = (e) => {
+        alert("To download, click the 3 dots and select Download from the options list. Please give credit if using in commercial use, social media, or any form of sharing.");
+        e.stopPropagation();
+        window.open(song.url, "_blank");
+      };
+
+      songElement.appendChild(title);
+      songElement.appendChild(downloadButton);
+
+      songElement.onclick = () => {
+        currentIndex = index;
+        loadSong();
+        playSong();
+      };
+
+      songsList.appendChild(songElement);
+    });
+
+    const loadSong = () => {
+      audio.src = songs[currentIndex].url;
+    };
+
+    const playSong = () => {
+      audio.play();
+      isPlaying = true;
+      playButton.textContent = "Pause";
+    };
+
+    const pauseSong = () => {
+      audio.pause();
+      isPlaying = false;
+      playButton.textContent = "Play";
+    };
+
+    const togglePlay = () => {
+      isPlaying ? pauseSong() : playSong();
+    };
 
         const changeSong = (direction) => {
-          currentIndex = (currentIndex + direction + songs.length) % songs.length;
-          playSong();
-        };
+      currentIndex = (currentIndex + direction + songs.length) % songs.length;
+      loadSong();
+      playSong();
+    };
 
-        soundtrack.onended = () => {
-          changeSong(1);
-        };
-      </script>
-    </main>
-  </body>
+    // Visualizer logic
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = context.createAnalyser();
+    analyser.fftSize = 128;
+
+    const source = context.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(context.destination);
+
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    const renderVisualizer = () => {
+      analyser.getByteFrequencyData(dataArray);
+      bars.forEach((bar, i) => {
+        bar.style.height = `${(dataArray[i] / 255) * 100}%`;
+      });
+      requestAnimationFrame(renderVisualizer);
+    };
+
+    renderVisualizer();
+    loadSong();
+  </script>
+</body>
 </html>
