@@ -217,7 +217,6 @@
 
     const changeSong = (direction) => {
       currentIndex = (currentIndex + direction + songs.length) % songs.length;
-      loadSong();
       playSong();
     };
 
@@ -241,7 +240,6 @@
     };
 
     renderVisualizer();
-    loadSong();
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -266,6 +264,7 @@
         overlay.remove();
         // Place any other start functionality here, e.g., play audio
         console.log("User clicked, interaction started!");
+        loadSong();
       };
 
       overlay.addEventListener("click", startFunction, { once: true });
