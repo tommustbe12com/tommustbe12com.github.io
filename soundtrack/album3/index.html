@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,6 +121,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="visualizer" id="visualizer"></div>
 
@@ -135,7 +137,7 @@
       <button onclick="togglePlay()" id="play-button">Play</button>
       <button onclick="changeSong(1)">Next &gt;</button>
     </div>
-    
+
     <div class="controls">
       <button onclick="location.replace('../album2/index.html')">&lt; Album 2</button>
     </div>
@@ -213,7 +215,7 @@
       isPlaying ? pauseSong() : playSong();
     };
 
-        const changeSong = (direction) => {
+    const changeSong = (direction) => {
       currentIndex = (currentIndex + direction + songs.length) % songs.length;
       loadSong();
       playSong();
@@ -241,5 +243,35 @@
     renderVisualizer();
     loadSong();
   </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const overlay = document.createElement("div");
+      overlay.style.position = "fixed";
+      overlay.style.top = "0";
+      overlay.style.left = "0";
+      overlay.style.width = "100%";
+      overlay.style.height = "100%";
+      overlay.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+      overlay.style.color = "white";
+      overlay.style.display = "flex";
+      overlay.style.justifyContent = "center";
+      overlay.style.alignItems = "center";
+      overlay.style.zIndex = "9999";
+      overlay.style.cursor = "pointer";
+      overlay.innerHTML = `<div>Click anywhere to start!</div>`;
+
+      document.body.appendChild(overlay);
+
+      const startFunction = () => {
+        overlay.remove();
+        // Place any other start functionality here, e.g., play audio
+        console.log("User clicked, interaction started!");
+      };
+
+      overlay.addEventListener("click", startFunction, { once: true });
+    });
+  </script>
+
 </body>
+
 </html>
