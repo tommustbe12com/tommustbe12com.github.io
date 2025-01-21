@@ -86,6 +86,10 @@
       transition: background 0.3s;
     }
 
+    .song.active {
+      background: rgba(0, 255, 204, 0.3);
+    }
+
     .song:hover {
       background: rgba(255, 255, 255, 0.2);
     }
@@ -171,7 +175,6 @@
     const songsList = document.getElementById("songs-list");
     const playButton = document.getElementById("play-button");
 
-    // Create visualizer bars
     const bars = Array.from({ length: 50 }, () => {
       const bar = document.createElement("div");
       bar.classList.add("bar");
@@ -183,6 +186,7 @@
       songs.forEach((song, index) => {
         const songElement = document.createElement("div");
         songElement.classList.add("song");
+        if (index === currentIndex) songElement.classList.add("active");
 
         const title = document.createElement("span");
         title.textContent = song.title;
@@ -191,7 +195,7 @@
         downloadButton.textContent = "Download";
         downloadButton.classList.add("download");
         downloadButton.onclick = (e) => {
-          alert("To download, click the 3 dots and select Download from the options list. Please give credit if using in commercial use, social media, or any form of sharing.");
+          alert("To download, click the 3 dots and select Download. Give credit for sharing.");
           e.stopPropagation();
           window.open(song.url, "_blank");
         };
@@ -203,9 +207,16 @@
           currentIndex = index;
           loadSong();
           playSong();
+          updateActiveSong();
         };
 
         songsList.appendChild(songElement);
+      });
+    };
+
+    const updateActiveSong = () => {
+      document.querySelectorAll(".song").forEach((song, index) => {
+        song.classList.toggle("active", index === currentIndex);
       });
     };
 
@@ -233,9 +244,13 @@
       currentIndex = (currentIndex + direction + songs.length) % songs.length;
       loadSong();
       playSong();
+      updateActiveSong();
     };
 
-    // Visualizer logic
+    audio.addEventListener("ended", () => {
+      changeSong(1);
+    });
+
     const context = new (window.AudioContext || window.webkitAudioContext)();
     const analyser = context.createAnalyser();
     analyser.fftSize = 128;
@@ -272,14 +287,13 @@
 
       document.body.appendChild(overlay);
 
-      const startFunction = () => {
+      overlay.addEventListener("click", () => {
         overlay.remove();
         populateSongs();
         loadSong();
+        context.resume();
         renderVisualizer();
-      };
-
-      overlay.addEventListener("click", startFunction, { once: true });
+      });
     });
   </script>
 </body>
