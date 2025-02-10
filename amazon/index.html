@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<title>Amazon Title Generator</title>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial;
+        color: white;
+        background: rgb(1, 24, 10);
+        background: linear-gradient(90deg, rgba(1, 24, 10, 1) 0%, rgba(11, 96, 27, 1) 50%, rgba(1, 24, 10, 1) 100%);
+    }
+
+    h1 {
+        font-family: Verdana;
+    }
+
+    select {
+        padding: 10px;
+        background-color: orange;
+        color: black;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+
+    button {
+        background-color: #006d24;
+        color: black; 
+        font-weight: bold;
+        padding: 25px;
+        border-radius: 10px;
+        font-size: 25px;
+        border: red 1px solid;
+    }
+</style>
+
+<body>
+    <h1>Amazon Title Generator</h1>
+    <p>This is an Amazon title generator. Most titles on Amazon are chinese absurdness.<br>This is a generator to have some fun with, choose a genre and have your mind<br>blown by the sheer power of Amazon titles.</p>
+    <select id="genre">
+        <option value="science">Science</option>
+        <option value="space">Space</option>
+        <option value="toys">Toys</option>
+        <option value="technology">Technology</option>
+    </select>
+    <br><br>
+    <button onclick="generateTitle()">Generate Title</button>
+    <br>
+    <h2 id="title"></h2>
+</body>
+
+<script>
+    function company() {
+        const syllables = ["QO", "JIN", "LO", "FE", "RA", "MI", "XU", "NE", "GO", "UX", "PA", "DE", "ZU", "KA", "TE", "MO", "VU", "SI", "GO", "HU", "BA", "YO", "XZ", "IA", "KL", "ZP", "PT", "WI", "OQ", "XN", "MV", "YL", "OY", "KING", "JIN", "SIE", "WAS", "JEX", "RUT", "QUB", "DRP", "DAL", "JUX", "QWEY", "MA"];
+        const length = Math.floor(Math.random() * 3) + 3;
+        let name = "";
+        for (let i = 0; i < length; i++) {
+            name += syllables[Math.floor(Math.random() * syllables.length)];
+        }
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+
+    function quantity() {
+        const quantityList = ["4 pack deluxe", "2 Parts", "2 piece", "4 of", "20 from", "10 inside", "3 pack", "2 pack", "1 piece", "4 piece only", "4 parts", "5 pack", "5 uniqe part", "2 uniqe pieces", "4 PCS", "3 Pcs", "2 pcs", "1pc", "5 pcs", "20 pcs", "20pcs", "20 pack pcs", "4 uniqe pcs", "3 unique pcs"];
+        return quantityList[Math.floor(Math.random() * quantityList.length)];
+    }
+
+    const descriptions = {
+        science: ["Super Smart Scientist Lab", "High-Tech Future Research", "Quantum Physics Easy", "AI Brain Power Chip", "Make Your Own Einstein", "100% Real Smart Boost", "DNA Upgrade Available", "Futuristic Science Supers", "Mega Brain Fast Study", "Microbiology Amazing Power", "Ultra Genius Research Tool", "Atomic Learning Set", "Supercharged Lab Smart", "Pro-Level Chemist", "Smart Science Result", "Magnetic Genius Power", "Exclusive Scientific Secret", "Brain Powers Kit", "Logically to Boost Tech", "Secret Science Unlock power"],
+        
+        space: ["Ultra Moon Star Light", "Rocket Super Cool Speed", "Alien Friend Gift", "Mars Extreme Test", "Galactic Ultra Telescope", "Planet Viewer Deluxe", "Astronaut Super Explorers", "Galaxy Size Infinite", "Space Adventure Best", "Top Rocket Engineer", "Star Explosion Model", "Moonbase DIY Easy", "Astro Suit Fun", "Space Mission Level Up", "Saturn Ring Real", "Comet Ride Future", "Black Hole Look", "Moonwalk Try Now", "Lunar Base Future", "Ultimate universe Feeling"],
+        
+        toys: ["Fun Happy Time Game", "Super Funny Toy Deluxe", "Laugh Smile Enjoy", "Kid Crazy Excite For Kids", "Super Extreme Challenge", "Epic Battle Playset", "Legend Toy History", "Ultimate Surprise Inside", "Mega Jumbo Pack", "Bright Color Happy", "Robot AI Smart", "3D Real Action", "Ultra Fast Motion", "Magnet Play Fun", "Unbelievable Happy Moment", "King of Toys Play", "Super Soft Kawaii", "Dream Toy Collector", "Must Have Now", "Funny Gift Box"],
+        
+        technology: ["Super AI Future Chip", "Ultra Fast Quantum Personal PC", "Next-Gen Smarter Tech", "Best Advanced Gadget", "New AI High Power", "High Performance Device", "Robot Intelligence Levels", "Mega Digital Brain", "Cybernets Upgrade 2024", "Future Smart Controls", "Gaming Ultra Setup", "AI-Controlled Smart Live", "Advanced Wirelessly, Fast", "Cyber Brain Revolution", "Super Innovation Edge", "Tech Mind Blow", "Smart Digital Genius", "Pro-Level Cyber Upgrade", "Insane Innovation Now", "Ultimate Tech Discovery"],
+    };
+
+    function generateTitle() {
+        const genre = document.getElementById("genre").value;
+        const selectedDescriptions = descriptions[genre];
+        let titleDescriptions = selectedDescriptions.sort(() => 0.5 - Math.random()).slice(0, 2);
+        
+        const title = `${company()} ${quantity()} ${titleDescriptions.join(", ")} `;
+        document.getElementById("title").innerText = title;
+    }
+</script>
+
+</html>
