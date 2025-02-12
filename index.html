@@ -123,7 +123,7 @@
             color: #a4d8a4;
             transition: color 0.3s;
         }
-        
+
         a:hover {
             color: #c3ffc3;
         }
@@ -158,7 +158,8 @@
 
     <section id="about">
         <div class="title">About</div>
-        <p>Hello! I'm TomMustBe12. I'm a small YouTuber with an interest in technology and coding. I enjoy web development and playing games like Minecraft.</p>
+        <p>Hello! I'm TomMustBe12. I'm a small YouTuber with an interest in technology and coding. I enjoy web
+            development and playing games like Minecraft.</p>
     </section>
 
     <section id="projects">
@@ -174,17 +175,19 @@
 
     <section id="contact">
         <div class="title">Contact</div>
-        <p>To get in touch with me, you can visit <a href="/contact/">this page</a>. You can also contact me by emailing <a href="mailto:admin@tommustbe12.com">admin@tommustbe12.com</a>.</p>
+        <p>To get in touch with me, you can visit <a href="/contact/">this page</a>. You can also contact me by emailing
+            <a href="mailto:admin@tommustbe12.com">admin@tommustbe12.com</a>.
+        </p>
     </section>
 
     <script>
         function createLights() {
             const colors = [
-                'rgba(34, 139, 34, 2.5)',  
-                'rgba(50, 205, 50, 2.5)',  
-                'rgba(107, 142, 35, 2.5)', 
-                'rgba(0, 128, 0, 2.5)',    
-                'rgba(60, 179, 113, 2.5)'  
+                'rgba(34, 139, 34, 2.5)',
+                'rgba(50, 205, 50, 2.5)',
+                'rgba(107, 142, 35, 2.5)',
+                'rgba(0, 128, 0, 2.5)',
+                'rgba(60, 179, 113, 2.5)'
             ];
 
             for (let i = 0; i < 100; i++) {
@@ -208,6 +211,30 @@
         window.onload = () => {
             createLights();
         };
+    </script>
+
+    <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        const broughtFrom = getQueryParam("broughtFrom");
+        if (broughtFrom === "blackBeltGame") {
+            alert("Hello! Welcome to my site. It looks like you came here from my Black Belt Game! Have fun exploring my site!");
+
+            const encodedWebhookUrl = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMzOTI4MTExMDIzNjEzNTU0NC9kRzA4cmpDOGpXVkIzNFNuSXVjbF9ua1I3OTh1M0I2dmtmcnNUNWdSY3dGVExXRkNlRXRpbzYwS1lnX0xoczkycnpnLQ=="; //lol prevents bots at least
+            const webhookUrl = atob(encodedWebhookUrl);
+
+            // Send Discord webhook message
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ content: "User came from Black Belt Game!" })
+            });
+        }
     </script>
 </body>
 
