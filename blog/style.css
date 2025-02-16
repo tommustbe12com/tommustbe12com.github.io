@@ -113,6 +113,42 @@ h2 {
     padding-left: 10px;
 }
 
+.blog-post {
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid rgb(110, 172, 110);
+    transition: background-color 0.3s ease;
+}
+
+.blog-post:hover {
+    background-color: #333333;
+}
+
+.blog-post h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: lightgreen;
+}
+
+.blog-post a {
+    margin-top: 0;
+    font-size: 28px;
+    color: lightgreen;
+    text-decoration: none;
+}
+
+.blog-post p {
+    margin: 10px 0;
+    color: #cecece;
+}
+
+.blog-post .date {
+    font-size: 14px;
+    color: #a0a0a0;
+}
+
 @media (max-width: 768px) {
     .largeContainer {
         flex-direction: column;
