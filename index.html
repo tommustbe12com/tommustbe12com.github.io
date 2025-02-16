@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TomMustBe12</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/profile.png">
     <style>
         * {
@@ -14,203 +14,304 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-            color: #e0f5e0;
-            background-color: #062906;
+            font-family: 'Inter', sans-serif;
+            background: #121212;
+            color: #fff;
+            line-height: 1.6;
         }
 
-        section {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.5s ease-out;
-        }
-
-        #about {
-            margin-top: -50px;
-        }
-
-        section:not(:first-of-type) {
-            transform: translateY(100vh);
-        }
-
+        /* nav */
         .navbar {
-            position: fixed;
-            top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1f1f1f;
+            padding: 20px 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
             width: 100%;
-            text-align: center;
-            z-index: 10;
+            z-index: 100;
         }
 
-        .navbar a {
-            margin: 0 15px;
+        .nav-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-socials a {
+            color: #34d399;
+            font-size: 1.5rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-socials a:hover {
+            color: #059669;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
             text-decoration: none;
-            color: #a4d8a4;
-            font-size: 1.2rem;
-            transition: color 0.3s;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
         }
 
-        .navbar a:hover {
-            color: #c3ffc3;
+        .nav-links a:hover {
+            color: #34d399;
         }
 
-        .title {
+        /* hero */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #121212, #282828);
+            position: relative;
+            text-align: center;
+            color: #fff;
+        }
+
+        /* svgs in hero */
+        .svg-top-right,
+        .svg-bottom-left {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            fill: #777;
+            opacity: 0.3;
+        }
+
+        .svg-top-right {
+            top: 20px;
+            right: 20px;
+            transform: rotate(30deg);
+        }
+
+        .svg-bottom-left {
+            bottom: 20px;
+            left: 20px;
+            transform: rotate(-30deg);
+        }
+
+        .hero h1 {
             font-size: 4rem;
-            text-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #bbb;
+            margin-bottom: 40px;
+        }
+
+        .cta-btn {
+            background: #34d399;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .cta-btn:hover {
+            background: #059669;
+            transform: scale(1.05);
+        }
+
+        /* actual content */
+        .content-section {
+            padding: 60px 40px;
+            background: #222;
+            text-align: center;
+            margin: 60px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .about-me {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: center;
+            text-align: left;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .about-me img {
+            width: 250px;
+            height: 250px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .about-me .text {
+            flex: 1;
+            text-align: left;
+            max-width: 500px;
+            margin-left: 250px;
+        }
+
+        .about-me .text h2 {
+            font-size: 2.5rem;
+            color: #34d399;
+            margin-bottom: 20px;
+        }
+
+        .about-me .text p {
+            font-size: 1.1rem;
+            color: #bbb;
+            line-height: 1.6;
+            text-align: justify;
         }
 
         .projects {
             display: flex;
-            gap: 20px;
+            gap: 30px;
+            justify-content: center;
             flex-wrap: wrap;
-            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .project {
+            background: #1f1f1f;
+            border-radius: 10px;
             padding: 20px;
-            margin-top: 20px;
-        }
-
-        .card {
-            width: 250px;
-            height: 300px;
-            background: linear-gradient(145deg, #194e19, #092d09);
-            border-radius: 15px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #aaffaa;
-            text-align: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: perspective(500px) rotateX(-5deg) rotateY(10deg) scale(1.05);
-            box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4), -8px -8px 20px rgba(255, 255, 255, 0.15);
-        }
-
-        .light {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.5;
-            filter: blur(80px);
-            animation: moveLight 15s infinite alternate ease-in-out;
-        }
-
-        p {
-            padding: 20px;
-            max-width: 600px;
+            width: 300px;
+            color: #fff;
+            transition: transform 0.3s ease;
+            margin: 20px;
             text-align: center;
         }
 
-        a {
+        .project:hover {
+            transform: scale(1.05);
+        }
+
+        .project h3 {
+            color: #34d399;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .project p {
+            color: #bbb;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        /* footer */
+        footer {
+            background: #1f1f1f;
+            color: #bbb;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        footer a {
+            color: #34d399;
             text-decoration: none;
-            color: #a4d8a4;
-            transition: color 0.3s;
+            font-weight: 600;
         }
 
-        a:hover {
-            color: #c3ffc3;
-        }
-
-        @keyframes moveLight {
-            0% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(calc(-20px + 20vw), calc(-20px + 20vh));
-            }
-
-            100% {
-                transform: translate(calc(20px - 20vw), calc(20px - 20vh));
-            }
+        footer a:hover {
+            color: #059669;
         }
     </style>
 </head>
 
 <body>
+
     <div class="navbar">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <div class="nav-socials">
+            <a href="https://github.com/tommustbe12com" target="_blank">
+                <svg src="/assets/github.svg" alt="GitHub" width="24" height="24"></svg>
+            </a>
+            <a href="https://youtube.com/@TomMustBe12" target="_blank">
+                <svg src="/assets/youtube.svg" alt="YouTube" width="24" height="24"></svg>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="/project-hub">Projects</a>
+            <a href="/youtube-videos">Videos</a>
+        </div>
     </div>
 
-    <section id="home">
-        <div class="title">TomMustBe12</div>
-    </section>
-
-    <section id="about">
-        <div class="title">About</div>
-        <p>Hello! I'm TomMustBe12. I'm a small YouTuber with an interest in technology and coding. I enjoy web development and playing games like Minecraft.</p>
-    </section>
-
-    <section id="projects">
-        <div class="title">Projects</div>
-        <div class="projects">
-            <div class="card">Project 1</div>
-            <div class="card">Project 2</div>
-            <div class="card">Project 3</div>
-            <div class="card">Project 4</div>
+    <div class="hero">
+        <div>
+            <h1>Hi, I'm TomMustBe12!</h1>
+            <p>I like coding and gaming. Welcome to my website!</p>
+            <button class="cta-btn"
+                onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">Explore</button>
         </div>
-        <p>There are more projects to see <a href="/project-hub/">here</a>.</p>
-    </section>
+        <!-- svgs in background -->
+        <div class="svg-top-right">
+            <svg src="/assets/dev.svg" alt="SVG" width="100" height="100"></svg>
+        </div>
+        <div class="svg-bottom-left">
+            <svg src="/assets/circuits.svg" alt="SVG" width="100" height="100"></svg>
+        </div>
+    </div>
 
-    <section id="contact">
-        <div class="title">Contact</div>
-        <p>To get in touch with me, you can visit <a href="/contact/">this page</a>. You can also contact me by emailing
-            <a href="mailto:admin@tommustbe12.com">admin@tommustbe12.com</a>.
-        </p>
-    </section>
+    <div class="content-section" id="about">
+        <div class="about-me">
+            <div>
+                <img src="https://tommustbe12.com/assets/profile.png" alt="TomMustBe12">
+                <h2 style="color: #fff; text-align: center;">TomMustBe12</h2>
+            </div>
+            <div class="text">
+                <h2>About Me</h2>
+                <p>
+                    I've always had a passion for technology and coding. I already had started learning on Khan
+                    Academy's platform when I was 8 or 9, and progressed into the web developer and technology
+                    enthusiast I am today. I now have a growing YouTube channel and am always looking to learn and
+                    create more!
+                </p>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        function createLights() {
-            const colors = [
-                'rgba(34, 139, 34, 2.5)',
-                'rgba(50, 205, 50, 2.5)',
-                'rgba(107, 142, 35, 2.5)',
-                'rgba(0, 128, 0, 2.5)',
-                'rgba(60, 179, 113, 2.5)'
-            ];
+    <div class="content-section" id="projects">
+        <h2 style="color: #34d399;">My Favorite Projects</h2>
+        <div class="projects">
+            <a href="https://e-mailer.replit.app" class="project" style="text-decoration: none; color: inherit;">
+                <h3>Emailer</h3>
+                <p>Uses an Outlook SMTP server to send emails from that site! You have to have an Outlook account.</p>
+            </a>
+            <a href="https://loginwgoogle.replit.app" class="project" style="text-decoration: none; color: inherit;">
+                <h3>Fake Google Login Page</h3>
+                <p>Eerily similar login page to google, don't use against friends!</p>
+            </a>
+            <a href="https://codeninjasreno.github.io/smokey-defense/" class="project"
+                style="text-decoration: none; color: inherit;">
+                <h3>Smokey Defense</h3>
+                <p>A game I made for Code Ninjas with Unity! It's my black belt game.</p>
+            </a>
+        </div>
+    </div>
 
-            for (let i = 0; i < 100; i++) {
-                const light = document.createElement('div');
-                light.classList.add('light');
-
-                const size = Math.random() * 80 + 40;
-                light.style.width = `${size}px`;
-                light.style.height = `${size}px`;
-                light.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                light.style.top = `${Math.random() * 100}vh`;
-                light.style.left = `${Math.random() * 100}vw`;
-
-                light.style.animationDuration = `${Math.random() * 15 + 10}s`;
-                light.style.animationDelay = `${Math.random() * 5}s`;
-
-                document.body.appendChild(light);
-            }
-        }
-
-        window.onload = () => {
-            createLights();
-        };
-    </script>
+    <footer>
+        <p>&copy; 2025 TomMustBe12. All Rights Reserved.</p>
+        <a href="https://tommustbe12.com/subtome" target="_blank">Subscribe</a> | <a
+            href="https://contact.tommustbe12.com">Contact</a>
+    </footer>
 
     <script>
         function getQueryParam(name) {
