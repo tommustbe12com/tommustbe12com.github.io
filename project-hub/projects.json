@@ -4,7 +4,7 @@
         "category": "productivity",
         "title": "Hire Tom",
         "description": "An easy way to hire Tom for a website or something else!",
-        "link": "#"
+        "link": "https://hiretom.replit.app"
       },
       {
         "category": "entertainment",
@@ -76,7 +76,7 @@
         "category": "productivity",
         "title": "Windows 10 Box",
         "description": "Fake Windows 10 Windows for YouTube videos, pranks, etc.",
-        "link": "https://nationalsecurityagency.replit.app"
+        "link": "https://windows10box.replit.app"
       },
       {
         "category": "productivity",
@@ -119,6 +119,18 @@
         "title": "GamEngine",
         "description": "Site with a game engine where you can build a game!",
         "link": "https://gamengine.replit.app"
+      },
+      {
+        "category": "entertainment",
+        "title": "Fake Amazon Product Title Generator",
+        "description": "Creates fake chinese company product titles like Amazon has.",
+        "link": "https://tommustbe12.com/amazon"
+      },
+      {
+        "category": "entertainment",
+        "title": "Fake Google Login Page",
+        "description": "Scarily similar google login page. Sends to my webhook. Don't trick your friends please...",
+        "link": "https://loginwgoogle.replit.app"
       }
     ]
   }
