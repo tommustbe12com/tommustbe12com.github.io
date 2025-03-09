@@ -5,151 +5,180 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perimeter Length Calculator | Geo 9th Grade | TomMustBe12.com</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 350px;
-        }
-
-        h1 {
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
             color: #333;
         }
-
-        .input-group {
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .form-group {
             margin-bottom: 15px;
         }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 40%;
-            padding: 8px;
-            margin: 0 5px;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 100%;
+        input[type="number"], input[type="button"], select {
             padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+        }
+        input[type="number"] {
+            width: 45%;
+            display: inline-block;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .vertices-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .vertex {
             background-color: #4CAF50;
             color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .vertex button {
+            margin-left: 5px;
+            background-color: #f44336;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
+            color: white;
             cursor: pointer;
+            font-size: 14px;
+            padding: 3px 5px;
+            border-radius: 3px;
         }
-
-        button:hover {
-            background-color: #45a049;
+        .vertex button:hover {
+            background-color: #d32f2f;
         }
-
-        #result {
+        .result-container {
             margin-top: 20px;
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
             text-align: center;
         }
-
-        .add-vertex-btn {
-            margin-top: 10px;
-            display: block;
-            width: 100%;
-            background-color: #007BFF;
-        }
-
-        .add-vertex-btn:hover {
-            background-color: #0056b3;
-        }
-
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Perimeter Length Calculator</h1>
-        <p>Enter the coordinates of the vertices of the polygon:</p>
-
-        <form id="perimeter-form">
-            <div id="vertex-container">
-                <div class="input-group">
-                    <label for="A">Vertex 1 (x, y):</label>
-                    <input type="number" class="x" placeholder="x" required>
-                    <input type="number" class="y" placeholder="y" required>
-                </div>
-                <div class="input-group">
-                    <label for="B">Vertex 2 (x, y):</label>
-                    <input type="number" class="x" placeholder="x" required>
-                    <input type="number" class="y" placeholder="y" required>
-                </div>
-            </div>
-            
-            <button type="button" id="add-vertex" class="add-vertex-btn">Add Another Vertex</button>
-            <button type="submit">Calculate Perimeter</button>
-        </form>
-
-        <div id="result">
-            <h2>Perimeter: <span id="perimeter">0</span> units</h2>
+        <h1>Perimeter Calculator</h1>
+        <div class="form-group">
+            <label for="x">X:</label>
+            <input type="number" id="x" placeholder="X Coordinate">
+            <label for="y">Y:</label>
+            <input type="number" id="y" placeholder="Y Coordinate">
         </div>
+        <div class="form-group">
+            <button id="addVertex">Add Vertex</button>
+        </div>
+        <div class="vertices-container" id="verticesContainer"></div>
+        <div class="form-group">
+            <label for="roundTo">Round To:</label>
+            <select id="roundTo">
+                <option value="0">0 Decimal Places</option>
+                <option value="1">1 Decimal Place</option>
+                <option value="2">2 Decimal Places</option>
+                <option value="3">3 Decimal Places</option>
+                <option value="4">4 Decimal Places</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exactPerimeter">
+                <input type="checkbox" id="exactPerimeter"> Show Exact Perimeter
+            </label>
+        </div>
+        <div class="form-group button-container">
+            <button id="calculatePerimeter">Calculate Perimeter</button>
+        </div>
+        <div class="result-container" id="resultContainer"></div>
     </div>
 
     <script>
-        document.getElementById('add-vertex').addEventListener('click', function() {
-            const vertexContainer = document.getElementById('vertex-container');
-            const newVertexIndex = vertexContainer.getElementsByClassName('input-group').length / 2 + 1;
+        const vertices = [];
+        const verticesContainer = document.getElementById("verticesContainer");
+        const resultContainer = document.getElementById("resultContainer");
+        const roundTo = document.getElementById("roundTo");
+        const exactPerimeterCheckbox = document.getElementById("exactPerimeter");
 
-            // Create a new input group for the new vertex
-            const newVertexGroup = document.createElement('div');
-            newVertexGroup.classList.add('input-group');
-            newVertexGroup.innerHTML = `
-                <label for="vertex-${newVertexIndex}">Vertex ${newVertexIndex} (x, y):</label>
-                <input type="number" class="x" placeholder="x" required>
-                <input type="number" class="y" placeholder="y" required>
-            `;
-            vertexContainer.appendChild(newVertexGroup);
+        document.getElementById("addVertex").addEventListener("click", function() {
+            const x = parseFloat(document.getElementById("x").value);
+            const y = parseFloat(document.getElementById("y").value);
+
+            if (!isNaN(x) && !isNaN(y)) {
+                const vertex = { x, y };
+                vertices.push(vertex);
+                updateVertices();
+                document.getElementById("x").value = '';
+                document.getElementById("y").value = '';
+            } else {
+                alert("Please enter valid coordinates.");
+            }
         });
 
-        document.getElementById('perimeter-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+        function updateVertices() {
+            verticesContainer.innerHTML = "";
+            vertices.forEach((vertex, index) => {
+                const vertexDiv = document.createElement("div");
+                vertexDiv.className = "vertex";
+                vertexDiv.textContent = `(${vertex.x}, ${vertex.y})`;
+                
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.onclick = () => deleteVertex(index);
+                
+                vertexDiv.appendChild(deleteButton);
+                verticesContainer.appendChild(vertexDiv);
+            });
+        }
 
-            // Get all x and y values from the inputs
-            const xValues = [...document.querySelectorAll('.x')].map(input => parseFloat(input.value));
-            const yValues = [...document.querySelectorAll('.y')].map(input => parseFloat(input.value));
+        function deleteVertex(index) {
+            vertices.splice(index, 1);
+            updateVertices();
+        }
 
-            // Function to calculate distance between two points
-            function calculateDistance(x1, y1, x2, y2) {
-                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        document.getElementById("calculatePerimeter").addEventListener("click", function() {
+            if (vertices.length < 2) {
+                alert("Please enter at least two vertices.");
+                return;
             }
 
-            // Calculate perimeter by summing distances between consecutive points
             let perimeter = 0;
-            for (let i = 0; i < xValues.length; i++) {
-                const nextIndex = (i + 1) % xValues.length; // Loop back to the first point
-                perimeter += calculateDistance(xValues[i], yValues[i], xValues[nextIndex], yValues[nextIndex]);
+            for (let i = 0; i < vertices.length; i++) {
+                const p1 = vertices[i];
+                const p2 = vertices[(i + 1) % vertices.length];
+                const distance = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+                perimeter += distance;
             }
 
-            // Display the result
-            document.getElementById('perimeter').textContent = perimeter.toFixed(2);
+            let resultText;
+            if (exactPerimeterCheckbox.checked) {
+                resultText = `Exact Perimeter: ${perimeter}`;
+            } else {
+                const rounding = parseInt(roundTo.value);
+                resultText = `Perimeter: ${perimeter.toFixed(rounding)}`;
+            }
+
+            resultContainer.textContent = resultText;
         });
     </script>
 </body>
