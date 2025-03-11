@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotation Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            margin: 10px 0 5px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Walking Distance Calculator</h1>
+        <label for="diameter">Enter the Diameter of circle walked (in km):</label>
+        <input type="number" id="diameter" placeholder="Enter diameter" required>
+
+        <label for="radius">Enter the Radius of circle walked (in km):</label>
+        <input type="number" id="radius" placeholder="Enter radius" required>
+
+        <label for="laps">Enter the Number of Laps Walked:</label>
+        <input type="number" id="laps" placeholder="Enter number of laps" required>
+
+        <button onclick="calculateDistance()">Calculate Walking Distance</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function calculateDistance() {
+            const diameter = parseFloat(document.getElementById("diameter").value);
+            const radius = parseFloat(document.getElementById("radius").value);
+            const laps = parseFloat(document.getElementById("laps").value);
+
+            if (isNaN(diameter) && isNaN(radius)) {
+                alert("Please enter either the diameter or radius.");
+                return;
+            }
+            if (isNaN(laps)) {
+                alert("Please enter the number of laps.");
+                return;
+            }
+
+            const pi = Math.PI;
+            let circumference;
+            let distance;
+
+            if (!isNaN(diameter)) {
+                // Circumference = π * diameter
+                circumference = pi * diameter;
+            } else {
+                // Circumference = 2 * π * radius
+                circumference = 2 * pi * radius;
+            }
+
+            // Total distance = laps * circumference
+            distance = laps * circumference;
+
+            // Display the result
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+                <p><strong>Total Distance Walked:</strong> ${distance.toFixed(2)} km</p>
+            `;
+        }
+    </script>
+</body>
+</html>
