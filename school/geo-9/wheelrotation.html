@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel Rotation Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            margin: 10px 0 5px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Wheel Rotation Calculator</h1>
+        <label for="frontDiameter">Front Wheel Diameter (in inches):</label>
+        <input type="number" id="frontDiameter" placeholder="Enter front wheel diameter" required>
+
+        <label for="rearDiameter">Rear Wheel Diameter (in inches):</label>
+        <input type="number" id="rearDiameter" placeholder="Enter rear wheel diameter" required>
+
+        <label for="distance">Total Distance Traveled (in miles):</label>
+        <input type="number" id="distance" placeholder="Enter total distance traveled" required>
+
+        <button onclick="calculateRotations()">Calculate</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function calculateRotations() {
+            const frontDiameter = parseFloat(document.getElementById("frontDiameter").value);
+            const rearDiameter = parseFloat(document.getElementById("rearDiameter").value);
+            const distance = parseFloat(document.getElementById("distance").value);
+
+            if (isNaN(frontDiameter) || isNaN(rearDiameter) || isNaN(distance)) {
+                alert("Please enter valid values for all fields.");
+                return;
+            }
+
+            // Conversion factors
+            const milesToInches = 5280 * 12; // 1 mile = 5280 feet = 5280*12 inches
+
+            // Circumference of the wheels
+            const pi = Math.PI;
+            const frontCircumference = pi * frontDiameter;
+            const rearCircumference = pi * rearDiameter;
+
+            // Total distance in inches
+            const totalDistanceInInches = distance * milesToInches;
+
+            // Number of rotations for each wheel
+            const frontRotations = totalDistanceInInches / frontCircumference;
+            const rearRotations = totalDistanceInInches / rearCircumference;
+
+            // Difference in rotations
+            const rotationsDifference = Math.round(frontRotations - rearRotations);
+
+            // Display the result
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+                <p>Front Wheel Rotations: ${Math.round(frontRotations)}</p>
+                <p>Rear Wheel Rotations: ${Math.round(rearRotations)}</p>
+                <p><strong>Difference: ${rotationsDifference} more rotations for the front wheel</strong></p>
+            `;
+        }
+    </script>
+</body>
+</html>
