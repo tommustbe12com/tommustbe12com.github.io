@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arc Length Calculator | Geo 9th Grade | TomMustBe12.com</title>
+    <title>Arc Length Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,17 +72,20 @@
     <div class="container">
         <h1>Arc Length Calculator</h1>
         <label for="radius">Radius (r):</label>
-        <input type="number" id="radius" placeholder="Enter radius in units" required>
+        <input type="number" id="radius" placeholder="Enter radius in units">
 
         <label for="angle">Angle (θ) in Degrees:</label>
-        <input type="number" id="angle" placeholder="Enter angle in degrees" required>
+        <input type="number" id="angle" placeholder="Enter angle in degrees">
 
-        <button onclick="calculateArcLength()">Calculate Arc Length</button>
+        <label for="arcLength">Arc Length (s):</label>
+        <input type="number" id="arcLength" placeholder="Enter arc length in units">
 
-        <div class="result" id="result">Arc Length: --</div>
+        <button onclick="calculateArcLength()">Calculate Missing Value</button>
+
+        <div class="result" id="result">Result: --</div>
 
         <div class="circle-container">
-            <canvas id="circleCanvas" width="300" height="300"></canvas>
+            <canvas id="circleCanvas" width="400" height="400"></canvas>
         </div>
     </div>
 
@@ -90,28 +93,47 @@
         function calculateArcLength() {
             const radius = parseFloat(document.getElementById('radius').value);
             const angle = parseFloat(document.getElementById('angle').value);
-            let arcLength;
+            const arcLength = parseFloat(document.getElementById('arcLength').value);
 
-            if (isNaN(radius) || isNaN(angle)) {
-                document.getElementById('result').textContent = "Please enter valid values for radius and angle!";
-                return;
+            let resultMessage = '';
+            let calculatedRadius = 0, calculatedAngle = 0, calculatedArcLength = 0;
+
+            if (!isNaN(radius) && !isNaN(angle)) {
+                // Formula for arc length: s = (θ / 360) * 2πr
+                calculatedArcLength = (angle / 360) * 2 * Math.PI * radius;
+                resultMessage = `Arc Length: ${calculatedArcLength.toFixed(2)} units`;
+            } else if (!isNaN(arcLength) && !isNaN(angle)) {
+                // Rearranged formula for radius: r = s / (θ / 360 * 2π)
+                calculatedRadius = arcLength / ((angle / 360) * 2 * Math.PI);
+                resultMessage = `Radius: ${calculatedRadius.toFixed(2)} units`;
+            } else if (!isNaN(radius) && !isNaN(arcLength)) {
+                // Rearranged formula for angle: θ = (s / (2πr)) * 360
+                calculatedAngle = (arcLength / (2 * Math.PI * radius)) * 360;
+                resultMessage = `Angle: ${calculatedAngle.toFixed(2)} degrees`;
+            } else {
+                resultMessage = "Please enter two values to calculate the missing one.";
             }
 
-            // Formula for arc length: s = (θ / 360) * 2πr
-            arcLength = (angle / 360) * 2 * Math.PI * radius;
-
             // Display the result
-            document.getElementById('result').textContent = `Arc Length: ${arcLength.toFixed(2)} units`;
+            document.getElementById('result').textContent = resultMessage;
 
-            // Visualize the arc
-            visualizeArc(radius, angle);
+            // Visualize the result
+            if (resultMessage.includes('Arc Length')) {
+                visualizeArc(radius, angle, calculatedArcLength);
+            } else if (resultMessage.includes('Radius')) {
+                visualizeArc(calculatedRadius, angle, arcLength);
+            } else if (resultMessage.includes('Angle')) {
+                visualizeArc(radius, calculatedAngle, arcLength);
+            }
         }
 
-        function visualizeArc(radius, angle) {
+        function visualizeArc(radius, angle, arcLength) {
             const canvas = document.getElementById('circleCanvas');
             const ctx = canvas.getContext('2d');
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
+            const zoomFactor = Math.min(canvas.width, canvas.height) / (2 * radius);
+
             const startAngle = 0;
             const endAngle = (angle / 180) * Math.PI;  // Convert degrees to radians
 
@@ -120,14 +142,14 @@
 
             // Draw the circle
             ctx.beginPath();
-            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.arc(centerX, centerY, radius * zoomFactor, 0, 2 * Math.PI);
             ctx.strokeStyle = '#333';
             ctx.lineWidth = 2;
             ctx.stroke();
 
             // Draw the arc
             ctx.beginPath();
-            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.arc(centerX, centerY, radius * zoomFactor, startAngle, endAngle);
             ctx.strokeStyle = 'red';
             ctx.lineWidth = 4;
             ctx.stroke();
@@ -137,6 +159,17 @@
             ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
             ctx.fillStyle = 'black';
             ctx.fill();
+
+            // Label the radius
+            ctx.font = "16px Arial";
+            ctx.fillStyle = 'black';
+            ctx.fillText(`Radius: ${radius} units`, centerX + radius * zoomFactor + 10, centerY);
+
+            // Label the arc length
+            ctx.fillText(`Arc Length: ${arcLength.toFixed(2)} units`, centerX - radius * zoomFactor - 180, centerY);
+
+            // Label the angle
+            ctx.fillText(`Angle: ${angle}°`, centerX - radius * zoomFactor - 80, centerY + 20);
         }
     </script>
 
