@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arc Length Calculator | Geo 9th Grade | TomMustBe12.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+        .circle-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: #f4f4f9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Arc Length Calculator</h1>
+        <label for="radius">Radius (r):</label>
+        <input type="number" id="radius" placeholder="Enter radius in units" required>
+
+        <label for="angle">Angle (θ) in Degrees:</label>
+        <input type="number" id="angle" placeholder="Enter angle in degrees" required>
+
+        <button onclick="calculateArcLength()">Calculate Arc Length</button>
+
+        <div class="result" id="result">Arc Length: --</div>
+
+        <div class="circle-container">
+            <canvas id="circleCanvas" width="300" height="300"></canvas>
+        </div>
+    </div>
+
+    <script>
+        function calculateArcLength() {
+            const radius = parseFloat(document.getElementById('radius').value);
+            const angle = parseFloat(document.getElementById('angle').value);
+            let arcLength;
+
+            if (isNaN(radius) || isNaN(angle)) {
+                document.getElementById('result').textContent = "Please enter valid values for radius and angle!";
+                return;
+            }
+
+            // Formula for arc length: s = (θ / 360) * 2πr
+            arcLength = (angle / 360) * 2 * Math.PI * radius;
+
+            // Display the result
+            document.getElementById('result').textContent = `Arc Length: ${arcLength.toFixed(2)} units`;
+
+            // Visualize the arc
+            visualizeArc(radius, angle);
+        }
+
+        function visualizeArc(radius, angle) {
+            const canvas = document.getElementById('circleCanvas');
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const startAngle = 0;
+            const endAngle = (angle / 180) * Math.PI;  // Convert degrees to radians
+
+            // Clear previous drawing
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Draw the arc
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Mark the center of the circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+        }
+    </script>
+
+</body>
+</html>
