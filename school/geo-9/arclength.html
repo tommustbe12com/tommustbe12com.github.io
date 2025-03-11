@@ -56,6 +56,12 @@
             background-color: #f1f1f1;
             border-radius: 8px;
         }
+        .exact-result {
+            font-size: 1.2em;
+            margin-top: 10px;
+            text-align: center;
+            color: #555;
+        }
         .circle-container {
             display: flex;
             justify-content: center;
@@ -83,6 +89,7 @@
         <button onclick="calculateArcLength()">Calculate Missing Value</button>
 
         <div class="result" id="result">Result: --</div>
+        <div class="exact-result" id="exactResult">Exact Answer: --</div>
 
         <div class="circle-container">
             <canvas id="circleCanvas" width="400" height="400"></canvas>
@@ -96,26 +103,32 @@
             const arcLength = parseFloat(document.getElementById('arcLength').value);
 
             let resultMessage = '';
+            let exactMessage = '';
             let calculatedRadius = 0, calculatedAngle = 0, calculatedArcLength = 0;
 
             if (!isNaN(radius) && !isNaN(angle)) {
                 // Formula for arc length: s = (θ / 360) * 2πr
                 calculatedArcLength = (angle / 360) * 2 * Math.PI * radius;
                 resultMessage = `Arc Length: ${calculatedArcLength.toFixed(2)} units`;
+                exactMessage = `Exact Answer: ${(angle / 360)} * 2 * π * ${radius}`;
             } else if (!isNaN(arcLength) && !isNaN(angle)) {
                 // Rearranged formula for radius: r = s / (θ / 360 * 2π)
                 calculatedRadius = arcLength / ((angle / 360) * 2 * Math.PI);
                 resultMessage = `Radius: ${calculatedRadius.toFixed(2)} units`;
+                exactMessage = `Exact Answer: ${arcLength} / ((${angle} / 360) * 2 * π)`;
             } else if (!isNaN(radius) && !isNaN(arcLength)) {
                 // Rearranged formula for angle: θ = (s / (2πr)) * 360
                 calculatedAngle = (arcLength / (2 * Math.PI * radius)) * 360;
                 resultMessage = `Angle: ${calculatedAngle.toFixed(2)} degrees`;
+                exactMessage = `Exact Answer: (${arcLength} / (2 * π * ${radius})) * 360`;
             } else {
                 resultMessage = "Please enter two values to calculate the missing one.";
+                exactMessage = "";
             }
 
             // Display the result
             document.getElementById('result').textContent = resultMessage;
+            document.getElementById('exactResult').textContent = exactMessage;
 
             // Visualize the result
             if (resultMessage.includes('Arc Length')) {
