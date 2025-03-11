@@ -79,24 +79,26 @@
             }
 
             const pi = Math.PI;
-            let circumference;
             let exactCircumference, roundedCircumference;
+            let exactFormula;
 
             if (!isNaN(diameter)) {
                 // Circumference = π * diameter
                 exactCircumference = pi * diameter;
+                exactFormula = `π × ${diameter}`;
                 roundedCircumference = exactCircumference.toFixed(2);
             } else {
-                // Circumference = 2 * π * radius
+                // Circumference = 2 × π × radius
                 exactCircumference = 2 * pi * radius;
+                exactFormula = `2π × ${radius}`;
                 roundedCircumference = exactCircumference.toFixed(2);
             }
 
             // Display the result
             const resultDiv = document.getElementById("result");
             resultDiv.innerHTML = `
-                <p>Exact Circumference: ${exactCircumference.toFixed(4)}</p>
-                <p>Rounded Circumference: ${roundedCircumference}</p>
+                <p><strong>Exact Circumference:</strong> ${exactFormula}</p>
+                <p><strong>Rounded Circumference:</strong> ${roundedCircumference} inches</p>
             `;
         }
     </script>
