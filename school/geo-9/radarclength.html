@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radians Arc Length Calculator | Geo 9th | TomMustBe12.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            margin: 10px 0 5px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Radians Arc Length Calculator</h1>
+        <label for="radius">Enter the Radius (miles):</label>
+        <input type="number" id="radius" placeholder="Enter radius" step="0.01" required>
+
+        <label for="angle">Enter the Angle (radians or fraction of pi, e.g., 3pi/4):</label>
+        <input type="text" id="angle" placeholder="Enter angle" required>
+
+        <button onclick="calculateArcLength()">Calculate Arc Length</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function calculateArcLength() {
+            let radius = parseFloat(document.getElementById("radius").value);
+            let angleInput = document.getElementById("angle").value.toLowerCase();
+
+            if (isNaN(radius) || radius <= 0) {
+                alert("Please enter a valid radius.");
+                return;
+            }
+
+            // Convert angle input (e.g., "3pi/4") to numeric radians
+            let angle;
+            if (angleInput.includes("pi")) {
+                let parts = angleInput.split("pi");
+                let coefficient = parseFloat(parts[0]) || 1; // Handle cases like "pi" or "3pi"
+                let denominator = parts[1] ? parseFloat(parts[1].replace("/", "")) : 1;
+                angle = (coefficient * Math.PI) / (denominator || 1);
+            } else {
+                angle = parseFloat(angleInput);
+            }
+
+            if (isNaN(angle)) {
+                alert("Please enter a valid angle in radians or as a fraction of pi.");
+                return;
+            }
+
+            let arcLength = radius * angle;
+
+            document.getElementById("result").innerHTML = `
+                <p><strong>Exact Arc Length:</strong> ${radius}π × (${angleInput}) = ${radius}π × ${angle.toFixed(4)}</p>
+                <p><strong>Rounded Arc Length:</strong> ${arcLength.toFixed(2)} miles</p>
+            `;
+        }
+    </script>
+</body>
+</html>
