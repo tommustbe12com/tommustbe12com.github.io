@@ -7,6 +7,13 @@ self.addEventListener('install', function(event) {
         '/style.css',
         '/script.js',
         '/assets/profile.png',
+        '/soundtrack/album1/',
+        '/soundtrack/album2/',
+        '/soundtrack/album3/',
+        '/server',
+        '/blog/',
+        '/amazon/',
+        '/project-hub'
         // Add more URLs as needed
       ]);
     })
