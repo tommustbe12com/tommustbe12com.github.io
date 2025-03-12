@@ -86,6 +86,9 @@
         <label for="arcLength">Arc Length (s):</label>
         <input type="number" id="arcLength" placeholder="Enter arc length in units">
 
+        <label for="useRadians">Use Radians:</label>
+        <input type="checkbox" id="useRadians">
+
         <button onclick="calculateArcLength()">Calculate Missing Value</button>
 
         <div class="result" id="result">Result: --</div>
@@ -101,26 +104,48 @@
             const radius = parseFloat(document.getElementById('radius').value);
             const angle = parseFloat(document.getElementById('angle').value);
             const arcLength = parseFloat(document.getElementById('arcLength').value);
+            const useRadians = document.getElementById('useRadians').checked;
 
             let resultMessage = '';
             let exactMessage = '';
             let calculatedRadius = 0, calculatedAngle = 0, calculatedArcLength = 0;
 
             if (!isNaN(radius) && !isNaN(angle)) {
-                // Formula for arc length: s = (θ / 360) * 2πr
-                calculatedArcLength = (angle / 360) * 2 * Math.PI * radius;
-                resultMessage = `Arc Length: ${calculatedArcLength.toFixed(2)} units`;
-                exactMessage = `Exact Answer: ${(angle / 360)} * 2 * π * ${radius}`;
+                if (useRadians) {
+                    // Formula for arc length with radians: s = r * θ
+                    calculatedArcLength = radius * angle;
+                    resultMessage = `Arc Length: ${calculatedArcLength.toFixed(2)} units`;
+                    exactMessage = `Exact Answer: ${radius} * ${angle}`;
+                } else {
+                    // Formula for arc length in degrees: s = (θ / 360) * 2πr
+                    calculatedArcLength = (angle / 360) * 2 * Math.PI * radius;
+                    resultMessage = `Arc Length: ${calculatedArcLength.toFixed(2)} units`;
+                    exactMessage = `Exact Answer: ${(angle / 360)} * 2 * π * ${radius}`;
+                }
             } else if (!isNaN(arcLength) && !isNaN(angle)) {
-                // Rearranged formula for radius: r = s / (θ / 360 * 2π)
-                calculatedRadius = arcLength / ((angle / 360) * 2 * Math.PI);
-                resultMessage = `Radius: ${calculatedRadius.toFixed(2)} units`;
-                exactMessage = `Exact Answer: ${arcLength} / ((${angle} / 360) * 2 * π)`;
+                if (useRadians) {
+                    // Rearranged formula for radius in radians: r = s / θ
+                    calculatedRadius = arcLength / angle;
+                    resultMessage = `Radius: ${calculatedRadius.toFixed(2)} units`;
+                    exactMessage = `Exact Answer: ${arcLength} / ${angle}`;
+                } else {
+                    // Rearranged formula for radius: r = s / ((θ / 360) * 2π)
+                    calculatedRadius = arcLength / ((angle / 360) * 2 * Math.PI);
+                    resultMessage = `Radius: ${calculatedRadius.toFixed(2)} units`;
+                    exactMessage = `Exact Answer: ${arcLength} / ((${angle} / 360) * 2 * π)`;
+                }
             } else if (!isNaN(radius) && !isNaN(arcLength)) {
-                // Rearranged formula for angle: θ = (s / (2πr)) * 360
-                calculatedAngle = (arcLength / (2 * Math.PI * radius)) * 360;
-                resultMessage = `Angle: ${calculatedAngle.toFixed(2)} degrees`;
-                exactMessage = `Exact Answer: (${arcLength} / (2 * π * ${radius})) * 360`;
+                if (useRadians) {
+                    // Rearranged formula for angle in radians: θ = s / r
+                    calculatedAngle = arcLength / radius;
+                    resultMessage = `Angle: ${calculatedAngle.toFixed(2)} radians`;
+                    exactMessage = `Exact Answer: ${arcLength} / ${radius}`;
+                } else {
+                    // Rearranged formula for angle in degrees: θ = (s / (2πr)) * 360
+                    calculatedAngle = (arcLength / (2 * Math.PI * radius)) * 360;
+                    resultMessage = `Angle: ${calculatedAngle.toFixed(2)} degrees`;
+                    exactMessage = `Exact Answer: (${arcLength} / (2 * π * ${radius})) * 360`;
+                }
             } else {
                 resultMessage = "Please enter two values to calculate the missing one.";
                 exactMessage = "";
@@ -148,7 +173,7 @@
             const zoomFactor = Math.min(canvas.width, canvas.height) / (2 * radius);
 
             const startAngle = 0;
-            const endAngle = (angle / 180) * Math.PI;  // Convert degrees to radians
+            const endAngle = angle;  // If in radians, angle should already be in radians
 
             // Clear previous drawing
             ctx.clearRect(0, 0, canvas.width, canvas.height);
