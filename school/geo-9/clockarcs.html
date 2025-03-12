@@ -78,6 +78,32 @@
             return radians * (180 / Math.PI);
         }
 
+        // Format exact result as a fraction involving pi (e.g., 2pi/3)
+        function formatExactResult(angleInRadians) {
+            const piFactor = angleInRadians / Math.PI;
+
+            // Approximate to a simple fraction
+            if (Math.abs(piFactor - 1/2) < 0.01) {
+                return "π/2";
+            } else if (Math.abs(piFactor - 1/3) < 0.01) {
+                return "π/3";
+            } else if (Math.abs(piFactor - 1/4) < 0.01) {
+                return "π/4";
+            } else if (Math.abs(piFactor - 1/6) < 0.01) {
+                return "π/6";
+            } else if (Math.abs(piFactor - 2/3) < 0.01) {
+                return "2π/3";
+            } else if (Math.abs(piFactor - 3/2) < 0.01) {
+                return "3π/2";
+            } else if (Math.abs(piFactor - 2) < 0.01) {
+                return "2π";
+            } else {
+                // For more complex cases, express as a fraction
+                const numerator = Math.round(piFactor * 100);
+                return `${numerator}π/100`;
+            }
+        }
+
         // Calculate the minor arc between two times
         function calculateArc() {
             const startTime = document.getElementById("startTime").value.trim();
@@ -97,12 +123,19 @@
             }
 
             // Convert the result based on the selected unit
+            let roundedResult = angleDifference;
+            let exactResult = formatExactResult(angleDifference);
+
             if (unit === "degrees") {
-                angleDifference = radiansToDegrees(angleDifference);
+                roundedResult = radiansToDegrees(roundedResult);
+                exactResult = formatExactResult(radiansToDegrees(angleDifference));
             }
 
-            // Display the result
-            document.getElementById("result").textContent = `The minor arc between ${startTime} and ${endTime} is: ${angleDifference.toFixed(4)} ${unit}.`;
+            // Display the rounded and exact result
+            document.getElementById("result").innerHTML = `
+                The minor arc between ${startTime} and ${endTime} is: <b>${roundedResult.toFixed(4)} ${unit}</b>
+                <div class="exact-result">Exact result: ${exactResult}</div>
+            `;
         }
     </script>
 
