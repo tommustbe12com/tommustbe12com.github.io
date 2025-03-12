@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock Arc Calculator | Geo 9th Grade | TomMustBe12.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+        }
+        label, input, select, button {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
+        input, select {
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Minor Arc Calculator</h1>
+
+    <label for="startTime">Enter start time (hh:mm):</label>
+    <input type="text" id="startTime" placeholder="e.g. 7:00" />
+
+    <label for="endTime">Enter end time (hh:mm):</label>
+    <input type="text" id="endTime" placeholder="e.g. 11:00" />
+
+    <label for="unit">Select the unit for the result:</label>
+    <select id="unit">
+        <option value="radians">Radians</option>
+        <option value="degrees">Degrees</option>
+    </select>
+
+    <button onclick="calculateArc()">Calculate Minor Arc</button>
+
+    <div id="result"></div>
+
+    <script>
+        // Convert time to angle in radians
+        function timeToAngle(time) {
+            let [hours, minutes] = time.split(":").map(Number);
+            // Convert hours to a 12-hour format (accounting for times like 12:30)
+            if (hours === 12) hours = 0;
+
+            // Convert the time to an angle (12 hours = 2π radians)
+            const angle = (hours + minutes / 60) * (Math.PI / 6); 
+            return angle;
+        }
+
+        // Convert radians to degrees
+        function radiansToDegrees(radians) {
+            return radians * (180 / Math.PI);
+        }
+
+        // Calculate the minor arc between two times
+        function calculateArc() {
+            const startTime = document.getElementById("startTime").value.trim();
+            const endTime = document.getElementById("endTime").value.trim();
+            const unit = document.getElementById("unit").value;
+
+            // Convert times to radians
+            const startAngle = timeToAngle(startTime);
+            const endAngle = timeToAngle(endTime);
+
+            // Find the absolute difference in angles
+            let angleDifference = Math.abs(endAngle - startAngle);
+            
+            // Ensure we're getting the minor arc (the smaller of the two angles)
+            if (angleDifference > Math.PI) {
+                angleDifference = 2 * Math.PI - angleDifference;
+            }
+
+            // Convert the result based on the selected unit
+            if (unit === "degrees") {
+                angleDifference = radiansToDegrees(angleDifference);
+            }
+
+            // Display the result
+            document.getElementById("result").textContent = `The minor arc between ${startTime} and ${endTime} is: ${angleDifference.toFixed(4)} ${unit}.`;
+        }
+    </script>
+
+</body>
+</html>
