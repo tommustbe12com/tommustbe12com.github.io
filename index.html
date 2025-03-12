@@ -4,6 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
+    <meta name="keywords" content="TomMustBe12, coding, gaming, projects, blog, videos, soundtrack">
+    <meta name="author" content="TomMustBe12">
+    <meta property="og:title" content="TomMustBe12">
+    <meta property="og:description" content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
+    <meta property="og:image" content="https://tommustbe12.com/assets/profile.png">
+    <meta property="og:url" content="https://tommustbe12.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TomMustBe12">
+    <meta name="twitter:description" content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
+    <meta name="twitter:image" content="https://tommustbe12.com/assets/profile.png">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
     <title>TomMustBe12</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/profile.png">
