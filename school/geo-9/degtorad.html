@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Degrees to Radians Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        function convert() {
+            let input = document.getElementById("inputValue").value;
+            try {
+                let degrees = parseExpression(input);
+                let radians = degrees * (Math.PI / 180);
+                
+                let simplified = simplifyPi(radians);
+                document.getElementById("output").innerHTML = 
+                    `<strong>Exact:</strong> ${simplified} rad <br> <strong>Rounded:</strong> ${radians.toFixed(6)} rad`;
+            } catch (error) {
+                document.getElementById("output").textContent = "Invalid input!";
+            }
+        }
+        
+        function parseExpression(expr) {
+            expr = expr.replace(/pi/g, 'Math.PI'); // Replace 'pi' with Math.PI
+            return Function(`'use strict'; return (${expr})`)(); // Evaluate expression safely
+        }
+        
+        function simplifyPi(radians) {
+            let frac = radians / Math.PI;
+            for (let d = 1; d <= 100; d++) {
+                let num = frac * d;
+                if (Math.abs(num - Math.round(num)) < 1e-6) {
+                    return `${Math.round(num)}/ ${d} π`;
+                }
+            }
+            return radians.toFixed(6);
+        }
+    </script>
+</head>
+<body>
+    <h1>Degrees to Radians Converter</h1>
+    <p>Enter a degree value (e.g., 180, 45, 360/2):</p>
+    <input type="text" id="inputValue" placeholder="Enter degrees">
+    <button onclick="convert()">Convert</button>
+    <h2 id="output"></h2>
+</body>
+</html>
