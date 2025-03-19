@@ -79,6 +79,23 @@
         .center {
             margin: 0 auto;
         }
+
+        #back-button {
+            display: block;
+            margin: 20px auto; /* Center the button horizontally with top and bottom margins */
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #back-button:hover {
+            background-color: #555;
+        }
     </style>
     
     
@@ -92,6 +109,9 @@
     <div class="center">
         <button id="load-more">Load More</button>
     </div>
+    <div class="center">
+        <button id="back-button" onclick="window.location.href='../index.html'">Back to Homepage</button>
+    </div></div>
 
     <script>
         const channelID = 'UCJJUPBhRVePwRmBP9xEh_hg';
