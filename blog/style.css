@@ -167,3 +167,18 @@ h2 {
         padding: 20px;
     }
 }
+
+.back-button {
+    padding: 10px 15px;
+    background-color: #1f1f1f;
+    color: lightgreen;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid rgb(110, 172, 110);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: rgb(110, 172, 110);
+    color: #1f1f1f;
+}
