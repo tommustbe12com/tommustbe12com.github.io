@@ -88,7 +88,7 @@
         "category": "entertainment",
         "title": "My Pages",
         "description": "Contains mini pages I've made that are pretty much useless.",
-        "link": "https://nationalsecurityagency.replit.app"
+        "link": "https://mypages.replit.app/"
       },
       {
         "category": "entertainment",
@@ -131,6 +131,12 @@
         "title": "Fake Google Login Page",
         "description": "Scarily similar google login page. Sends to my webhook. Don't trick your friends please...",
         "link": "https://loginwgoogle.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "Planner Pro",
+        "description": "A planner to help you stay on task! It even includes notifications in your browser (if the tab is open).",
+        "link": "https://plannerpro.replit.app"
       }
     ]
   }
