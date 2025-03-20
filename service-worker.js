@@ -2,7 +2,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open('my-cache').then(function(cache) {
       return cache.addAll([
-        '/', // Add the URLs you want to cache here
+        '/', 
         '/index.html',
         '/style.css',
         '/script.js',
@@ -14,13 +14,12 @@ self.addEventListener('install', function(event) {
         '/blog/',
         '/amazon/',
         '/project-hub'
-        // Add more URLs as needed
       ]);
     })
   );
 });
 
-// Service Worker Activation
+// activate service worker
 self.addEventListener('activate', function(event) {
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
@@ -35,7 +34,7 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-// Service Worker Fetch
+// service worker fetch
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
@@ -43,3 +42,38 @@ self.addEventListener('fetch', function(event) {
     })
   );
 });
+
+// ill use this maybe sometime
+
+// // function to show push notification
+// function showPushNotification(title, options) {
+//   self.registration.showNotification(title, options);
+// }
+
+// // push notification service worker
+// self.addEventListener('push', function(event) {
+//   const options = {
+//     body: event.data ? event.data.text() : 'Default body',
+//     icon: '/assets/profile.png',
+//     badge: '/assets/badge.png'
+//   };
+
+//   event.waitUntil(
+//     showPushNotification('Push Notification', options)
+//   );
+// });
+
+// // notification click event
+// self.addEventListener('notificationclick', function(event) {
+//   event.notification.close();
+
+//   event.waitUntil(
+//     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(clientList) {
+//       if (clientList.length > 0) {
+//         let client = clientList[0];
+//         return client.focus();
+//       }
+//       return clients.openWindow('/');
+//     })
+//   );
+// });

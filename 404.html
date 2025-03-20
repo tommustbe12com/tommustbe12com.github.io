@@ -8,46 +8,109 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <style>
       * {
-        font-family: Montserrat;
+        font-family: 'Montserrat', sans-serif;
         text-align: center;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
       body {
-        background: #2f2f2f;
+        background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
         color: #f2f2f2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
       }
-      h3 {
-        font-weight: 15;
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.5) 70%);
+        pointer-events: none;
+      }
+      @-moz-document url-prefix() {
+        body::before {
+          background: -moz-radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.5) 70%);
+        }
+      }
+      h1 {
+        font-size: 8em;
+        margin: 0;
+        animation: fadeIn 1s ease-in-out;
+      }
+      p {
+        font-size: 1.5em;
+        margin: 20px 0;
+        animation: fadeIn 2s ease-in-out;
       }
       button {
         color: #f3f3f3;
-        background: #3f3f3f;
+        background: #ff5722;
         border: none;
-        border-radius: 2.5px;
-        padding: 10px;
-        transition: 0.25s;
+        border-radius: 5px;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        transition: transform 0.3s, background 0.3s;
+        animation: fadeIn 3s ease-in-out;
       }
       button:hover {
         cursor: pointer;
-        transform: scale(1.05);
+        transform: scale(1.1);
+        background: #e64a19;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+      }
+      .container h1 {
+        font-size: 10em;
+        margin-bottom: 20px;
+      }
+      .container p {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+      .container button {
+        font-size: 1.2em;
+        padding: 15px 30px;
       }
     </style>
   </head>
   <body>
     <h1>404</h1>
-    <p>The page you requested couldn't be found. If you think this is a mistake, click the button below.</p><br>
-    <button onclick="mistake404()">This 404 page is a mistake</button>
+    <p>Oops! The page you are looking for doesn't exist.</p>
+    <p>If you think this is a mistake, click the button below to let me know.</p>
+    <button onclick="mistake404()">Report this as a mistake</button>
     <script src="scripts/popup.js"></script>
     <script>
       let url = window.location.href;
       function mistake404() {
-        const webhook ="https://discord.com/api/webhooks/1263939343240921181/yrRqoP0vVdZq2v3QITYG_UQvARtDVR17Vqtymj42XFRK4mODpeBbOH-T4gT_YUhEB7JT"; //Don't use this to spam, please.
+        const webhook = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM1MjMxMTI4MTc4MDI2NTAzMS85ZTh4UHJQaTdBaXE2ZXMzdmE5ek1VS1FjWk41bXNwTHg1dGVtdGdUNzRBbkh2WHhacHl2U0ZKek5JbU5WMzVFZ2ZXRg==");
       
         const contents = `There is an error with the tommustbe12.com site.\n\n ${url} has been marked as a mistake 404 url by someone. Please review or fix @TomMustBe12.`;
         const request = new XMLHttpRequest();
         request.open("POST", webhook);
         request.setRequestHeader('Content-type', 'application/json');
         const params = {
-            username: 'TomMustBe12.com Site 404',
             content: contents
         }
         request.send(JSON.stringify(params));
