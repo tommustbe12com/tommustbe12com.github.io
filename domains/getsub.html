@@ -78,13 +78,13 @@
             const subdomain = document.getElementById('subdomain').value.trim();
             const target = document.getElementById('target').value.trim();
             const responseDiv = document.getElementById('response');
-
+    
             if (!subdomain || !target) {
                 responseDiv.textContent = "Please fill in both fields.";
                 responseDiv.className = "response error";
                 return;
             }
-
+    
             try {
                 const response = await fetch("https://getsubdomain.tommustbe12.workers.dev", {
                     method: "POST",
@@ -93,11 +93,12 @@
                     },
                     body: JSON.stringify({ subdomain, target })
                 });
-
+    
+                // Check if the response is valid and has a valid JSON body
                 const result = await response.json();
-
+                
                 if (response.ok) {
-                    responseDiv.textContent = `Success! Your subdomain is set up. You can visit it at https://${subdomain}.tommustbe12.workers.dev. Note: It might take up to 24 hours to fully propagate the DNS.`;
+                    responseDiv.textContent = `Success! Your subdomain is set up. You can visit it at https://${subdomain}.tommustbe12.com. Note: It might take up to 24 hours to fully propagate the DNS.`;
                     responseDiv.className = "response success";
                 } else if (result.code === 81053) {
                     responseDiv.textContent = "That subdomain is taken. Try another or contact TomMustBe12.";
@@ -107,10 +108,12 @@
                     responseDiv.className = "response error";
                 }
             } catch (error) {
+                console.error("Fetch error:", error);
                 responseDiv.textContent = "An error occurred. Please try again later.";
                 responseDiv.className = "response error";
             }
         }
     </script>
+       
 </body>
 </html>
