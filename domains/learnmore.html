@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Platforms Require CNAME Setup | TomMustBe12 Domains</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: #0078d7;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #0078d7;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background: #333;
+            color: #fff;
+            margin-top: 2rem;
+        }
+        a {
+            color: #0078d7;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Why Custom Domains Require CNAME Setup</h1>
+        <a href="https://tommustbe12.com/domains">Back to TomMustBe12 Domains</a>
+    </header>
+    <main>
+        <h2>Understanding the Requirement</h2>
+        <p>When using custom domains with popular website-sharing platforms like Replit, GitHub Pages, Netlify, or Vercel, you often need to configure a CNAME record in your platform's DNS settings. This is because:</p>
+        <ul>
+            <li><strong>Verification:</strong> The platform needs to verify that you own the domain.</li>
+            <li><strong>Routing:</strong> The CNAME record ensures that traffic to your custom domain is routed to the platform's servers.</li>
+        </ul>
+        <h2>How to Set It Up</h2>
+        <p>To set up a CNAME record:</p>
+        <ol>
+            <li>Log in to your platform's project.</li>
+            <li>Create a new CNAME record, or connect via CNAME in settings. Connect using <code>yoursubdomain.tommustbe12.com</code> as the url. (Replace yoursubdomain with your actual subdomain name you created)</li>
+            <li>Save the changes and wait for DNS propagation, which can take up to 24 hours.</li>
+        </ol>
+        <h2>Why It Matters</h2>
+        <p>Without proper CNAME configuration, your custom domain will not work as expected (returning 404s, not founds, 401s, etc.). This step is crucial for ensuring your website is accessible via your chosen platform.</p>
+    </main>
+    <footer>
+        <p>&copy; 2025 TomMustBe12 Domains. All rights reserved.</p>
+    </footer>
+</body>
+</html>

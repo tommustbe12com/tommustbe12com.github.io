@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Subdomain | TomMustBe12 Domains</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="text"]:first-of-type {
+            border: 2px solid #007BFF;
+            background-color: #f0f8ff;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .response.success {
+            color: green;
+        }
+        .response.error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Your Custom Subdomain</h1>
+        <input type="text" id="subdomain" placeholder="Enter Subdomain (e.g., mysubdomain)">
+        <input type="text" id="target" placeholder="Enter Target URL (e.g., https://example.com)">
+        <button onclick="createSubdomain()">Submit</button>
+        <div id="response" class="response"></div>
+    </div>
+
+    <script>
+        async function createSubdomain() {
+            const subdomain = document.getElementById('subdomain').value.trim();
+            const target = document.getElementById('target').value.trim();
+            const responseDiv = document.getElementById('response');
+
+            if (!subdomain || !target) {
+                responseDiv.textContent = "Please fill in both fields.";
+                responseDiv.className = "response error";
+                return;
+            }
+
+            try {
+                const response = await fetch("https://getsubdomain.tommustbe12.workers.dev", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ subdomain, target })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    responseDiv.textContent = `Success! Your subdomain is set up. You can visit it at https://${subdomain}.tommustbe12.workers.dev. Note: It might take up to 24 hours to fully propagate the DNS.`;
+                    responseDiv.className = "response success";
+                } else if (result.code === 81053) {
+                    responseDiv.textContent = "That subdomain is taken. Try another or contact TomMustBe12.";
+                    responseDiv.className = "response error";
+                } else {
+                    responseDiv.textContent = `Error: ${result.message || "Something went wrong."}`;
+                    responseDiv.className = "response error";
+                }
+            } catch (error) {
+                responseDiv.textContent = "An error occurred. Please try again later.";
+                responseDiv.className = "response error";
+            }
+        }
+    </script>
+</body>
+</html>
