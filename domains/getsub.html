@@ -67,8 +67,9 @@
 <body>
     <div class="container">
         <h1>Create Your Custom Subdomain</h1>
+        <p>If you're using Glitch, don't put your glitch URL here. First get your Fastly CNAME.</p>
         <input type="text" id="subdomain" placeholder="Enter Subdomain (e.g., mysubdomain)">
-        <input type="text" id="target" placeholder="Enter Target URL (e.g., https://example.com)">
+        <input type="text" id="target" placeholder="CNAME value (target URL)">
         <button onclick="createSubdomain()">Submit</button>
         <div id="response" class="response"></div>
     </div>
