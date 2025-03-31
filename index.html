@@ -361,6 +361,21 @@
                 },
                 body: JSON.stringify({ content: "User came from Black Belt Game!" })
             });
+        } else
+        if (broughtFrom === "senseiGameJam") {
+            alert("Hello! Welcome to my site. It looks like you came here from my Sensei Game Jam Game! Have fun exploring my site!");
+
+            const encodedWebhookUrl = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMzOTI4MTExMDIzNjEzNTU0NC9kRzA4cmpDOGpXVkIzNFNuSXVjbF9ua1I3OTh1M0I2dmtmcnNUNWdSY3dGVExXRkNlRXRpbzYwS1lnX0xoczkycnpnLQ=="; //lol prevents bots at least
+            const webhookUrl = atob(encodedWebhookUrl);
+
+            // Send Discord webhook message
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ content: "User came from Sensei Game Jam Game!" })
+            });
         }
     </script>
 </body>
