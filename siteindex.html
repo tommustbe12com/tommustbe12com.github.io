@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TomMustBe12.com Site Index</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+    .folder {
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+    <h1>TomMustBe12.com Site Index</h1>
+    <input type="text" id="search-bar" placeholder="Search files or folders..." style="width: 80%; padding: 10px; margin-bottom: 20px;"/>
+    <div id="file-tree">Loading...</div>
+
+<script>
+        // Function to create the file tree
+        function createFileTree(structure, searchTerm = '') {
+                const ul = document.createElement('ul');
+                for (const key in structure) {
+                        const li = document.createElement('li');
+                        const value = structure[key];
+
+                        if (typeof value === 'string') {
+                                // It's a file (string contains URL)
+                                if (!key.toLowerCase().includes(searchTerm.toLowerCase())) continue;
+                                const link = document.createElement('a');
+                                link.textContent = key;
+                                link.href = value;
+                                link.target = '_blank';
+                                li.appendChild(link);
+                        } else {
+                                // It's a folder (value is an object)
+                                if (!key.toLowerCase().includes(searchTerm.toLowerCase()) && !hasMatchingChild(value, searchTerm)) continue;
+                                const span = document.createElement('span');
+                                span.innerHTML = `<span style="margin-right: 5px;">📁</span>${key} <span class="arrow">▶</span>`;
+                                span.classList.add('folder');
+                                li.appendChild(span);
+
+                                const subTree = createFileTree(value, searchTerm);
+                                subTree.classList.add('hidden');
+                                li.appendChild(subTree);
+
+                                span.addEventListener('click', () => {
+                                        subTree.classList.toggle('hidden');
+                                        const arrow = span.querySelector('.arrow');
+                                        arrow.textContent = subTree.classList.contains('hidden') ? '▶' : '▼';
+                                });
+                        }
+
+                        ul.appendChild(li);
+                }
+                return ul;
+        }
+
+        // Check if any child matches the search term
+        function hasMatchingChild(structure, searchTerm) {
+                for (const key in structure) {
+                        const value = structure[key];
+                        if (typeof value === 'string') {
+                                if (key.toLowerCase().includes(searchTerm.toLowerCase())) return true;
+                        } else {
+                                if (hasMatchingChild(value, searchTerm)) return true;
+                        }
+                }
+                return false;
+        }
+
+        // Fetch directory structure from GitHub API
+        async function fetchDirectoryStructure() {
+                const repoOwner = 'tommustbe12com';
+                const repoName = 'tommustbe12com.github.io';
+                const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/main?recursive=1`;
+
+                try {
+                        const response = await fetch(apiUrl);
+                        if (response.status === 403) {
+                                throw new Error('Rate limit exceeded. Please try again later.');
+                        }
+                        if (!response.ok) throw new Error('Failed to fetch directory structure from GitHub');
+
+                        const data = await response.json();
+                        const directoryStructure = buildFileTree(data.tree);
+                        const fileTreeContainer = document.getElementById('file-tree');
+                        fileTreeContainer.innerHTML = '';
+                        const fileTree = createFileTree(directoryStructure);
+                        fileTreeContainer.appendChild(fileTree);
+
+                        // Add search functionality
+                        const searchBar = document.getElementById('search-bar');
+                        searchBar.addEventListener('input', () => {
+                                const searchTerm = searchBar.value;
+                                fileTreeContainer.innerHTML = '';
+                                const filteredTree = createFileTree(directoryStructure, searchTerm);
+                                fileTreeContainer.appendChild(filteredTree);
+                        });
+                } catch (error) {
+                        console.error(error);
+                        const fileTreeContainer = document.getElementById('file-tree');
+                        fileTreeContainer.textContent = error.message || 'Error loading file tree.';
+                }
+        }
+
+        // Build file tree structure from GitHub API response
+        function buildFileTree(tree) {
+                const root = {};
+                tree.forEach(item => {
+                        const parts = item.path.split('/');
+                        let current = root;
+
+                        for (let i = 0; i < parts.length; i++) {
+                                const part = parts[i];
+                                if (i === parts.length - 1) {
+                                        // If it's a file (blob), save as link
+                                        if (item.type === 'blob') {
+                                                current[part] = `https://tommustbe12.com/${item.path}`;
+                                        }
+                                } else {
+                                        // Folder
+                                        current[part] = current[part] || {};
+                                        current = current[part];
+                                }
+                        }
+                });
+                return root;
+        }
+
+        // Initialize
+        fetchDirectoryStructure();
+</script>
+</body>
+</html>
