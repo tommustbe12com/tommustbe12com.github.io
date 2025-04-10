@@ -1,28 +1,112 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Portfolio sites</title>
+        <title>Portfolio Sites</title>
         <style>
+            /* General body styling */
             body {
-                background-color: black;
-                color: white;
-                font-family: Arial;
+                background: linear-gradient(to right, #1a1a1a, #333333);
+                color: #f5f5f5;
+                font-family: 'Roboto', sans-serif;
                 margin: 0;
-                padding: 10px;
+                padding: 0;
+                line-height: 1.6;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
+            /* Header styling */
             h1 {
-                color: rgb(212, 212, 212);
+                color: #ffffff;
+                text-align: center;
+                font-size: 2.5rem;
+                margin-top: 20px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 
+            /* Paragraph styling */
             p {
-                color: white;
+                color: #e0e0e0;
+                font-size: 1.1rem;
+                text-align: center;
+                margin: 10px 20px;
+            }
+
+            /* Links styling */
+            a {
+                display: inline-block;
+                color: #ffffff;
+                text-decoration: none;
+                background: #4caf50;
+                padding: 10px 20px;
+                margin: 10px;
+                border-radius: 5px;
+                font-weight: bold;
+                transition: background 0.3s ease, transform 0.2s ease;
+                text-align: center;
+            }
+
+            a:hover {
+                background: #45a049;
+                transform: scale(1.05);
+            }
+
+            /* Section header styling */
+            h2 {
+                color: #f5f5f5;
+                text-align: center;
+                font-size: 2rem;
+                margin-top: 30px;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            }
+
+            /* Center buttons */
+            .button-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            /* Add spacing and layout */
+            body > * {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 0 15px;
+            }
+
+            /* Responsive design */
+            @media (max-width: 600px) {
+                h1 {
+                    font-size: 2rem;
+                }
+
+                h2 {
+                    font-size: 1.5rem;
+                }
+
+                a {
+                    font-size: 0.9rem;
+                    padding: 8px 15px;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
             }
         </style>
     </head>
     <body>
         <h1>Portfolio Sites</h1>
-        <p>If you were at the activity where we made portfolios, your site is likely here. Please use "yourname".html in this directory. For example, if your name was John Doe, it would be https://tommustbe12.com/portfolio-sites/johndoe.html. Thanks!</p>
+        <p>If you were at the activity where we made portfolios, your site is likely here. Look at the portfolios I was able to receive from the activity below and find yours if there:</p>
+        <br>
+        <h2>Portfolio Sites</h2>
+        <div class="button-container">
+            <a href="oakley-cooper/">Oakley and Cooper</a>
+            <a href="christopher/">Christopher</a>
+        </div>
         <p>:D</p>
     </body>
 </html>
