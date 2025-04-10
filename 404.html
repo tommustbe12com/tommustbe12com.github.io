@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TomMustBe12 App Home</title>
+    <title>404 | TomMustBe12.com</title>
     <link rel="icon" href="assets/profile.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,6 +49,12 @@
         font-size: 1.5em;
         margin: 20px 0;
         animation: fadeIn 2s ease-in-out;
+      }
+      a {
+        color: #ff5722;
+        text-decoration: none;
+        transition: color 0.3s;
+        animation: fadeIn 2.5s ease-in-out;
       }
       button {
         color: #f3f3f3;
@@ -99,6 +105,8 @@
     <h1>404</h1>
     <p>Oops! The page you are looking for doesn't exist.</p>
     <p>If you think this is a mistake, click the button below to let me know.</p>
+    <p>Otherwise, you might want to go <a href="https://tommustbe12.com">home</a>.</p>
+    <br>
     <button onclick="mistake404()">Report this as a mistake</button>
     <script src="scripts/popup.js"></script>
     <script>
