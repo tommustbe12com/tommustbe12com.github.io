@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Distance Between Two Points</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+    }
+    input {
+      width: 60px;
+      margin: 5px;
+    }
+    #graph {
+      border: 1px solid #ccc;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Distance Calculator</h1>
+
+  <div>
+    <label>Point A: (</label>
+    <input type="number" id="x1" placeholder="x₁">
+    <label>,</label>
+    <input type="number" id="y1" placeholder="y₁">
+    <label>)</label>
+  </div>
+
+  <div>
+    <label>Point B: (</label>
+    <input type="number" id="x2" placeholder="x₂">
+    <label>,</label>
+    <input type="number" id="y2" placeholder="y₂">
+    <label>)</label>
+  </div>
+
+  <button onclick="calculateDistance()">Calculate & Graph</button>
+
+  <h2 id="result">Distance: </h2>
+
+  <canvas id="graph" width="400" height="400"></canvas>
+
+  <script>
+    function calculateDistance() {
+      const x1 = parseFloat(document.getElementById("x1").value);
+      const y1 = parseFloat(document.getElementById("y1").value);
+      const x2 = parseFloat(document.getElementById("x2").value);
+      const y2 = parseFloat(document.getElementById("y2").value);
+
+      const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+      document.getElementById("result").innerText = "Distance: " + distance.toFixed(2);
+
+      drawGraph(x1, y1, x2, y2);
+    }
+
+    function drawGraph(x1, y1, x2, y2) {
+      const canvas = document.getElementById("graph");
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Set scale and center
+      const scale = 20;
+      const offsetX = canvas.width / 2;
+      const offsetY = canvas.height / 2;
+
+      function toCanvasX(x) {
+        return offsetX + x * scale;
+      }
+      function toCanvasY(y) {
+        return offsetY - y * scale;
+      }
+
+      // Draw axes
+      ctx.strokeStyle = "#ccc";
+      ctx.beginPath();
+      ctx.moveTo(0, offsetY);
+      ctx.lineTo(canvas.width, offsetY);
+      ctx.moveTo(offsetX, 0);
+      ctx.lineTo(offsetX, canvas.height);
+      ctx.stroke();
+
+      // Draw line between points
+      ctx.strokeStyle = "blue";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(toCanvasX(x1), toCanvasY(y1));
+      ctx.lineTo(toCanvasX(x2), toCanvasY(y2));
+      ctx.stroke();
+
+      // Draw points
+      ctx.fillStyle = "red";
+      ctx.beginPath();
+      ctx.arc(toCanvasX(x1), toCanvasY(y1), 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(toCanvasX(x2), toCanvasY(y2), 5, 0, 2 * Math.PI);
+      ctx.fill();
+
+      // Label points
+      ctx.fillStyle = "black";
+      ctx.font = "14px Arial";
+      ctx.fillText(`A(${x1}, ${y1})`, toCanvasX(x1) + 8, toCanvasY(y1) - 8);
+      ctx.fillText(`B(${x2}, ${y2})`, toCanvasX(x2) + 8, toCanvasY(y2) - 8);
+    }
+  </script>
+</body>
+</html>
