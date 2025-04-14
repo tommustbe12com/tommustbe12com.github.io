@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Point to Line Distance Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #f0f0f0; }
+    canvas { border: 1px solid black; background: white; }
+    input { margin: 5px; padding: 5px; width: 60px; }
+    button { margin: 10px; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Point to Line Distance Calculator</h2>
+  <p>Line: <strong>Ax + By + C = 0</strong></p>
+  <input id="a" type="number" placeholder="A"> x +
+  <input id="b" type="number" placeholder="B"> y +
+  <input id="c" type="number" placeholder="C"> = 0
+  <br><br>
+  <p>Point:</p>
+  <input id="x0" type="number" placeholder="x₀">
+  <input id="y0" type="number" placeholder="y₀">
+  <br>
+  <button onclick="calculate()">Calculate Distance & Graph</button>
+  <h3 id="result"></h3>
+  <canvas id="graph" width="500" height="500"></canvas>
+
+  <script>
+    function calculate() {
+      const a = parseFloat(document.getElementById("a").value);
+      const b = parseFloat(document.getElementById("b").value);
+      const c = parseFloat(document.getElementById("c").value);
+      const x0 = parseFloat(document.getElementById("x0").value);
+      const y0 = parseFloat(document.getElementById("y0").value);
+
+      if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(x0) || isNaN(y0)) {
+        alert("Please fill in all fields with numbers.");
+        return;
+      }
+
+      // Distance formula
+      const distance = Math.abs(a * x0 + b * y0 + c) / Math.sqrt(a * a + b * b);
+      document.getElementById("result").innerText = `Distance: ${distance.toFixed(2)}`;
+
+      // Draw graph
+      const canvas = document.getElementById("graph");
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Scale and center setup
+      const scale = 20;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+
+      // Draw axes
+      ctx.strokeStyle = "#aaa";
+      ctx.beginPath();
+      ctx.moveTo(0, centerY);
+      ctx.lineTo(canvas.width, centerY);
+      ctx.moveTo(centerX, 0);
+      ctx.lineTo(centerX, canvas.height);
+      ctx.stroke();
+
+      // Draw point
+      ctx.fillStyle = "red";
+      ctx.beginPath();
+      ctx.arc(centerX + x0 * scale, centerY - y0 * scale, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Draw line
+      ctx.strokeStyle = "blue";
+      ctx.beginPath();
+      for (let x = -canvas.width / 2; x < canvas.width / 2; x++) {
+        let xGraph = x / scale;
+        if (b !== 0) {
+          let y = (-a * xGraph - c) / b;
+          let px = centerX + xGraph * scale;
+          let py = centerY - y * scale;
+          if (x === -canvas.width / 2) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+      }
+      ctx.stroke();
+    }
+  </script>
+</body>
+</html>
