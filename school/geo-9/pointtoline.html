@@ -1,86 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Point to Line Distance Calculator</title>
+  <meta charset="UTF-8">
+  <title>Point to Line Distance</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f0f0f0; }
-    canvas { border: 1px solid black; background: white; }
-    input { margin: 5px; padding: 5px; width: 60px; }
-    button { margin: 10px; padding: 10px; }
+    body { font-family: Arial, sans-serif; text-align: center; background: #f8f8f8; }
+    input { width: 50px; margin: 4px; padding: 4px; }
+    canvas { border: 1px solid #000; margin-top: 20px; background: #fff; }
+    button { padding: 10px 15px; margin: 10px; }
   </style>
 </head>
 <body>
-  <h2>Point to Line Distance Calculator</h2>
-  <p>Line: <strong>Ax + By + C = 0</strong></p>
-  <input id="a" type="number" placeholder="A"> x +
-  <input id="b" type="number" placeholder="B"> y +
-  <input id="c" type="number" placeholder="C"> = 0
-  <br><br>
-  <p>Point:</p>
-  <input id="x0" type="number" placeholder="x₀">
-  <input id="y0" type="number" placeholder="y₀">
-  <br>
-  <button onclick="calculate()">Calculate Distance & Graph</button>
-  <h3 id="result"></h3>
-  <canvas id="graph" width="500" height="500"></canvas>
+  <h2>Distance from Point to Line (Defined by Two Points)</h2>
+
+  <p>Point A on line: (<input id="x1" type="number">, <input id="y1" type="number">)</p>
+  <p>Point B on line: (<input id="x2" type="number">, <input id="y2" type="number">)</p>
+  <p>External Point P: (<input id="xp" type="number">, <input id="yp" type="number">)</p>
+
+  <button onclick="calculate()">Calculate & Graph</button>
+  <h3 id="result">Distance: </h3>
+
+  <canvas id="canvas" width="500" height="500"></canvas>
 
   <script>
     function calculate() {
-      const a = parseFloat(document.getElementById("a").value);
-      const b = parseFloat(document.getElementById("b").value);
-      const c = parseFloat(document.getElementById("c").value);
-      const x0 = parseFloat(document.getElementById("x0").value);
-      const y0 = parseFloat(document.getElementById("y0").value);
+      const x1 = parseFloat(document.getElementById("x1").value);
+      const y1 = parseFloat(document.getElementById("y1").value);
+      const x2 = parseFloat(document.getElementById("x2").value);
+      const y2 = parseFloat(document.getElementById("y2").value);
+      const xp = parseFloat(document.getElementById("xp").value);
+      const yp = parseFloat(document.getElementById("yp").value);
 
-      if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(x0) || isNaN(y0)) {
-        alert("Please fill in all fields with numbers.");
+      if ([x1, y1, x2, y2, xp, yp].some(isNaN)) {
+        alert("Please fill in all the fields with numbers.");
         return;
       }
 
-      // Distance formula
-      const distance = Math.abs(a * x0 + b * y0 + c) / Math.sqrt(a * a + b * b);
+      // Distance formula from point to line through (x1,y1) and (x2,y2)
+      const numerator = Math.abs((y2 - y1) * xp - (x2 - x1) * yp + x2*y1 - y2*x1);
+      const denominator = Math.sqrt(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2));
+      const distance = numerator / denominator;
+
       document.getElementById("result").innerText = `Distance: ${distance.toFixed(2)}`;
 
       // Draw graph
-      const canvas = document.getElementById("graph");
+      const canvas = document.getElementById("canvas");
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Scale and center setup
       const scale = 20;
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
+      const offsetX = canvas.width / 2;
+      const offsetY = canvas.height / 2;
 
-      // Draw axes
-      ctx.strokeStyle = "#aaa";
+      // Axis
+      ctx.strokeStyle = "#ccc";
       ctx.beginPath();
-      ctx.moveTo(0, centerY);
-      ctx.lineTo(canvas.width, centerY);
-      ctx.moveTo(centerX, 0);
-      ctx.lineTo(centerX, canvas.height);
+      ctx.moveTo(0, offsetY);
+      ctx.lineTo(canvas.width, offsetY);
+      ctx.moveTo(offsetX, 0);
+      ctx.lineTo(offsetX, canvas.height);
       ctx.stroke();
-
-      // Draw point
-      ctx.fillStyle = "red";
-      ctx.beginPath();
-      ctx.arc(centerX + x0 * scale, centerY - y0 * scale, 5, 0, Math.PI * 2);
-      ctx.fill();
 
       // Draw line
       ctx.strokeStyle = "blue";
       ctx.beginPath();
-      for (let x = -canvas.width / 2; x < canvas.width / 2; x++) {
-        let xGraph = x / scale;
-        if (b !== 0) {
-          let y = (-a * xGraph - c) / b;
-          let px = centerX + xGraph * scale;
-          let py = centerY - y * scale;
-          if (x === -canvas.width / 2) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        }
-      }
+      ctx.moveTo(offsetX + x1 * scale, offsetY - y1 * scale);
+      ctx.lineTo(offsetX + x2 * scale, offsetY - y2 * scale);
       ctx.stroke();
+
+      // Draw external point
+      ctx.fillStyle = "red";
+      ctx.beginPath();
+      ctx.arc(offsetX + xp * scale, offsetY - yp * scale, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Label
+      ctx.fillStyle = "black";
+      ctx.fillText("A", offsetX + x1 * scale + 5, offsetY - y1 * scale - 5);
+      ctx.fillText("B", offsetX + x2 * scale + 5, offsetY - y2 * scale - 5);
+      ctx.fillText("P", offsetX + xp * scale + 5, offsetY - yp * scale - 5);
     }
   </script>
 </body>
