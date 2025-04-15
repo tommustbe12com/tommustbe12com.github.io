@@ -77,7 +77,10 @@
     <script>
         async function createSubdomain() {
             const subdomain = document.getElementById('subdomain').value.trim();
-            const target = document.getElementById('target').value.trim();
+            let target = document.getElementById('target').value.trim();
+            if (target && !target.startsWith("https://")) {
+                target = "https://" + target;
+            }
             const responseDiv = document.getElementById('response');
     
             if (!subdomain || !target) {
