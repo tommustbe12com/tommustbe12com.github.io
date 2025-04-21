@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Subscriber Counter</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+        }
+        iframe {
+            border: none;
+            height: 90px;
+            width: 310px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="position: relative; display: inline-block; background-color: #212121; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
+            <iframe 
+                src="https://socialcounts.org/youtube-live-subscriber-count/UCJJUPBhRVePwRmBP9xEh_hg/embed" 
+                style="pointer-events: none; border-radius: 5px; background-color: #444444;" 
+                allowFullScreen 
+                onload="this.contentWindow.document.body.style.backgroundColor = '#444444';">
+            </iframe>
+        </div>
+    </div>
+</body>
+</html>
