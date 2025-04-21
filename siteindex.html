@@ -92,7 +92,7 @@
                 try {
                         const response = await fetch(apiUrl);
                         if (response.status === 403) {
-                                throw new Error('Rate limit exceeded. Please try again later.');
+                                throw new Error('The site index is currently unavailable because the GitHub API is rate limiting it. Try again later.');
                         }
                         if (!response.ok) throw new Error('Failed to fetch directory structure from GitHub');
 
