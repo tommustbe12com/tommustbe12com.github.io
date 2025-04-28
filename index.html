@@ -1,383 +1,419 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
-    <meta name="keywords" content="TomMustBe12, coding, gaming, projects, blog, videos, soundtrack">
-    <meta name="author" content="TomMustBe12">
-    <meta property="og:title" content="TomMustBe12">
-    <meta property="og:description" content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
-    <meta property="og:image" content="https://tommustbe12.com/assets/profile.png">
-    <meta property="og:url" content="https://tommustbe12.com">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="TomMustBe12">
-    <meta name="twitter:description" content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
-    <meta name="twitter:image" content="https://tommustbe12.com/assets/profile.png">
-    <link rel="manifest" href="manifest.json">
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-        }
-    </script>
-    <title>TomMustBe12</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/profile.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
+  <meta name="keywords" content="TomMustBe12, coding, gaming, projects, blog, videos, soundtrack">
+  <meta name="author" content="TomMustBe12">
+  <meta property="og:title" content="TomMustBe12">
+  <meta property="og:description"
+    content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
+  <meta property="og:image" content="https://tommustbe12.com/assets/profile.png">
+  <meta property="og:url" content="https://tommustbe12.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TomMustBe12">
+  <meta name="twitter:description"
+    content="TomMustBe12 - Coding and gaming enthusiast. Explore my projects, videos, blog, and more!">
+  <meta name="twitter:image" content="https://tommustbe12.com/assets/profile.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/profile.png">
+  <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --primary: #065F46;
+      --secondary: #047857;
+      --text: #F3F4F6;
+      --dark: #064E3B;
+      --accent: #34D399;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #121212;
-            color: #fff;
-            line-height: 1.6;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-        /* nav */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1f1f1f;
-            padding: 20px 40px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-        }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
 
-        .nav-socials {
-            display: flex;
-            gap: 20px;
-        }
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+    }
 
-        .nav-socials a {
-            color: #34d399;
-            font-size: 1.5rem;
-            transition: color 0.3s ease-in-out;
-        }
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1.5rem;
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .nav-socials a:hover {
-            color: #059669;
-        }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
 
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
+    .nav-links a:hover {
+      color: var(--primary);
+    }
 
-        .nav-links a:hover {
-            color: #34d399;
-        }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 2rem;
+      background: radial-gradient(circle at center, var(--secondary) 0%, var(--dark) 70%);
+    }
 
-        /* hero */
-        .hero {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(to right, #121212, #282828);
-            position: relative;
-            text-align: center;
-            color: #fff;
-        }
+    .hero-content {
+      text-align: center;
 
-        /* svgs in hero */
-        .svg-top-right,
-        .svg-bottom-left {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            fill: #777;
-            opacity: 0.3;
-        }
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+        border-radius: 50%;
+        background: var(--glass-bg);
+        transition: all 0.3s ease;
+      }
 
-        .svg-top-right {
-            top: 100px;
-            right: 300px;
-            transform: rotate(30deg);
-        }
+      .social-link:hover {
+        background: var(--primary);
+        transform: translateY(-2px);
+      }
 
-        .svg-bottom-left {
-            bottom: 300px;
-            left: 100px;
-            transform: rotate(-30deg);
-        }
+      .social-link svg {
+        width: 20px;
+        height: 20px;
+      }
 
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+      max-width: 800px;
+      z-index: 2;
+    }
 
-        .hero p {
-            font-size: 1.5rem;
-            color: #bbb;
-            margin-bottom: 40px;
-        }
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #4F46E5, #A78BFA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        .cta-btn {
-            background: #34d399;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
-        }
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
 
-        .cta-btn:hover {
-            background: #059669;
-            transform: scale(1.05);
-        }
+    .cta-btn {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
 
-        /* actual content */
-        .content-section {
-            padding: 60px 40px;
-            background: #222;
-            text-align: center;
-            margin: 60px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      background: var(--glass-bg);
+    }
 
-        .about-me {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 60px;
-            align-items: center;
-            text-align: left;
-            max-width: 1200px;
-            width: 100%;
-        }
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
 
-        .about-me img {
-            width: 250px;
-            height: 250px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
+    .social-btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid var(--accent);
+    }
 
-        .about-me .text {
-            flex: 1;
-            text-align: left;
-            max-width: 500px;
-            margin-left: 250px;
-        }
+    .social-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
 
-        .about-me .text h2 {
-            font-size: 2.5rem;
-            color: #34d399;
-            margin-bottom: 20px;
-        }
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #ffffff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
 
-        .about-me .text p {
-            font-size: 1.1rem;
-            color: #bbb;
-            line-height: 1.6;
-            text-align: justify;
-        }
+    .hero p {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
 
-        .projects {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            width: 100%;
-        }
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(17, 24, 39, 0.95);
+        padding: 1rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        display: none;
+      }
 
-        .project {
-            background: #1f1f1f;
-            border-radius: 10px;
-            padding: 20px;
-            width: 300px;
-            color: #fff;
-            transition: transform 0.3s ease;
-            margin: 20px;
-            text-align: center;
-        }
+      .nav-links.active {
+        display: flex;
+      }
 
-        .project:hover {
-            transform: scale(1.05);
-        }
+      .about-content {
+        padding: 1rem;
+      }
 
-        .project h3 {
-            color: #34d399;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
+      .projects {
+        padding: 1rem;
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .project p {
-            color: #bbb;
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
+    .section {
+      padding: 8rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-        /* footer */
-        footer {
-            background: #1f1f1f;
-            color: #bbb;
-            text-align: center;
-            padding: 20px 0;
-        }
+    .about {
+      background: #1F2937;
+    }
 
-        footer a {
-            color: #34d399;
-            text-decoration: none;
-            font-weight: 600;
-        }
+    .about-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
 
-        footer a:hover {
-            color: #059669;
-        }
-    </style>
+    .about-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      padding: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .project-card h3 {
+      color: #A7F3D0;
+      margin-bottom: 1rem;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+
+    .social-icons a {
+      color: var(--text);
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-icons a:hover {
+      color: #A7F3D0;
+    }
+
+    .social-icons p {
+      color: var(--text);
+      font-size: 1.5rem;
+    }
+
+    footer {
+      background: #1F2937;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .parallax {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .shape {
+      position: absolute;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.1;
+    }
+
+    @media (max-width: 768px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    sub {
+      font-size: 12px;
+      color: #033827;
+    }
+  </style>
 </head>
 
 <body>
-
-    <div class="navbar">
-        <div class="nav-socials">
-            <a href="https://github.com/tommustbe12com" target="_blank">
-                <img src="assets/github.svg" width="24" height="24" alt="GitHub">
-            </a>
-            <a href="https://youtube.com/@TomMustBe12" target="_blank">
-                <img src="assets/youtube.svg" width="24" height="24" alt="YouTube">
-            </a>
-        </div>
-        <div class="nav-links">
-            <a href="https://forumpro.tommustbe12.com">ForumPro</a>
-            <a href="/domains">Free Subdomain</a>
-            <a href="/project-hub">Projects</a>
-            <a href="/youtube-videos">Videos</a>
-            <a href="/blog">Blog</a>
-            <a href="/soundtrack">Soundtrack</a>
-        </div>
+  <nav class="navbar">
+    <div class="logo">TomMustBe12</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="https://forumpro.tommustbe12.com">ForumPro</a>
+      <a href="/domains">Free Subdomain</a>
+      <a href="/blog">Blog</a>
+      <a href="https://github.com/tommustbe12com" target="_blank" class="social-link">
+        <img src="https://tommustbe12.com/assets/github.svg" width="24" height="24" alt="GitHub">
+      </a>
+      <a href="https://youtube.com/@TomMustBe12" target="_blank" class="social-link">
+        <img src="https://tommustbe12.com/assets/youtube.svg" width="24" height="24" alt="YouTube">
+      </a>
     </div>
+  </nav>
 
-    <div class="hero">
-        <div>
-            <h1>Hi, I'm TomMustBe12!</h1>
-            <p>I like coding and gaming. Welcome to my website!</p>
-            <button class="cta-btn"
-                onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">Explore</button>
-        </div>
-        <div class="svg-top-right">
-            <object type="image/svg+xml" data="assets/dev.svg" width="300" height="300" style="color: gray;"></object>
-        </div>
-        <div class="svg-bottom-left">
-            <object type="image/svg+xml" data="assets/circuits.svg" width="300" height="300" style="color: gray;"></object>
-        </div>
+  <section class="hero">
+    <div class="parallax" id="scene"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <h1>HI, I'M TOMMUSTBE12</h1>
+      <p>WEB DEVELOPER & TECH ENTHUSIAST</p>
+      <sub>yeah... i guess you could call me a 'fullstack' developer 💀</sub>
+      <br><br><br>
+      <button class="cta-btn"
+        onclick="window.scrollTo({ top: document.querySelector('.section').offsetTop, behavior: 'smooth' });">Explore My
+        Work</button>
     </div>
+  </section>
 
-    <div class="content-section" id="about">
-        <div class="about-me">
-            <div>
-                <img src="https://tommustbe12.com/assets/profile.png" alt="TomMustBe12">
-                <h2 style="color: #fff; text-align: center;">TomMustBe12</h2>
-            </div>
-            <div class="text">
-                <h2>About Me</h2>
-                <p>
-                    I've always had a passion for technology and coding. I already had started learning on Khan
-                    Academy's platform when I was 8 or 9, and progressed into the web developer and technology
-                    enthusiast I am today. I now have a growing YouTube channel and am always looking to learn and
-                    create more!
-                </p>
-            </div>
+  <section class="section about" id="about">
+    <div class="about-content">
+      <div class="about-image" data-aos="fade-right">
+        <img src="https://tommustbe12.com/assets/profile.png" alt="TomMustBe12" class="glass"
+          style="width: 100%; border-radius: 16px;">
+      </div>
+      <div class="about-text" data-aos="fade-left">
+        <h2>About Me</h2>
+        <p>I've always had a passion for technology and coding. I already had started learning on Khan Academy's
+          platform when I was 8 or 9, and progressed into the web developer and technology enthusiast I am today. I now
+          have a growing YouTube channel and am always looking to learn and create more!</p>
+        <div class="social-icons">
+          <a href="https://github.com/tommustbe12com" target="_blank" class="social-link">
+            <img src="https://tommustbe12.com/assets/github.svg" width="35" height="35" alt="GitHub">
+          </a>
+          <a href="https://youtube.com/@TomMustBe12" target="_blank" class="social-link">
+            <img src="https://tommustbe12.com/assets/youtube.svg" width="35" height="35" alt="YouTube">
+          </a>
         </div>
+      </div>
     </div>
+  </section>
 
-    <div class="content-section" id="projects">
-        <h2 style="color: #34d399;">My Favorite Projects</h2>
-        <div class="projects">
-            <a href="https://e-mailer.replit.app" class="project" style="text-decoration: none; color: inherit;">
-                <h3>Emailer</h3>
-                <p>Uses an Outlook SMTP server to send emails from that site! You have to have an Outlook account.</p>
-            </a>
-            <a href="https://loginwgoogle.replit.app" class="project" style="text-decoration: none; color: inherit;">
-                <h3>Fake Google Login Page</h3>
-                <p>Eerily similar login page to google, don't use against friends!</p>
-            </a>
-            <a href="https://codeninjasreno.github.io/smokey-defense/" class="project"
-                style="text-decoration: none; color: inherit;">
-                <h3>Smokey Defense</h3>
-                <p>A game I made for Code Ninjas with Unity! It's my black belt game.</p>
-            </a>
-        </div>
+  <section class="section" id="projects">
+    <div class="projects">
+      <a href="https://e-mailer.replit.app" class="project-card glass" data-aos="fade-up" data-aos-delay="300"
+        style="text-decoration: none; color: inherit;">
+        <h3>Emailer</h3>
+        <p>Uses an Outlook SMTP server to send emails from that site! You have to have an Outlook account.</p>
+      </a>
+      <a href="https://loginwgoogle.replit.app" class="project-card glass" data-aos="fade-up" data-aos-delay="400"
+        style="text-decoration: none; color: inherit;">
+        <h3>Fake Google Login Page</h3>
+        <p>Eerily similar login page to google, don't use against friends!</p>
+      </a>
+      <a href="https://codeninjasreno.github.io/smokey-defense/" class="project-card glass" data-aos="fade-up"
+        data-aos-delay="500" style="text-decoration: none; color: inherit;">
+        <h3>Smokey Defense</h3>
+        <p>A game I made for Code Ninjas with Unity! It's my black belt game.</p>
+      </a>
     </div>
+  </section>
 
-    <footer>
-        <p>&copy; 2025 TomMustBe12. All Rights Reserved.</p>
-        <a href="https://tommustbe12.com/subtome" target="_blank">Subscribe</a> | <a
-            href="https://contact.tommustbe12.com">Contact</a>
-    </footer>
+  <footer>
+    <p>&copy; 2025 TomMustBe12. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="https://tommustbe12.com/subtome">Subscribe</a>
+      <p> | </p>
+      <a href="https://tommustbe12.com/contact">Contact</a>
+    </div>
+  </footer>
 
-    <script>
-        function getQueryParam(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
-
-        const broughtFrom = getQueryParam("broughtFrom");
-        if (broughtFrom === "blackBeltGame") {
-            alert("Hello! Welcome to my site. It looks like you came here from my Black Belt Game! Have fun exploring my site!");
-
-            const encodedWebhookUrl = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMzOTI4MTExMDIzNjEzNTU0NC9kRzA4cmpDOGpXVkIzNFNuSXVjbF9ua1I3OTh1M0I2dmtmcnNUNWdSY3dGVExXRkNlRXRpbzYwS1lnX0xoczkycnpnLQ=="; //lol prevents bots at least
-            const webhookUrl = atob(encodedWebhookUrl);
-
-            // Send Discord webhook message
-            fetch(webhookUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ content: "User came from Black Belt Game!" })
-            });
-        } else
-        if (broughtFrom === "senseiGameJam") {
-            alert("Hello! Welcome to my site. It looks like you came here from my Sensei Game Jam Game! Have fun exploring my site!");
-
-            const encodedWebhookUrl = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMzOTI4MTExMDIzNjEzNTU0NC9kRzA4cmpDOGpXVkIzNFNuSXVjbF9ua1I3OTh1M0I2dmtmcnNUNWdSY3dGVExXRkNlRXRpbzYwS1lnX0xoczkycnpnLQ=="; //lol prevents bots at least
-            const webhookUrl = atob(encodedWebhookUrl);
-
-            // Send Discord webhook message
-            fetch(webhookUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ content: "User came from Sensei Game Jam Game!" })
-            });
-        }
-    </script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax.js/1.5.0/parallax.min.js"></script>
+  <script src="script.js"></script>
 </body>
 
-</html> -->
-this website is stupid, and you shouldn't be here. it doesn't even matter because nobody even visits or reads it, and also coding is just a 'waste of time' and dumb (apparently)<br><br>go away.
+</html>
