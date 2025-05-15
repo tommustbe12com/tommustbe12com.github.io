@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ServerUtils Plugin for Minecraft 1.21.5</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Mojangles font for Minecraft style -->
+    <style>
+        @font-face {
+            font-family: 'Mojangles';
+            src: url('../assets/mojangles.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            margin: 0;
+            height: 100vh;
+            background: radial-gradient(circle at 60% 40%, #6bbf59 0%, #3c763d 80%, #222 100%);
+            font-family: 'Mojangles', 'Press Start 2P', monospace;
+            color: #fff;
+            overflow: hidden;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            background: rgba(34, 34, 34, 0.85);
+            border-radius: 16px;
+            padding: 2.5rem 2rem 2rem 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.5);
+            border: 4px solid #8b5a2b;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #ffe600;
+            text-shadow: 2px 2px 0 #222, 4px 4px 0 #8b5a2b;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b7ff7a;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 0 #222;
+        }
+        .features {
+            text-align: left;
+            margin: 0 auto 1.5rem auto;
+            display: inline-block;
+            background: rgba(60, 60, 60, 0.7);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #ffe600;
+            box-shadow: 0 2px 8px #0008;
+        }
+        .features li {
+            margin-bottom: 0.7rem;
+            font-size: 1rem;
+            color: #fff;
+            text-shadow: 1px 1px 0 #222;
+        }
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container { padding: 1.2rem 0.5rem; }
+        }
+
+        /* Minecraft Download Button */
+        .mc-download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #ffe600 80%, #b7ff7a 100%);
+            border: 4px solid #8b5a2b;
+            border-radius: 10px;
+            box-shadow: 0 6px 0 #8b5a2b, 0 0 16px #ffe600;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.1s;
+            font-family: 'Mojangles', 'Press Start 2P', monospace;
+            font-size: 2rem;
+            color: #222;
+            position: relative;
+            outline: none;
+            user-select: none;
+            /* Make button as tall as features */
+            height: auto;
+            min-height: 0;
+            padding: 0;
+        }
+        /* Container for features and button side by side */
+        .features-download-row {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .features-download-row > * {
+            flex: 1 1 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            align-items: stretch;
+        }
+        .features {
+            margin: 0;
+        }
+        .mc-download-btn {
+            min-width: 180px;
+            width: 180px;
+            font-size: 2rem;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .mc-download-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #8b5a2b, 0 0 8px #ffe600;
+        }
+        @media (max-width: 900px) {
+            .features-download-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            .mc-download-btn, .features {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+        @media (max-width: 600px) {
+            .mc-download-btn {
+                font-size: 1.2rem;
+                padding: 0 0.7rem;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="backdrop-filter: blur(4px); border: 4px solid #ffe600; box-shadow: 0 12px 48px #000b;">
+        <h1 style="font-size:3rem;letter-spacing:3px;text-shadow: 3px 3px 0 #222, 6px 6px 0 #8b5a2b, 0 0 18px #ffe600;">ServerUtils</h1>
+        <div class="subtitle" style="font-size:1.3rem;color:#ffe600;text-shadow:2px 2px 0 #222;">A powerful Minecraft plugin for 1.21.5<br><br>Paper/Spigot</div>
+        <div class="features-download-row">
+            <ul class="features" id="features-list" style="font-size:1.1rem;">
+                <li>Easy to setup</li>
+                <li>Helpful commands</li>
+                <li>Customizable join messages</li>
+                <li>And much more!</li>
+            </ul>
+            <a class="mc-download-btn" id="download-btn" href="../assets/ServerUtils.jar" download>
+                Download
+                <br>
+                <sub style="font-size: 15px;">8KB space.</sub>
+            </a>
+        </div>
+        <div style="margin-top:2rem;color:#ffe600;font-size:1.1rem;text-shadow:1px 1px 0 #222;">
+            Made by <b>TomMustBe12</b> &mdash; <span style="color:#b7ff7a;">It's really cool!</span>
+        </div>
+    </div>
+</body>
+</html>
