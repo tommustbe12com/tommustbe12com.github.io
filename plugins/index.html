@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ServerUtils Plugin for Minecraft 1.21.5</title>
+    <title>Minecraft Plugins by TomMustBe12</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Mojangles font for Minecraft style -->
     <style>
@@ -14,155 +14,235 @@
         }
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             background: radial-gradient(circle at 60% 40%, #6bbf59 0%, #3c763d 80%, #222 100%);
             font-family: 'Mojangles', 'Press Start 2P', monospace;
             color: #fff;
-            overflow: hidden;
+            overflow-x: hidden;
         }
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 1rem 2rem 1rem;
+            position: relative;
             z-index: 2;
-            background: rgba(34, 34, 34, 0.85);
-            border-radius: 16px;
-            padding: 2.5rem 2rem 2rem 2rem;
-            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.5);
-            border: 4px solid #8b5a2b;
         }
-        h1 {
-            font-size: 2.5rem;
+        .page-title {
+            font-size: 3rem;
+            color: #ffe600;
+            text-shadow: 3px 3px 0 #222, 6px 6px 0 #8b5a2b, 0 0 18px #ffe600;
+            text-align: center;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: #ffe600;
+            text-shadow: 2px 2px 0 #222;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .plugins-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: center;
+        }
+        .plugin-card {
+            background: linear-gradient(135deg, #232b1a 0%, #2e3d23 100%);
+            border-radius: 18px;
+            padding: 2.5rem 2rem 2rem 2rem;
+            box-shadow: 0 10px 36px 0 rgba(0,0,0,0.6), 0 0 0 4px #ffe60033;
+            border: 4px solid #8b5a2b;
+            min-width: 300px;
+            max-width: 370px;
+            flex: 1 1 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            position: relative;
+            backdrop-filter: blur(4px);
+            transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+        }
+        .plugin-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 20px 60px #000c, 0 0 32px #ffe60055;
+            border-color: #ffe600;
+        }
+        .plugin-title {
+            font-size: 2.1rem;
             color: #ffe600;
             text-shadow: 2px 2px 0 #222, 4px 4px 0 #8b5a2b;
-            margin-bottom: 1rem;
+            margin-bottom: 0.7rem;
             letter-spacing: 2px;
+            text-align: center;
         }
-        .subtitle {
-            font-size: 1.1rem;
+        .plugin-version {
+            font-size: 1.15rem;
             color: #b7ff7a;
-            margin-bottom: 1.5rem;
             text-shadow: 1px 1px 0 #222;
+            text-align: center;
+            margin-bottom: 1.3rem;
         }
         .features {
             text-align: left;
-            margin: 0 auto 1.5rem auto;
-            display: inline-block;
-            background: rgba(60, 60, 60, 0.7);
-            padding: 1rem 1.5rem;
+            margin: 0 auto 1.4rem auto;
+            background: linear-gradient(120deg, #3c3c3c 80%, #232b1a 100%);
+            padding: 1.5rem 1.7rem 1.5rem 1.7rem;
+            border-radius: 14px;
+            border: 2.5px solid #ffe600;
+            box-shadow: 0 3px 12px #000a;
+            font-size: 1.13rem;
+            position: relative;
+        }
+        .features:before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
             border-radius: 10px;
-            border: 2px solid #ffe600;
-            box-shadow: 0 2px 8px #0008;
+            pointer-events: none;
         }
         .features li {
-            margin-bottom: 0.7rem;
-            font-size: 1rem;
+            margin-bottom: 0.9rem;
             color: #fff;
             text-shadow: 1px 1px 0 #222;
+            padding-left: 0.2em;
+            line-height: 1.6;
         }
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container { padding: 1.2rem 0.5rem; }
+        .features li:last-child {
+            margin-bottom: 0;
         }
-
-        /* Minecraft Download Button */
         .mc-download-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(180deg, #ffe600 80%, #b7ff7a 100%);
             border: 4px solid #8b5a2b;
-            border-radius: 10px;
-            box-shadow: 0 6px 0 #8b5a2b, 0 0 16px #ffe600;
-            margin-top: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 0 #8b5a2b, 0 0 20px #ffe600;
+            margin: 1.5rem auto 0 auto;
             cursor: pointer;
             text-decoration: none;
-            transition: transform 0.1s;
+            transition: transform 0.13s, box-shadow 0.13s, background 0.13s;
             font-family: 'Mojangles', 'Press Start 2P', monospace;
-            font-size: 2rem;
+            font-size: 1.6rem;
             color: #222;
-            position: relative;
+            min-width: 180px;
+            width: 85%;
+            max-width: 250px;
+            padding: 0.7rem 1.5rem 0.7rem 1.5rem;
+            text-align: center;
             outline: none;
             user-select: none;
-            /* Make button as tall as features */
-            height: auto;
-            min-height: 0;
-            padding: 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
-        /* Container for features and button side by side */
-        .features-download-row {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .features-download-row > * {
-            flex: 1 1 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: stretch;
-            align-items: stretch;
-        }
-        .features {
-            margin: 0;
-        }
-        .mc-download-btn {
-            min-width: 180px;
-            width: 180px;
-            font-size: 2rem;
-            padding: 0 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+        .mc-download-btn:before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, #ffe60044 0%, #b7ff7a22 100%);
+            opacity: 0.2;
+            pointer-events: none;
         }
         .mc-download-btn:active {
-            transform: translateY(4px);
+            transform: translateY(4px) scale(0.98);
             box-shadow: 0 2px 0 #8b5a2b, 0 0 8px #ffe600;
+            background: linear-gradient(180deg, #ffe600 60%, #b7ff7a 100%);
+        }
+        .mc-download-btn sub {
+            display: block;
+            color: #3c763d;
+            font-weight: normal;
+            margin-top: 0.2em;
+            text-shadow: none;
+        }
+        .plugin-footer {
+            margin-top: 2.7rem;
+            color: #ffe600;
+            font-size: 1.13rem;
+            text-shadow: 1px 1px 0 #222;
+            text-align: center;
+        }
+        .plugin-footer span {
+            color: #b7ff7a;
         }
         @media (max-width: 900px) {
-            .features-download-row {
+            .plugins-grid {
                 flex-direction: column;
                 align-items: center;
-                gap: 1rem;
+                gap: 1.7rem;
             }
-            .mc-download-btn, .features {
-                width: 100%;
+            .plugin-card {
+                max-width: 98vw;
                 min-width: 0;
+                width: 100%;
             }
         }
         @media (max-width: 600px) {
+            .main-container {
+                padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+            }
+            .plugin-card {
+                padding: 1.2rem 0.5rem 1rem 0.5rem;
+            }
+            .plugin-title {
+                font-size: 1.3rem;
+            }
             .mc-download-btn {
-                font-size: 1.2rem;
-                padding: 0 0.7rem;
+                font-size: 1.1rem;
+                padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+                min-width: 0;
                 width: 100%;
+            }
+            .features {
+                font-size: 1rem;
+                padding: 1rem 0.7rem 1rem 0.7rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container" style="backdrop-filter: blur(4px); border: 4px solid #ffe600; box-shadow: 0 12px 48px #000b;">
-        <h1 style="font-size:3rem;letter-spacing:3px;text-shadow: 3px 3px 0 #222, 6px 6px 0 #8b5a2b, 0 0 18px #ffe600;">ServerUtils</h1>
-        <div class="subtitle" style="font-size:1.3rem;color:#ffe600;text-shadow:2px 2px 0 #222;">A powerful Minecraft plugin for 1.21.5<br><br>Paper/Spigot</div>
-        <div class="features-download-row">
-            <ul class="features" id="features-list" style="font-size:1.1rem;">
-                <li>Easy to setup</li>
-                <li>Helpful commands</li>
-                <li>Customizable join messages</li>
-                <li>And much more!</li>
-            </ul>
-            <a class="mc-download-btn" id="download-btn" href="../assets/ServerUtils.jar" download>
-                Download
-                <br>
-                <sub style="font-size: 15px;">8KB space.</sub>
-            </a>
+    <div class="main-container">
+        <div class="page-title">TomMustBe12's Minecraft Plugins</div>
+        <div class="page-subtitle">High quality plugins for Paper/Spigot 1.21.5!</div>
+        <div class="plugins-grid">
+            <!-- Plugin Card 1 -->
+            <div class="plugin-card">
+                <div class="plugin-title">ServerUtils</div>
+                <div class="plugin-version">v1.0 &mdash; Minecraft 1.21.5</div>
+                <ul class="features">
+                    <li>Easy to setup</li>
+                    <li>Helpful commands</li>
+                    <li>Customizable join messages</li>
+                    <li>And much more!</li>
+                </ul>
+                <a class="mc-download-btn" href="../assets/plugins/ServerUtils.jar" download>
+                    Download<br>
+                    <sub style="font-size: 13px;">8KB space.</sub>
+                </a>
+            </div>
+            <!-- Plugin Card 2 (Example) -->
+            <div class="plugin-card">
+                <div class="plugin-title">ThrowableTNT</div>
+                <div class="plugin-version">v1.0 &mdash; Minecraft 1.21.5</div>
+                <ul class="features">
+                    <li>Right click to throw TNT</li>
+                    <li>Customizable fuse time</li>
+                    <li>Customizable throw speed</li>
+                    <li>Toggleable on or off</li>
+                </ul>
+                <a class="mc-download-btn" href="../assets/plugins/ThrowableTNT.jar" download>
+                    Download<br>
+                    <sub style="font-size: 13px;">7KB space.</sub>
+                </a>
+            </div>
+            <!-- Add more plugin cards below as needed -->
         </div>
-        <div style="margin-top:2rem;color:#ffe600;font-size:1.1rem;text-shadow:1px 1px 0 #222;">
-            Made by <b>TomMustBe12</b> &mdash; <span style="color:#b7ff7a;">It's really cool!</span>
+        <div class="plugin-footer">
+            Made by <b>TomMustBe12</b> &mdash; <span>It's really cool!</span>
         </div>
     </div>
 </body>
