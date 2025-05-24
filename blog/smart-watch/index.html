@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Smart Watch | TomMustBe12 Blog</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <nav>
+        <h3>My Blog</h3>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <main>
+        <div class="largeContainer">
+            <div class="stickyInfo">
+                <div class="author">Author: TomMustBe12</div>
+                <div class="date">Date: 5/23/2025, 3:49 PM</div>
+            </div>
+            <div class="content">
+                <div class="title">
+                    <h1>Custom Smart Watch Build</h1>
+                    <sub>Build along / Guide</sub>
+                </div>
+                <div class="image">
+                    <img src="../assets/watch.png" alt="Custom Smart Watch">
+                </div>
+                <p>This is one of my favorite projects I've worked on when it comes to Arduino, and I think you'll really enjoy this blog post. This is a post about a custom smart watch I created.</p>
+                <p>This won't necessarily be a build guide, but I will link the parts I used, and also link all the source code and documentation I looked at. (To the best of my ability.) I think if you want to create a watch like this, it's worth it, but I think it has some concerns that some people would definitely want to think about before doing something like this.</p>
+                <h2>Parts List</h2>
+                <p>Surprisingly, I found a screen and a board for this project simply. It's the Seeed Studio Round Display for XIAO (supports touchscreen) and a XIAO ESP32S3 Sense to go along with it. Really, you can choose any of Seeed's XIAO boards and it will work with their screen. I think its a great way for them to expand on their already great small form factor chips. In hindsight, I would NOT have chosen the Sense, it cost a lot more because it had a camera on the listing I was looking at. It increased the price from around 8-10 dollars to 20+ dollars, for a <b>single</b> microcontroller. Don't make the same mistake lol.</p>
+                <a href="https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html" target="_blank">Seeed XIAO ESP32S3 Sense (No 2.4ghz antenna here)</a><br>
+                <a href="https://www.seeedstudio.com/Seeed-Studio-Round-Display-for-XIAO-p-5638.html" target="_blank">Seeed XIAO Round Display</a><br>
+                <sub>I linked the Seeed Studio parts here to their actual company URLs, even though I bought the actual product off of Amazon. Searching for the same search term should show similar to what I have here.</sub>
+                <p>Battery can be personal preference, but this is a hard part to decide for this build. It's difficult because the watch will be thicc if you add a big battery on top of the already existing gap where the headers of the screen and XIAO meet.</p>
+                <p>For the battery, I ended up going with a chunky 4000mah battery that can last around 1.5 days on full charge (with all features at the end, no battery saving techniques were implemented yet). I think this is fine, because the battery is going to be sticking out / be an eyesore anyways. I thought go big or go home, because the tiny 500mah one wasn't going to last more than 3 hours. If I want to use this thing daily, it might have to look like a chunky thing, and that's ok. In some ways it adds to the vibe lol. Anyways, I got that chunky battery (those thing are heavy, just so you know too).</p>
+                <h2>Software Design</h2>
+                <p>When you have a screen as good as this, you want to use it to its fullest. I don't want to make crap software, and just have it display time normally like all the goofy TFT screens do. I want to have actual images and such.</p>
+                <p>So, I used SquareLine Studio. Seeed recommends this free trial (no credit card) software, and I do too. For 30 days (enough time for me to make my watch's software) you can use a ton of features for free, and they have a lifetime free tier as well that still has pretty good specs. This isn't sponsored or paid, I really think it's useful and awesome.</p>
+                <p>In my YouTube video coming out soon, I'll have footage of me making the software, it's essentially just drag and drop the elements that you want, and then you can edit them. Overall, it was easy to make the software. I put placeholder text for most of the text since it had to be filled in in code, and I was ready to upload.</p>
+                <p>I had some issues with the touchscreen and compilation, but after adding the libraries, I was able to upload the screens. Soon, I could add touch swiping to detect left and right swipes, and then switch screens with a slide animation depending on the action. It looks really good and I'm impressed by how easy LVGL (the open source graphics library) makes it to detect.</p>
+                <h2>Grabbing Data</h2>
+                <p>If you didn't know already, ESP32 MCUs always have WiFi and Bluetooth/BLE capability. It's almost always a guarantee. So, I utilized WiFi to grab information like the time from an NTP server, the weather from a local weather API, and a joke of the day (for fun) that would update every day. It wasn't that hard, I just sent JSON post/get requests to these websites and they return data that I can replace the placeholder data I made in Software Design with. Since LVGL is all based on setting labels, I could quite literally take 'ui_Label6' and set the text content of it to be the new time information or whatever I was trying to replace it with.</p>
+                <p>I finally finished working on the status page, which would basically show the current status of the WiFi connection, weather API, and more.</p>
+                <h2>Cons</h2>
+                <p>Building a custom smart watch, while fun and engaging, can be a pain in the butt. Not gonna lie, it's really annoying how thick this thing is. I need to find a way to make it less tall, cuz it literally looks like a water bottle is on my arm 24/7. But again, it looks custom made.</p>
+                <p>Second, the battery percentage readings would never work correctly. I could read raw analog data, but it wasn't correct. The touch screen is supposed to use a transistor voltage divider, but it didn't work, and returned either nothing or random jibberish that I knew wasn't correct. So that's one problem that is probably logic error on my end, but it wasn't well documented (their own provided code didn't work when I compiled it to a sketch by itself)</p>
+                <p>Finally, the watch isn't very comfortable. 3d printed parts rub on the skin and it's not good for comfort. So it's definitely really DIY. However, I think its a step up from the silly projects you solder together real quick in your lab for random, because this has a pretty good use case if you put enough work and effort into it.</p>
+                <h2>Conclusion</h2>
+                <p>I would say to keep your money, only do this if you want a challenge, or if you think it will be cool. I don't think it's worth the hassle, there are enough cheap smart watches that don't make you look like a technology hogger from the 90s. If you're part of that style type of group, definitely isn't for you. But it is very fun to tinker with, and I hope you enjoyed this blog post.</p>
+                <p>Thanks for reading! Make sure to monitor my YouTube channel for the long-form and short-form videos I'll be making on this project.</p>
+                <p>Cya! - TomMustBe12</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
