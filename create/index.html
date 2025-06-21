@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TomMustBe12 Create</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: #0e1013;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse 60% 40% at 50% 30%, #3a7bd5 0%, #0e1013 80%);
+            opacity: 0.7;
+            pointer-events: none;
+            transition: background 0.7s;
+            animation: bgMove 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgMove {
+            0% {
+                background-position: 50% 30%;
+            }
+
+            100% {
+                background-position: 60% 60%;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 520px;
+            margin: 18vh auto 0 auto;
+            background: rgba(18, 22, 28, 0.82);
+            border-radius: 22px;
+            box-shadow: 0 8px 40px 0 rgba(30, 40, 80, 0.18), 0 1.5px 8px 0 rgba(60, 80, 120, 0.08);
+            padding: 3.5rem 2.5rem 3rem 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: box-shadow 0.3s;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 48px 0 rgba(30, 40, 80, 0.22), 0 2px 12px 0 rgba(60, 80, 120, 0.12);
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            font-weight: 700;
+            color: #f5f7fa;
+            margin-bottom: 0.7em;
+            letter-spacing: 0.01em;
+            background: linear-gradient(90deg, #3a7bd5 10%, #00d2ff 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero {
+            font-size: 1.25rem;
+            color: #b5c6e0;
+            margin-bottom: 2.2em;
+            letter-spacing: 0.02em;
+            opacity: 0.92;
+            animation: fadeInUp 1.2s cubic-bezier(.23, 1.01, .32, 1) both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.85em 2.2em;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+            border: none;
+            border-radius: 100px;
+            box-shadow: 0 2px 16px 0 rgba(58, 123, 213, 0.13);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            outline: none;
+            margin-top: 1.2em;
+            letter-spacing: 0.04em;
+        }
+
+        .button:hover,
+        .button:focus {
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 4px 24px 0 rgba(58, 123, 213, 0.18);
+        }
+
+        .flex-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.7rem;
+            justify-content: center;
+            margin-top: 2.8em;
+            margin-bottom: 1.5em;
+        }
+
+        .box {
+            background: rgba(30, 36, 48, 0.92);
+            border-radius: 18px;
+            box-shadow: 0 2px 18px 0 rgba(58, 123, 213, 0.10);
+            padding: 2.1rem 1.6rem 1.7rem 1.6rem;
+            min-width: 220px;
+            max-width: 260px;
+            flex: 1 1 220px;
+            color: #eaf1fb;
+            text-align: left;
+            border: 1px solid rgba(58, 123, 213, 0.09);
+            transition: box-shadow 0.22s, transform 0.18s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box:hover,
+        .box:focus-within {
+            box-shadow: 0 6px 32px 0 rgba(58, 123, 213, 0.18);
+            transform: translateY(-4px) scale(1.025);
+        }
+
+        .box-title {
+            font-size: 1.18rem;
+            font-weight: 600;
+            color: #3a7bd5;
+            margin-bottom: 0.5em;
+            letter-spacing: 0.01em;
+        }
+
+        .box-desc {
+            font-size: 1.01rem;
+            color: #b5c6e0;
+            opacity: 0.93;
+            margin-bottom: 0.4em;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .flex-boxes {
+                flex-direction: column;
+                gap: 1.1rem;
+                align-items: stretch;
+            }
+
+            .box {
+                max-width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.2rem 0.7rem;
+                max-width: 98vw;
+                margin-top: 8vh;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero {
+                font-size: 1.02rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>TomMustBe12 Create</h1>
+        <div class="hero">
+            Create your own website, and publish it on my domain.
+            <br><br>
+            dumb not anything yet so stop, if u see this pls stop poking around my github lol
+        </div>
+        <button class="button">Get Started</button>
+    </div>
+    <div class="flex-boxes">
+        <div class="box">
+            <div class="box-title">Easy Editor</div>
+            <div class="box-desc">Build your site with a simple code editor. Or, you can bring your files from your preferred IDE.</div>
+        </div>
+        <div class="box">
+            <div class="box-title">Custom Domains</div>
+            <div class="box-desc">Publish your site on a custom subdomain of tommustbe12.com for free.</div>
+        </div>
+    </div>
+</body>
+
+</html>
