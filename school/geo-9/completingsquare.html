@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complete the Square Calculator (General Quadratic)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        input, button { font-size: 1em; padding: 0.5em; }
+        #result { margin-top: 1em; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Complete the Square Calculator (General Quadratic)</h1>
+    <form id="squareForm" onsubmit="return false;">
+        <label>
+            Enter quadratic equation (e.g. <code>9x^2-4y^2-90x-32y+125=0</code>):
+            <input type="text" id="equation" size="50" placeholder="ax^2 + by^2 + cx + dy + e = 0">
+        </label>
+        <button onclick="completeSquare()">Complete the Square</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function parseGeneralQuadratic(eq) {
+            eq = eq.replace(/\s+/g, '').replace(/−/g, '-');
+            if (eq.includes('=')) eq = eq.split('=')[0];
+
+            // Default coefficients
+            let a=0, b=0, c=0, d=0, e=0;
+
+            // Patterns for each term
+            let patterns = [
+                { re: /([+-]?[\d\.]*)x\^2/, set: v => a = v },
+                { re: /([+-]?[\d\.]*)y\^2/, set: v => b = v },
+                { re: /([+-]?[\d\.]*)x(?![\^])/, set: v => c = v },
+                { re: /([+-]?[\d\.]*)y(?![\^])/, set: v => d = v },
+                { re: /([+-]?[\d\.]+)(?![xy\^])/, set: v => e = v }
+            ];
+
+            for (let pat of patterns) {
+                let m = eq.match(pat.re);
+                if (m) {
+                    let val = m[1];
+                    if (val === '' || val === '+') val = 1;
+                    else if (val === '-') val = -1;
+                    else val = parseFloat(val);
+                    pat.set(val);
+                    // Remove matched part to avoid double counting
+                    eq = eq.replace(pat.re, '');
+                }
+            }
+            return { a, b, c, d, e };
+        }
+
+        function formatTerm(coeff, variable) {
+            if (coeff === 0) return '';
+            if (coeff === 1) return `+${variable}`;
+            if (coeff === -1) return `-${variable}`;
+            return (coeff > 0 ? '+' : '') + coeff + variable;
+        }
+
+        function completeSquare() {
+            const eq = document.getElementById('equation').value;
+            const resultDiv = document.getElementById('result');
+            const { a, b, c, d, e } = parseGeneralQuadratic(eq);
+
+            if (a === 0 && b === 0) {
+                resultDiv.textContent = "Equation must have at least x² or y² term.";
+                return;
+            }
+
+            // Complete the square for x terms: a x² + c x
+            let xh = 0, xk = 0, xPart = '';
+            if (a !== 0) {
+                xh = c / (2 * a);
+                xk = -a * xh * xh;
+                xPart = `${a !== 1 ? (a === -1 ? '-' : a) : ''}(x${xh === 0 ? '' : (xh > 0 ? ' + ' + xh : ' - ' + Math.abs(xh))})²`;
+            }
+
+            // Complete the square for y terms: b y² + d y
+            let yh = 0, yk = 0, yPart = '';
+            if (b !== 0) {
+                yh = d / (2 * b);
+                yk = -b * yh * yh;
+                yPart = `${b !== 1 ? (b === -1 ? '-' : b) : ''}(y${yh === 0 ? '' : (yh > 0 ? ' + ' + yh : ' - ' + Math.abs(yh))})²`;
+            }
+
+            // Combine constants
+            let constant = e + xk + yk;
+
+            // Build result string
+            let result = '';
+            if (xPart) result += xPart;
+            if (yPart) result += (result ? ' ' : '') + (b > 0 ? ' + ' : ' - ') + yPart.replace(/^[+-]/, '');
+            if (constant !== 0) result += (constant > 0 ? ' + ' : ' - ') + Math.abs(constant);
+            result += ' = 0';
+
+            resultDiv.innerHTML = `Completed square form:<br><strong>${result.replace(/\+\s*-/, '- ')}</strong>`;
+        }
+    </script>
+</body>
+</html>
