@@ -5,21 +5,25 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="TomMustBe12 - Web developer, tech & gaming enthusiast. Explore projects, blog, videos, and more.">
-  <meta name="keywords" content="TomMustBe12, web developer, coding, gaming, projects, blog, YouTube, technology, portfolio">
+  <meta name="description"
+    content="TomMustBe12 - Web developer, tech & gaming enthusiast. Explore projects, blog, videos, and more.">
+  <meta name="keywords"
+    content="TomMustBe12, web developer, coding, gaming, projects, blog, YouTube, technology, portfolio">
   <meta name="author" content="TomMustBe12">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="bingbot" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:title" content="TomMustBe12 | Tech & Gaming Enthusiast">
-  <meta property="og:description" content="TomMustBe12 - Web developer, tech & gaming enthusiast. Explore projects, blog, videos, and more.">
+  <meta property="og:description"
+    content="TomMustBe12 - Web developer, tech & gaming enthusiast. Explore projects, blog, videos, and more.">
   <meta property="og:image" content="https://tommustbe12.com/assets/profile.png">
   <meta property="og:url" content="https://tommustbe12.com/">
   <meta property="og:site_name" content="TomMustBe12">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TomMustBe12 | Tech & Gaming Enthusiast">
-  <meta name="twitter:description" content="TomMustBe12 - Web developer, tech & gaming enthusiast. Explore projects, blog, videos, and more.">
+  <meta name="twitter:description"
+    content="TomMustBe12 - Web developer, tech & gaming enthusiast. Explore projects, blog, videos, and more.">
   <meta name="twitter:image" content="https://tommustbe12.com/assets/profile.png">
   <meta name="twitter:site" content="@TomMustBe12">
   <meta name="twitter:creator" content="@TomMustBe12">
@@ -357,6 +361,7 @@
       .hamburger {
         display: flex;
       }
+
       .nav-links {
         position: fixed;
         top: 0;
@@ -371,15 +376,45 @@
         display: none;
         z-index: 1050;
       }
+
       .nav-links.active {
         display: flex;
       }
+
       .navbar {
         padding: 1rem;
       }
     }
+
+    .fancy-text-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .fancy-text-outline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-weight: 600;
+      color: white;
+      z-index: 0;
+      -webkit-text-stroke: 2px rgb(129, 129, 129);
+      /* crisp white stroke */
+    }
+
+    .fancy-text-fill {
+      font-weight: 600;
+      background: linear-gradient(to right, #2563eb, #7c3aed, #4f46e5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      z-index: 1;
+    }
   </style>
 </head>
+
 <body>
   <nav class="navbar">
     <div class="logo">TomMustBe12</div>
@@ -389,7 +424,10 @@
       <span></span>
     </div>
     <div class="nav-links">
-      <a href="#about">About</a>
+      <a class="fancy-text-wrapper" href="https://codecraft.tommustbe12.com">
+        <span class="fancy-text-outline">CodeCraft Academy</span>
+        <span class="fancy-text-fill">CodeCraft Academy</span>
+      </a>
       <a href="/project-hub">Projects</a>
       <a href="https://discord.gg/qFy6MdMV9t">Minecraft Server</a>
       <a href="/domains">Free Subdomain</a>
@@ -465,25 +503,25 @@
       <a href="https://tommustbe12.com/subtome">Subscribe</a>
       <p> | </p>
       <a href="https://tommustbe12.com/contact">Contact</a>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax.js/1.5.0/parallax.min.js"></script>
-  <script src="script.js"></script>
-  <script>
-    // Hamburger menu toggle
-    const hamburger = document.getElementById('hamburger-menu');
-    const navLinks = document.querySelector('.nav-links');
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-    hamburger.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        navLinks.classList.toggle('active');
-      }
-    });
-  </script>
+      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax.js/1.5.0/parallax.min.js"></script>
+      <script src="script.js"></script>
+      <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger-menu');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+        hamburger.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            navLinks.classList.toggle('active');
+          }
+        });
+      </script>
 </body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax.js/1.5.0/parallax.min.js"></script>
-  <script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parallax.js/1.5.0/parallax.min.js"></script>
+<script src="script.js"></script>
 </body>
 
 </html>
