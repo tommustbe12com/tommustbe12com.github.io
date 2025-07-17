@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Playit.GG Port Scanning | TomMustBe12 Blog</title>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <nav>
+            <h3>TomMustBe12 Blog</h3>
+            <a href="../recent">Recent</a>
+        </nav>
+        <div class="largeContainer">
+            <div class="stickyInfo">
+                <h4>Author: TomMustBe12</h4>
+                <h4>Date Posted: 7/16/2025, 9:41 PM</h4>
+            </div>
+            <div class="content">
+                <div class="title">
+                    <h1>Playit.GG Port Scanning</h1>
+                    <sub>Your minecraft servers (or server servers) could be at risk.</sub>
+                </div>
+                <div class="image">
+                    <img src="../assets/playitgg.png">
+                </div>
+                <main>
+                    <h2>What is Playit.gg?</h2>
+                    <p>Well, if you don't know what playit.gg is, then you're safe from <i>this particular</i> service. However, many services like this do the exact same thing and can be found.</p>
+                    <p>Playit.gg is a service that allows you to host your own Minecraft server without needing to port forward. It does this by creating a tunnel between your computer and their servers, allowing players to connect to your server through a unique URL.</p>
+                    <p>While this is a great service for those who don't want to deal with port forwarding, it's not very safe in the fact that all of its ports are completely open, not guarded whatsoever, there is nothing stopping random people from scanning playit.</p>
+                    <p>Why does this matter? This means that anybody who runs a simple 15 character command can find anybody's service on playit.gg. This could be your Minecraft server, your SSH port, or even your random security camera port that you never deleted because why not.</p>
+                    <h2>How you scan for Playit.gg servers</h2>
+                    <p>I'm going to make this public because A) it's super easy and simple to do, ask ChatGPT you'll get the exact same command. And B) this should be a reminder that everyone should know that their public service is really public! If you are exposing your server to the internet - that's what it's doing! Anybody can find it now.</p>
+                    <p>To scan for Playit.gg servers, you can use the following command (you need <a href="https://nmap.org">Nmap</a> installed):</p>
+                    <pre><code>nmap -sS -p- 20.ip.gl.ply.gg</code></pre>
+                    <sub>Note: 20.ip.gl.ply.gg is just <b>one</b> of playit's global broadcast. I've personally found at least from 16-29.ip.gl.ply.gg. Tons of ports are out there.</sub>
+                    <p>Since this is a full SYN stealth scan, it will take much longer to complete. However, this gives much more accurate results compared to normal port scanning.</p>
+                    <p>This will return all the found TCP ports and display them in the terminal. Minecraft runs on TCP. See what I mean?</p>
+                    <p>A decent amount of these aren't Minecraft though. Some of them are other TCP services. However, most of them are. Playit is known for making Minecraft servers tunneled for free, so most people use it for that.</p>
+                    <h2>Which are Minecraft, and which aren't?</h2>
+                    <p>Minecraft ports aren't going to immediately be known. You'll have to sort through which ones are, or which ones aren't.</p>
+                    <p>If you use Python, there is a nice script called <b>mcstatus</b>. Mcstatus lets you ping servers, find out if they are Minecraft, and most servers return default information like motd, players, player max, player limit, and what version of Minecraft. If you use this mcstatus script and sort through your nmap list, you'll be able to search for basically anything.</p>
+                    <p>I personally sort by version, so that I can find if the version is the version I'm going to be using to connect to servers (usually I just use the latest) and I sort through that. Look at mcstatus's documentation for more on how to use it.</p>
+                    <p>However, if you wanted to search for all servers on a version <b>and</b> without a default motd (meaning the server is probably custom and has an active player base) then that would be very possible too.</p>
+                    <p>After you scan your nmap list, with a simple Python script, you can find which TCP services are Minecraft and which aren't. The only problem now is to figure out if they have a whitelist. Unfortunately, unless you create an intense bot that will search servers automatically for you (probably would be a mod of some sort) there isn't a straightforward easy way to do that. That I know of. But by now, the list should be manageable enough that you can manually try joining.</p>
+                    <h2>How to protect my server</h2>
+                    <p>There are a few ways to protect your server from being scanned:</p>
+                    <ol>
+                        <li>Use a whitelist: A whitelist can help to restrict access to your server to only those who you trust.</li>
+                        <li>Don't use playit: While many of these services are not great, playit is definitely not on top.</li>
+                        <li>Use a custom domain from Playit: I haven't used a custom domain before, but if you have that then it might not be visible on the main global anycast. Still be careful though, I haven't checked this.</li>
+                    </ol>
+                    <p>Overall, it's important to be aware of the risks associated with using services like playit.gg. While they can be convenient, they can also expose your server to potential attacks.</p>
+                    <p>By taking steps to protect your server, you can help to reduce the risk of it being scanned or attacked.</p>
+                    <h2>Conclusion</h2>
+                    <p>All in all, you should really protect your server with a whitelist. Even if you don't use playit, whitelists help random people from joining your server. If you have a public ip address (either your own, a remote virtual server, or a friend's old PC) then you should turn on whitelist. Anybody that finds that IP can see that it has Minecraft running on whatever port, and join your server.</p>>
+                    <h2>Final Note</h2>
+                    <p>Bruh did you see me attack your server 💀</p>
+                </main>
+            </div>
+        </div>
+        <br>
+        <br>
+    </body>
+</html>
