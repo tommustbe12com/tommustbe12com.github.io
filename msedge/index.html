@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edge Message Command Generator</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        label { display: block; margin-top: 10px; }
+        input, select { margin-top: 5px; }
+        #command { margin-top: 20px; font-family: monospace; background: #eee; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Edge Fullscreen Message Command Generator</h2>
+    <label>
+        Message:
+        <input type="text" id="message" value="Hello">
+    </label>
+    <label>
+        Background Color:
+        <input type="color" id="bgcolor" value="#000000">
+    </label>
+    <button onclick="generateCommand()">Generate Command</button>
+    <div id="command"></div>
+
+    <script>
+        function generateCommand() {
+            const msg = encodeURIComponent(document.getElementById('message').value);
+            const bg = encodeURIComponent(document.getElementById('bgcolor').value);
+            const html = `<body style='margin:0;background:${bg};color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-size:3em;'>${msg}</body>`;
+            const dataUrl = 'data:text/html,' + html;
+            const command = `start msedge --app="${dataUrl}"`;
+            document.getElementById('command').textContent = command;
+        }
+    </script>
+</body>
+</html>
