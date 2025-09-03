@@ -34,6 +34,7 @@ jobs:
           if [ -d "subdomain-404" ]; then
             cp -r subdomain-404 out/_404/
             echo "tommustbe12.com" > out/_404/CNAME
+          fi
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
