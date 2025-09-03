@@ -16,7 +16,7 @@ jobs:
         run: |
           mkdir -p out
           
-          # Deploy all subdomain-* folders
+          # Deploy all subdomain-* folders (except subdomain-404)
           for d in subdomain-*; do
             if [ -d "$d" ] && [ "$d" != "subdomain-404" ]; then
               sub="${d#subdomain-}"
@@ -27,7 +27,6 @@ jobs:
           done
           
           # Add fallback 404 folder for unknown subdomains
-          # This will serve subdomain-404/index.html if someone visits an undefined subdomain
           if [ -d "subdomain-404" ]; then
             cp -r subdomain-404 out/_404/
             echo "tommustbe12.com" > out/_404/CNAME
