@@ -137,6 +137,24 @@
         "title": "Planner Pro",
         "description": "A planner to help you stay on task! It even includes notifications in your browser (if the tab is open).",
         "link": "https://plannerpro.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "CodeCraft Academy",
+        "description": "A site where you can learn to code, and save, share, and run your projects.",
+        "link": "https://codecraft.tommustbe12.com"
+      },
+      {
+        "category": "entertainment",
+        "title": "Chat",
+        "description": "A chatroom hosted on my home server.",
+        "link": "https://chat.tommustbe12.com"
+      },
+      {
+        "category": "productivity",
+        "title": "TomMail",
+        "description": "A mail service, all local, doesn't actually send real emails. Just local sending to others.",
+        "link": "https://mail.tommustbe12.com"
       }
     ]
   }

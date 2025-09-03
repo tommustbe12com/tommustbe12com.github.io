@@ -1,0 +1,40 @@
+name: Deploy Subdomains with Fallback
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Prepare subdomains
+        run: |
+          mkdir -p out
+          
+          # Deploy all subdomain-* folders
+          for d in subdomain-*; do
+            if [ -d "$d" ] && [ "$d" != "subdomain-404" ]; then
+              sub="${d#subdomain-}"
+              mkdir -p "out/$sub"
+              cp -r "$d/"* "out/$sub/"
+              echo "$sub.tommustbe12.com" > "out/$sub/CNAME"
+            fi
+          done
+          
+          # Add fallback 404 folder for unknown subdomains
+          # This will serve subdomain-404/index.html if someone visits an undefined subdomain
+          if [ -d "subdomain-404" ]; then
+            cp -r subdomain-404 out/_404/
+            echo "tommustbe12.com" > out/_404/CNAME
+          fi
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
