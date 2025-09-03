@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BACKDOOR LC 1352.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #1976d2;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2em auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
+            padding: 2em;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5em;
+            border: 1px solid #1976d2;
+            border-radius: 4px;
+            margin-bottom: 1em;
+            font-size: 1em;
+        }
+        .teacher-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .teacher-item {
+            border-bottom: 1px solid #e3eafc;
+            padding: 1em 0;
+            cursor: pointer;
+            color: #1976d2;
+            transition: background 0.1s;
+        }
+        .teacher-item:hover {
+            background: #e3eafc;
+        }
+        .drive-view {
+            margin-top: 2em;
+            border-top: 1px solid #e3eafc;
+            padding-top: 1em;
+        }
+        .folder {
+            font-weight: bold;
+            color: #1565c0;
+            margin-top: 1em;
+        }
+        .file {
+            margin-left: 1.5em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Teacher Database Demo</h1>
+        <p>Search for teachers and view their "Google Drive" files</p>
+    </header>
+    <div class="container">
+        <input type="text" id="search" placeholder="Search teachers...">
+        <ul class="teacher-list" id="teacherList"></ul>
+        <div class="drive-view" id="driveView"></div>
+    </div>
+    <script>
+        // Fake teacher data
+        const teachers = [
+            { name: "Ms. Alice Johnson", id: "alice" },
+            { name: "Mr. Bob Smith", id: "bob" },
+            { name: "Mrs. Carol Lee", id: "carol" },
+            { name: "Dr. David Kim", id: "david" },
+            { name: "Ms. Emily Chen", id: "emily" },
+            { name: "Mr. Frank Turner", id: "frank" },
+            { name: "Mrs. Grace Patel", id: "grace" },
+            { name: "Dr. Henry Clark", id: "henry" },
+            { name: "Ms. Ivy Nguyen", id: "ivy" },
+            { name: "Mr. Jack Brown", id: "jack" }
+        ];
+
+        // Fake Google Drive data
+        const drives = {
+            alice: {
+                "Class Materials": ["Syllabus.pdf", "Lesson1.pptx", "Homework1.docx"],
+                "Student Work": ["ProjectA.docx", "ProjectB.docx"]
+            },
+            bob: {
+                "Assignments": ["MathHW1.pdf", "MathHW2.pdf"],
+                "Resources": ["AlgebraNotes.docx", "GeometrySlides.pptx"]
+            },
+            carol: {
+                "Science": ["LabReportTemplate.docx", "ExperimentResults.xlsx"],
+                "Photos": ["FieldTrip.jpg"]
+            },
+            david: {
+                "History": ["WWII.pptx", "EssayGuidelines.pdf"],
+                "Quizzes": ["Quiz1.docx", "Quiz2.docx"]
+            },
+            emily: {
+                "English": ["ReadingList.pdf", "EssayRubric.docx"],
+                "Feedback": ["Student1.pdf", "Student2.pdf"]
+            },
+            frank: {
+                "Music": ["SheetMusic.pdf", "ConcertInfo.docx"],
+                "Recordings": ["Song1.mp3", "Song2.mp3"]
+            },
+            grace: {
+                "Art": ["ProjectIdeas.pdf", "GalleryPhotos.jpg"],
+                "Supplies": ["OrderList.xlsx"]
+            },
+            henry: {
+                "PE": ["WorkoutPlan.docx", "Schedule.pdf"],
+                "Forms": ["PermissionSlip.pdf"]
+            },
+            ivy: {
+                "Math": ["CalculusNotes.pdf", "TestReview.docx"],
+                "Extra Credit": ["ChallengeProblems.pdf"]
+            },
+            jack: {
+                "Tech": ["CodingAssignment1.py", "RoboticsGuide.pdf"],
+                "Club": ["MeetingMinutes.docx"]
+            }
+        };
+
+        // Render teacher list
+        function renderTeachers(filter = "") {
+            const list = document.getElementById("teacherList");
+            list.innerHTML = "";
+            teachers
+                .filter(t => t.name.toLowerCase().includes(filter.toLowerCase()))
+                .forEach(t => {
+                    const li = document.createElement("li");
+                    li.className = "teacher-item";
+                    li.textContent = t.name;
+                    li.onclick = () => showDrive(t.id, t.name);
+                    list.appendChild(li);
+                });
+        }
+
+        // Show drive files/folders
+        function showDrive(id, name) {
+            const drive = drives[id];
+            const view = document.getElementById("driveView");
+            if (!drive) {
+                view.innerHTML = `<h3>${name}'s Google Drive</h3><p>No files found.</p>`;
+                return;
+            }
+            let html = `<h3>${name}'s Google Drive</h3>`;
+            Object.keys(drive).forEach(folder => {
+                html += `<div class="folder">${folder}</div>`;
+                drive[folder].forEach(file => {
+                    html += `<div class="file">${file}</div>`;
+                });
+            });
+            view.innerHTML = html;
+        }
+
+        // Search functionality
+        document.getElementById("search").addEventListener("input", e => {
+            renderTeachers(e.target.value);
+            document.getElementById("driveView").innerHTML = "";
+        });
+
+        // Initial render
+        renderTeachers();
+    </script>
+</body>
+</html>
