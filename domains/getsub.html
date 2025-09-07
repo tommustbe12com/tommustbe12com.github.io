@@ -40,16 +40,12 @@
             background-color: #f0f8ff;
         }
         button {
-            background-color: #007BFF;
+            background-color: #8a8a8a;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
         }
         .response {
             margin-top: 20px;
@@ -66,11 +62,14 @@
 </head>
 <body>
     <div class="container">
+        <div style="background-color:#ffdddd;color:#a00;padding:1rem;text-align:center;font-weight:bold;">
+            Subdomains are no longer available because of abuse.
+        </div>
         <h1>Create Your Custom Subdomain</h1>
         <p>If you're using Glitch, don't put your glitch URL here. First get your Fastly CNAME.</p>
         <input type="text" id="subdomain" placeholder="Enter Subdomain (e.g., mysubdomain)">
         <input type="text" id="target" placeholder="CNAME value (target URL)">
-        <button onclick="createSubdomain()">Submit</button>
+        <button onclick="createSubdomain()" disabled>Submit</button>
         <div id="response" class="response"></div>
     </div>
 
