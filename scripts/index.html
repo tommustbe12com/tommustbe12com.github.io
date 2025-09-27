@@ -1,10 +1,42 @@
-This directory contains useful scripts in mostly js, maybe some other languages.
-
-<br>
-
-<br>
-
-SCRIPTS:<br>
-popup.js<br>
-hackerBg.js<br>
-tabedit.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Useful Scripts Directory</title>
+</head>
+<body>
+    <p>This directory contains useful scripts in mostly js, maybe some other languages.</p>
+    <br>
+    <br>
+    <strong>SCRIPTS:</strong><br>
+    popup.js<br>
+    hackerBg.js<br>
+    tabedit.js<br>
+    rightClickOverride.js
+    <script type="module">
+        import rightClickAction from './rightClickOverride.js';
+        rightClickAction({
+            options: [
+                {
+                    label: 'Copy',
+                    icon: '📋',
+                    onClick: () => alert('Copy clicked!')
+                },
+                {
+                    label: 'Paste',
+                    icon: '📄',
+                    onClick: () => alert('Paste clicked!')
+                },
+                {
+                    label: 'Delete',
+                    icon: '<svg width="16" height="16" fill="red"><rect width="16" height="16"/></svg>',
+                    onClick: () => alert('Delete clicked!')
+                }
+            ],
+            padding: '12px',
+            bgColor: '#333',
+            color: '#fff'
+        });
+    </script>
+</body>
+</html>
