@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundtrack Album 3 - TomMustBe12</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+  <link rel="icon" href="../../assets/profile.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: black;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .visualizer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      z-index: 1;
+    }
+
+    .bar {
+      background: linear-gradient(180deg, #00ffcc, #0066ff);
+      width: 2%;
+      height: 10%;
+      transition: height 0.1s;
+    }
+
+    header {
+      z-index: 2;
+      text-align: center;
+      padding: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .container {
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .song-list {
+      width: 100%;
+      max-height: 50vh;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid white;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 20px 0;
+    }
+
+    .song {
+      padding: 10px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .song.active {
+      background: rgba(0, 255, 204, 0.3);
+    }
+
+    .song:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #00ffcc;
+      border: none;
+      color: black;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #00cc99;
+    }
+
+    .download {
+      background: #0066ff;
+    }
+
+    .download:hover {
+      background: #0052cc;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="visualizer" id="visualizer"></div>
+
+  <header>
+    <h1>TomMustBe12's Soundtrack - Album 3</h1>
+  </header>
+
+  <div class="container">
+    <div class="song-list" id="songs-list"></div>
+
+    <div class="controls">
+      <button onclick="changeSong(-1)">&lt; Prev</button>
+      <button onclick="togglePlay()" id="play-button">Play</button>
+      <button onclick="changeSong(1)">Next &gt;</button>
+    </div>
+
+    <div class="controls">
+      <button onclick="location.replace('../album2/index.html')">&lt; Album 2</button>
+    </div>
+  </div>
+
+  <audio id="audio" crossorigin="anonymous"></audio>
+
+  <script>
+    const songs = [
+      { url: "../../assets/music/its-alright.mp3", title: "It's Alright" }
+    ];
+
+    let currentIndex = 0;
+    let isPlaying = false;
+
+    const audio = document.getElementById("audio");
+    const visualizer = document.getElementById("visualizer");
+    const songsList = document.getElementById("songs-list");
+    const playButton = document.getElementById("play-button");
+
+    const bars = Array.from({ length: 50 }, () => {
+      const bar = document.createElement("div");
+      bar.classList.add("bar");
+      visualizer.appendChild(bar);
+      return bar;
+    });
+
+    const populateSongs = () => {
+      songs.forEach((song, index) => {
+        const songElement = document.createElement("div");
+        songElement.classList.add("song");
+        if (index === currentIndex) songElement.classList.add("active");
+
+        const title = document.createElement("span");
+        title.textContent = song.title;
+
+        const downloadButton = document.createElement("button");
+        downloadButton.textContent = "Download";
+        downloadButton.classList.add("download");
+        downloadButton.onclick = (e) => {
+          alert("To download, click the 3 dots and select Download. Give credit for sharing.");
+          e.stopPropagation();
+          window.open(song.url, "_blank");
+        };
+
+        songElement.appendChild(title);
+        songElement.appendChild(downloadButton);
+
+        songElement.onclick = () => {
+          currentIndex = index;
+          loadSong();
+          playSong();
+          updateActiveSong();
+        };
+
+        songsList.appendChild(songElement);
+      });
+    };
+
+    const updateActiveSong = () => {
+      document.querySelectorAll(".song").forEach((song, index) => {
+        song.classList.toggle("active", index === currentIndex);
+      });
+    };
+
+    const loadSong = () => {
+      audio.src = songs[currentIndex].url;
+    };
+
+    const playSong = () => {
+      audio.play();
+      isPlaying = true;
+      playButton.textContent = "Pause";
+    };
+
+    const pauseSong = () => {
+      audio.pause();
+      isPlaying = false;
+      playButton.textContent = "Play";
+    };
+
+    const togglePlay = () => {
+      isPlaying ? pauseSong() : playSong();
+    };
+
+    const changeSong = (direction) => {
+      currentIndex = (currentIndex + direction + songs.length) % songs.length;
+      loadSong();
+      playSong();
+      updateActiveSong();
+    };
+
+    audio.addEventListener("ended", () => {
+      changeSong(1);
+    });
+
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = context.createAnalyser();
+    analyser.fftSize = 128;
+
+    const source = context.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(context.destination);
+
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    const renderVisualizer = () => {
+      analyser.getByteFrequencyData(dataArray);
+      bars.forEach((bar, i) => {
+        bar.style.height = `${(dataArray[i] / 255) * 100}%`;
+      });
+      requestAnimationFrame(renderVisualizer);
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const overlay = document.createElement("div");
+      overlay.style.position = "fixed";
+      overlay.style.top = "0";
+      overlay.style.left = "0";
+      overlay.style.width = "100%";
+      overlay.style.height = "100%";
+      overlay.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+      overlay.style.color = "white";
+      overlay.style.display = "flex";
+      overlay.style.justifyContent = "center";
+      overlay.style.alignItems = "center";
+      overlay.style.zIndex = "9999";
+      overlay.style.cursor = "pointer";
+      overlay.innerHTML = `<div>Click anywhere to start!</div>`;
+
+      document.body.appendChild(overlay);
+
+      overlay.addEventListener("click", () => {
+        overlay.remove();
+        populateSongs();
+        loadSong();
+        context.resume();
+        renderVisualizer();
+      });
+    });
+  </script>
+</body>
+
+</html>

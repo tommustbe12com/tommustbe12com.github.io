@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Gamez - Play Awesome Games!</title>
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:700|Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e90ff;
+            --secondary: #23272f;
+            --accent: #ffcb05;
+            --bg: #181a20;
+            --text: #fff;
+        }
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        header {
+            background: var(--secondary);
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px #0008;
+        }
+        nav {
+            margin-top: 1rem;
+        }
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 1.2rem;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: var(--accent);
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            background: linear-gradient(120deg, #1e90ff 0%, #23272f 100%);
+            text-align: center;
+            padding: 3rem 1rem 2rem 1rem;
+        }
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            text-shadow: 0 4px 16px #000a;
+        }
+        .hero-desc {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            max-width: 600px;
+        }
+        .hero-btn {
+            background: var(--accent);
+            color: #222;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #0004;
+            transition: background 0.2s, color 0.2s;
+        }
+        .hero-btn:hover {
+            background: #fff;
+            color: var(--primary);
+        }
+        .carousel-section {
+            padding: 3rem 1rem 4rem 1rem;
+            background: var(--secondary);
+            text-align: center;
+        }
+        .carousel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+        .carousel-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+        }
+        .carousel-game {
+            min-width: 280px;
+            max-width: 280px;
+            margin: 0 1rem;
+            background: #22242a;
+            border-radius: 1.2rem;
+            box-shadow: 0 2px 16px #0005;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .carousel-game img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px #0006;
+        }
+        .carousel-game h3 {
+            margin: 0.5rem 0 0.3rem 0;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        .carousel-game p {
+            font-size: 0.95rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+        .carousel-game a {
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 1rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .carousel-game a:hover {
+            background: var(--accent);
+            color: #222;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #181a20cc;
+            border: none;
+            color: var(--accent);
+            font-size: 2rem;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            cursor: pointer;
+            z-index: 2;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        .carousel-btn.prev {
+            left: -1.5rem;
+        }
+        .carousel-btn.next {
+            right: -1.5rem;
+        }
+        @media (max-width: 900px) {
+            .carousel-game {
+                min-width: 220px;
+                max-width: 220px;
+            }
+        }
+        @media (max-width: 700px) {
+            .hero-title { font-size: 2.1rem; }
+            .carousel-title { font-size: 1.3rem; }
+            .carousel-game { min-width: 160px; max-width: 160px; }
+            .carousel-game img { width: 80px; height: 80px; }
+            .carousel-btn { font-size: 1.3rem; width: 2rem; height: 2rem; }
+        }
+        @media (max-width: 500px) {
+            .carousel-game { min-width: 90vw; max-width: 90vw; }
+            .carousel-btn.prev { left: 0; }
+            .carousel-btn.next { right: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Gamez</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#favorite-gamez">Favorite Gamez</a>
+            <a href="#">All Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-title">Welcome to Gamez!</div>
+        <div class="hero-desc">
+            Dive into a world of fun and excitement. Play the best free games online, from action-packed adventures to mind-bending puzzles. Discover your next favorite game today!
+        </div>
+        <a href="#favorite-gamez" class="hero-btn">Play Now</a>
+    </section>
+
+    <section class="carousel-section" id="favorite-gamez">
+        <div class="carousel-title">🎮 Favorite Gamez</div>
+        <div class="carousel-container">
+            <button class="carousel-btn prev" aria-label="Previous">&#8592;</button>
+            <div class="carousel-track">
+                <div class="carousel-game">
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80" alt="Space Adventure">
+                    <h3>Space Adventure</h3>
+                    <p>Blast off and explore the galaxy in this thrilling space shooter!</p>
+                    <a href="#">Play</a>
+                </div>
+                <div class="carousel-game">
+                    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Puzzle Mania">
+                    <h3>Puzzle Mania</h3>
+                    <p>Test your brain with hundreds of challenging puzzles and riddles.</p>
+                    <a href="#">Play</a>
+                </div>
+                <div class="carousel-game">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Racing Rush">
+                    <h3>Racing Rush</h3>
+                    <p>Speed through tracks and beat your rivals in this fast-paced racer.</p>
+                    <a href="#">Play</a>
+                </div>
+                <div class="carousel-game">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Mystic Quest">
+                    <h3>Mystic Quest</h3>
+                    <p>Embark on a magical journey filled with secrets and treasures.</p>
+                    <a href="#">Play</a>
+                </div>
+                <div class="carousel-game">
+                    <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Battle Arena">
+                    <h3>Battle Arena</h3>
+                    <p>Fight your way to the top in this action-packed multiplayer arena.</p>
+                    <a href="#">Play</a>
+                </div>
+            </div>
+            <button class="carousel-btn next" aria-label="Next">&#8594;</button>
+        </div>
+    </section>
+
+    <footer style="background:#181a20;color:#aaa;text-align:center;padding:1.5rem 0;font-size:1rem;">
+        &copy; 2024 Gamez. All rights reserved.
+    </footer>
+
+    <script>
+        // Simple Carousel Logic
+        const track = document.querySelector('.carousel-track');
+        const games = Array.from(document.querySelectorAll('.carousel-game'));
+        const prevBtn = document.querySelector('.carousel-btn.prev');
+        const nextBtn = document.querySelector('.carousel-btn.next');
+        let currentIndex = 0;
+        let visibleCount = 3;
+
+        function updateVisibleCount() {
+            if (window.innerWidth < 500) visibleCount = 1;
+            else if (window.innerWidth < 900) visibleCount = 2;
+            else visibleCount = 3;
+        }
+
+        function updateCarousel() {
+            const gameWidth = games[0].offsetWidth + 32; // 2*margin
+            track.style.transform = `translateX(-${currentIndex * gameWidth}px)`;
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex >= games.length - visibleCount;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) currentIndex--;
+            updateCarousel();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < games.length - visibleCount) currentIndex++;
+            updateCarousel();
+        });
+
+        window.addEventListener('resize', () => {
+            updateVisibleCount();
+            if (currentIndex > games.length - visibleCount) {
+                currentIndex = Math.max(0, games.length - visibleCount);
+            }
+            updateCarousel();
+        });
+
+        // Init
+        updateVisibleCount();
+        updateCarousel();
+    </script>
+</body>
+</html>
