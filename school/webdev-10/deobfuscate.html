@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deobfuscator</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;max-width:980px;margin:28px auto;padding:16px}
+textarea{width:100%;min-height:140px;padding:10px;font-family:monospace;font-size:13px;box-sizing:border-box}
+button{padding:8px 12px;margin:6px 6px 6px 0;border-radius:6px;border:1px solid #888;background:#f3f3f3;cursor:pointer}
+.result{white-space:pre-wrap;background:#111;color:#efe;padding:12px;border-radius:8px;min-height:160px;overflow:auto}
+.meta{margin-top:10px;color:#666;font-size:13px}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+.small{font-size:13px;padding:6px 10px}
+</style>
+</head>
+<body>
+<h2>Deobfuscator — reverse CodeHS obfuscation</h2>
+<textarea id="input" placeholder='Paste the obfuscated JS or the string here'></textarea>
+<div class="controls">
+  <button id="decode">Decode</button>
+  <button id="copy" class="small">Copy</button>
+  <button id="open" class="small">Open</button>
+  <button id="download" class="small">Download</button>
+  <button id="clear" class="small">Clear</button>
+</div>
+<div class="meta" id="meta">Status: waiting</div>
+<h3>Decoded</h3>
+<pre id="output" class="result">(decoded text appears here)</pre>
+<script>
+(function(){
+  const input = document.getElementById('input');
+  const output = document.getElementById('output');
+  const meta = document.getElementById('meta');
+
+  function longestQuoted(s){
+    const re = /(['"`])((?:\\.|(?!\1)[\s\S])*?)\1/g;
+    let m, longest = '';
+    while((m = re.exec(s)) !== null){
+      if(m[2].length > longest.length) longest = m[2];
+    }
+    return longest || null;
+  }
+
+  function safeUnescape(str){
+    try{
+      return JSON.parse('"' + str.replace(/\\/g,'\\\\').replace(/"/g,'\\"') + '"');
+    }catch(e){
+      return str;
+    }
+  }
+
+  function decodeChars(payload){
+    let out = '';
+    for(let i=0;i<payload.length;i++){
+      out += String.fromCharCode(payload.charCodeAt(i) - 1);
+    }
+    return out;
+  }
+
+  function repairArtifacts(text){
+    text = text.replace(/<\[\!/g,'<!');
+    text = text.replace(/\[!--/g,'<!--');
+    text = text.replace(/<\[/g,'<');
+    text = text.replace(/\[m\b/g,'');
+    text = text.replace(/\[\/?m\b/g,'');
+    text = text.replace(/\[([A-Za-z]{1,6})\]/g,''); 
+    text = text.replace(/\[\s*!/g,'<!');
+    text = text.replace(/\s+\[\s*!\s*\]/g,'');
+    return text;
+  }
+
+  function pickPayload(txt){
+    const q = longestQuoted(txt);
+    if(q) return q;
+    const varMatch = txt.match(/var\s+s\s*=\s*([^\n;]+)/i);
+    if(varMatch) return varMatch[1].trim().replace(/^['"`]|['"`]$/g,'');
+    return txt.trim();
+  }
+
+  document.getElementById('decode').addEventListener('click', ()=>{
+    const txt = input.value || '';
+    if(!txt.trim()){ meta.textContent='Status: paste something'; return; }
+    let payload = pickPayload(txt);
+    payload = safeUnescape(payload);
+    const decoded = repairArtifacts(decodeChars(payload));
+    output.textContent = decoded;
+    meta.textContent = `Status: decoded (${payload.length} chars in → ${decoded.length} chars out)`;
+  });
+
+  document.getElementById('copy').addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText(output.textContent); meta.textContent='Status: copied'; }
+    catch(e){ meta.textContent='Status: copy failed'; }
+  });
+
+  document.getElementById('open').addEventListener('click', ()=>{
+    const data = output.textContent;
+    if(!data){ meta.textContent='Status: nothing to open'; return; }
+    const isHtml = /<\s*!doctype|<html|<head|<body/i.test(data);
+    const blob = new Blob([data], {type: isHtml ? 'text/html' : 'text/plain'});
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+  });
+
+  document.getElementById('download').addEventListener('click', ()=>{
+    const data = output.textContent;
+    if(!data){ meta.textContent='Status: nothing to download'; return; }
+    const blob = new Blob([data], {type:'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'deobfuscated.txt';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+    meta.textContent='Status: download started';
+  });
+
+  document.getElementById('clear').addEventListener('click', ()=>{
+    input.value=''; output.textContent='(decoded text appears here)'; meta.textContent='Status: cleared';
+  });
+
+  window.addEventListener('keydown',(e)=>{
+    if(e.ctrlKey && e.key.toLowerCase()==='i'){
+      input.value='var s="=\"EPDUZQF!iunm?\\n=iunm!mboh>#fo#?\\n!!=ifbe?\\n"; m=""; for(i=0;i<s.length;i++){m+=String.fromCharCode(s.charCodeAt(i)-1);} document.write(m);';
+      meta.textContent='Status: sample injected';
+    }
+  });
+})();
+</script>
+</body>
+</html>
