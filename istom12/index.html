@@ -263,5 +263,139 @@
             window.addEventListener('resize', ()=>{ ww = innerWidth; wh = innerHeight; });
         })();
     </script>
+    <style>
+    /* Secret fullscreen overlay styles */
+    #secretOverlay{
+        position:fixed;
+        inset:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:
+            radial-gradient(circle at 30% 30%, rgba(124,77,255,0.16), transparent 12%),
+            radial-gradient(circle at 70% 70%, rgba(255,122,182,0.12), transparent 14%),
+            rgba(0,0,0,0.88);
+        z-index:99999;
+        cursor:pointer;
+        -webkit-backdrop-filter: blur(8px) saturate(120%);
+        backdrop-filter: blur(8px) saturate(120%);
+        animation: overlayIn .9s cubic-bezier(.2,.9,.25,1) both;
+    }
+
+    /* The GIF itself: dramatic entrance animation */
+    .secretGif{
+        max-width:95vw;
+        max-height:95vh;
+        border-radius:12px;
+        box-shadow:
+            0 40px 140px rgba(0,0,0,0.8),
+            0 0 48px rgba(124,77,255,0.18),
+            inset 0 0 80px rgba(255,255,255,0.02);
+        transform: scale(.78);
+        filter: blur(6px) saturate(130%);
+        animation: gifIn 1.1s cubic-bezier(.2,.9,.25,1) both;
+    }
+
+    /* Subtle pulse for extra "amazingly beautiful" effect */
+    .secretGif::after{
+        content:"";
+        position:absolute;
+        pointer-events:none;
+        inset: -12%;
+        border-radius: 16px;
+        background: radial-gradient(circle at 50% 40%, rgba(124,77,255,0.06), transparent 30%);
+        mix-blend-mode: screen;
+        animation: pulse 2.6s ease-in-out infinite;
+        z-index:-1;
+    }
+
+    @keyframes gifIn{
+        0%{ opacity:0; transform: scale(.6) translateY(24px); filter: blur(18px) saturate(80%); }
+        60%{ transform: scale(1.06) translateY(-12px); filter: blur(4px) saturate(140%); }
+        100%{ opacity:1; transform: scale(1) translateY(0); filter: blur(0) saturate(120%); }
+    }
+    @keyframes overlayIn{ from{opacity:0} to{opacity:1} }
+    @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:.9 } 50%{ transform:scale(1.04); opacity:1 } }
+
+    /* small responsive tweak to avoid covering system UI on narrow screens */
+    @media (max-height:520px){
+        .secretGif{ max-height:86vh; }
+    }
+    </style>
+
+    <script>
+    (function(){
+        const REQUIRED_PRESS = 36;     // number of consecutive key presses required
+        const WINDOW_MS = 12000;       // time window (ms) to complete the combo
+        const GIF_SRC = 'slaughterhouse.gif';
+
+        let buffer = [];
+        let firstTs = 0;
+        let active = false;
+
+        function resetBuffer(){
+            buffer = [];
+            firstTs = 0;
+        }
+
+        function openSecret(){
+            if(active) return;
+            active = true;
+
+            const overlay = document.createElement('div');
+            overlay.id = 'secretOverlay';
+            overlay.setAttribute('role','dialog');
+            overlay.setAttribute('aria-label','Secret animation');
+
+            // create image element
+            const img = document.createElement('img');
+            img.className = 'secretGif';
+            img.src = GIF_SRC;
+            img.alt = 'Secret animation';
+            overlay.appendChild(img);
+
+            // append and try to enter fullscreen (keydown counts as user gesture in most browsers)
+            document.body.appendChild(overlay);
+            const requestFull = overlay.requestFullscreen || overlay.webkitRequestFullscreen || overlay.msRequestFullscreen;
+            try{ if(requestFull) requestFull.call(overlay); }catch(e){ /* ignore if blocked */ }
+
+            function close(){
+                try{
+                    const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+                    if(exit && document.fullscreenElement) exit.call(document);
+                }catch(e){ /* ignore */ }
+                overlay.removeEventListener('click', close);
+                window.removeEventListener('keydown', onEsc);
+                if(overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                active = false;
+                resetBuffer();
+            }
+
+            // click overlay or press Escape to close
+            overlay.addEventListener('click', close);
+            function onEsc(e){ if(e.key === 'Escape') close(); }
+            window.addEventListener('keydown', onEsc, {once:false});
+        }
+
+        function onKey(e){
+            // ignore when typing into form controls
+            const tag = document.activeElement && document.activeElement.tagName;
+            if(tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement && document.activeElement.isContentEditable) return;
+
+            const now = Date.now();
+            if(!firstTs) firstTs = now;
+            if(now - firstTs > WINDOW_MS){ resetBuffer(); firstTs = now; }
+
+            buffer.push(e.key);
+            if(buffer.length > REQUIRED_PRESS) buffer.shift();
+
+            if(buffer.length === REQUIRED_PRESS){
+                openSecret();
+            }
+        }
+
+        window.addEventListener('keydown', onKey, {passive:true});
+    })();
+    </script>
 </body>
 </html>
