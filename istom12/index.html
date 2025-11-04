@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Is Tom 12?</title>
+
+    <!-- Elegant fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg-dark: #060617;
+            --accent-1: #8be9fd;
+            --accent-2: #7c4dff;
+            --accent-3: #ff7ab6;
+            --glass: rgba(255,255,255,0.06);
+            --glass-border: rgba(255,255,255,0.12);
+            --glow: 0 10px 40px rgba(124,77,255,0.18), 0 2px 6px rgba(0,0,0,0.6);
+        }
+
+        /* Full-page reset and animated layered background */
+        html,body{
+            height:100%;
+            margin:0;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: radial-gradient(1200px 800px at 15% 20%, rgba(124,77,255,0.12), transparent 8%),
+                                    radial-gradient(900px 600px at 85% 80%, rgba(255,122,182,0.08), transparent 10%),
+                                    linear-gradient(180deg, rgba(6,6,23,1) 0%, rgba(12,10,30,1) 100%);
+            color: #fff;
+            overflow:hidden;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            background-color: var(--bg-dark);
+        }
+
+        /* Moving gradient overlays */
+        body::before,
+        body::after{
+            content:"";
+            position:fixed;
+            inset: -20%;
+            z-index:0;
+            pointer-events:none;
+            mix-blend-mode: screen;
+            filter: blur(60px) saturate(120%);
+            opacity: 0.9;
+            transition: opacity .6s ease;
+        }
+        body::before{
+            background: conic-gradient(from 120deg at 50% 50%, var(--accent-1), transparent 25%, var(--accent-2) 50%, transparent 75%, var(--accent-3));
+            animation: spin 18s linear infinite;
+            transform: translate3d(-5%, -5%, 0) scale(1.15);
+        }
+        body::after{
+            background: radial-gradient(closest-side, rgba(255,255,255,0.06), transparent 45%),
+                                    conic-gradient(from 220deg at 40% 60%, rgba(139,233,253,0.35), transparent 30%, rgba(255,122,182,0.3));
+            animation: swirl 26s linear infinite reverse;
+            transform: translate3d(5%, 5%, 0) scale(1.05);
+            opacity: .7;
+        }
+
+        @keyframes spin{
+            from{ transform: rotate(0deg) translate3d(-5%,-5%,0) scale(1.15); }
+            to{   transform: rotate(360deg) translate3d(-5%,-5%,0) scale(1.15); }
+        }
+        @keyframes swirl{
+            from{ transform: rotate(0deg) translate3d(5%,5%,0) scale(1.05); }
+            to{   transform: rotate(-360deg) translate3d(5%,5%,0) scale(1.05); }
+        }
+
+        /* Subtle film grain overlay using SVG data-URI for texture */
+        .grain{
+            position:fixed;
+            inset:0;
+            z-index:4;
+            pointer-events:none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' opacity='0.02'><filter id='n'><feTurbulence baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+            mix-blend-mode: overlay;
+            opacity: .9;
+        }
+
+        /* Centering container */
+        main{
+            position:relative;
+            z-index:5;
+            min-height:100%;
+            display:grid;
+            place-items:center;
+            padding:6vh 6vw;
+            box-sizing:border-box;
+        }
+
+        /* The "card" that holds the single word - extremely stylized */
+        .mural{
+            position:relative;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width:min(88vw, 1200px);
+            padding: clamp(36px, 6vh, 64px);
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glow);
+            backdrop-filter: blur(8px) saturate(120%);
+            -webkit-backdrop-filter: blur(8px) saturate(120%);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform .3s ease, box-shadow .3s ease;
+            overflow: visible;
+        }
+
+        .mural:before{
+            /* soft rim light */
+            content:"";
+            position:absolute;
+            inset:-6px;
+            border-radius:inherit;
+            background: linear-gradient(90deg, rgba(124,77,255,0.06), rgba(139,233,253,0.04));
+            filter: blur(18px);
+            z-index:-1;
+            opacity:.9;
+            transform: translateZ(-1px);
+        }
+
+        /* Floating accent shapes */
+        .mural .blob{
+            position:absolute;
+            width:240px;
+            height:240px;
+            border-radius:50%;
+            filter: blur(52px);
+            mix-blend-mode: screen;
+            pointer-events:none;
+            opacity:.45;
+            transform: translate3d(0,0,0);
+        }
+        .blob.a{ left:-8%; top:-12%; background:radial-gradient(circle at 30% 30%, rgba(139,77,255,0.7), rgba(124,77,255,0.12)); animation: floatA 9s ease-in-out infinite; }
+        .blob.b{ right:-6%; bottom:-18%; background:radial-gradient(circle at 70% 70%, rgba(255,122,182,0.6), rgba(255,122,182,0.09)); animation: floatB 11s ease-in-out infinite; }
+        @keyframes floatA{ 0%{transform:translateY(0)}50%{transform:translateY(18px)}100%{transform:translateY(0)} }
+        @keyframes floatB{ 0%{transform:translateY(0)}50%{transform:translateY(-22px)}100%{transform:translateY(0)} }
+
+        /* The single word stylized to absurd perfection */
+        .answer{
+            position:relative;
+            z-index:10;
+            display:inline-block;
+            font-family: 'Playfair Display', serif;
+            font-weight:800;
+            color: transparent;
+            font-size: clamp(48px, 12vw, 220px);
+            line-height: 0.86;
+            letter-spacing: -2px;
+            text-transform: none;
+            background-image: linear-gradient(180deg, #ffffff, rgba(190,230,255,0.9));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-stroke: 1.6px rgba(255,255,255,0.06);
+            text-shadow:
+                0 2px 0 rgba(0,0,0,0.3),
+                0 12px 38px rgba(12,10,30,0.6),
+                0 0 28px rgba(124,77,255,0.12);
+            transform: translateZ(60px) rotateX(0.001deg);
+            transition: transform .35s cubic-bezier(.2,.9,.2,1), text-shadow .25s ease;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap: .6rem;
+            padding: 0 6px;
+        }
+
+        /* Neon outline glow using filter and duplicate element */
+        .answer::after{
+            content: attr(data-text);
+            position:absolute;
+            inset:0;
+            z-index:-1;
+            filter: blur(18px) saturate(150%);
+            opacity:.7;
+            background-image: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+            -webkit-background-clip: text;
+            background-clip:text;
+            color: transparent;
+            transform: translateZ(-40px) scale(1.02);
+        }
+
+        /* tiny sublabel for contrast */
+        .label{
+            position:absolute;
+            bottom:8px;
+            right:12px;
+            font-size:clamp(10px,1.2vw,14px);
+            font-weight:600;
+            opacity:.7;
+            font-family: Inter, system-ui, sans-serif;
+            letter-spacing:0.12em;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Hover / motion interactions */
+        .mural:hover{ transform: translateY(-6px) scale(1.008); box-shadow: 0 28px 80px rgba(0,0,0,0.6), 0 8px 30px rgba(124,77,255,0.14); }
+        .mural:active{ transform: translateY(-2px) scale(1.002); }
+
+        /* small responsive tweaks */
+        @media (max-width:640px){
+            .mural{ padding: clamp(20px, 6vh, 36px); border-radius:18px; }
+            .blob{ display:none; }
+            .answer{ letter-spacing: -1px; }
+        }
+
+        /* playful entrance animation */
+        .mural{ animation: arrive .9s cubic-bezier(.2,.9,.25,1) both; }
+        @keyframes arrive{
+            0%{ transform: translateY(18px) scale(.985) rotateX(6deg); opacity:0; }
+            60%{ transform: translateY(-6px) scale(1.01) rotateX(0.5deg); opacity:1; }
+            100%{ transform: translateY(0) scale(1) rotateX(0deg); opacity:1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <main>
+        <section class="mural" aria-labelledby="answerLabel" role="region">
+            <span class="blob a" aria-hidden="true"></span>
+            <span class="blob b" aria-hidden="true"></span>
+
+            <!-- THE SINGLE WORD: extravagantly styled -->
+            <div class="answer" id="answerLabel" data-text="No.">No.</div>
+
+            <div class="label" aria-hidden="true">Is Tom 12?</div>
+        </section>
+    </main>
+
+    <script>
+        // Parallax: subtle tilt of the card and tweak background positions on mouse move.
+        (function(){
+            const mural = document.querySelector('.mural');
+            const body = document.body;
+            let ww = window.innerWidth, wh = window.innerHeight;
+
+            function onMove(e){
+                const x = (e.clientX || (e.touches && e.touches[0].clientX) || ww/2) - ww/2;
+                const y = (e.clientY || (e.touches && e.touches[0].clientY) || wh/2) - wh/2;
+                const rx = (y / wh) * 6; // rotateX
+                const ry = (x / ww) * -12; // rotateY
+                mural.style.transform = `translateY(-6px) scale(1.008) rotateX(${rx}deg) rotateY(${ry}deg)`;
+                // move conic gradients slightly for depth
+                const px = 50 + (x/ww)*8;
+                const py = 50 + (y/wh)*8;
+                body.style.setProperty('--bg-pos-x', px + '%');
+                body.style.setProperty('--bg-pos-y', py + '%');
+            }
+
+            function onLeave(){
+                mural.style.transform = '';
+            }
+
+            window.addEventListener('mousemove', onMove, {passive:true});
+            window.addEventListener('touchmove', onMove, {passive:true});
+            window.addEventListener('mouseleave', onLeave);
+            window.addEventListener('resize', ()=>{ ww = innerWidth; wh = innerHeight; });
+        })();
+    </script>
+</body>
+</html>
