@@ -1,40 +1,85 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TomMustBe12 Blog</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <nav>
-            <h3>TomMustBe12 Blog</h3>
-            <a href="../index.html" class="back-button">Back to Homepage</a>
-            <a href="recent">Recent</a>
-        </nav>
-        <div class="largeContainer">
-            <div class="stickyInfo">
-                <h4>Welcome to TomMustBe12's Blog</h4>
-                <h4>A place where I can post what I think is interesting.</h4>
-            </div>
-            <div class="content">
-                <div class="title">
-                    <h1>Welcome to my blog</h1>
-                    <sub>I post my thinking and cool projects here sometimes.</sub>
-                </div>
-                <div class="image">
-                    <img src="assets/blog.png">
-                </div>
-                <main>
-                    <h2>My Blog</h2>
-                    <hr>
-                    <p>I'm TomMustBe12. You may know me from the YouTube channel I run or from something else. I like technology, and this blog is for me to post what I think about it.</p>
-                    <p>Check for updates. Eventually I might make it so that you can receive notifications but I don't know. Anyways you should check out some of my posts now.</p>
-                </main>
-            </div>
+<head>
+    <title>Recent Blog Posts | TomMustBe12 Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+    <h3>TomMustBe12 Blog</h3>
+    <a href="https://tommustbe12.com">Homepage</a>
+</nav>
+
+<div class="largeContainer">
+    <div class="stickyInfo">
+        <h4>Recent Blog Posts</h4>
+        <h4>A place where I can post what I think is interesting.</h4>
+    </div>
+
+    <div class="content">
+        <div class="title">
+            <h1>Recent Blog Posts</h1>
+            <sub>These are my latest blog posts.</sub>
         </div>
-        <br>
-        <br>
-    </body>
+
+        <main id="posts"></main>
+    </div>
+</div>
+
+<script>
+function stripHtml(html) {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+}
+
+async function loadPosts() {
+    try {
+        const response = await fetch('https://tmb12.link/blogs/previews');
+        if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
+        const posts = await response.json();
+
+        const container = document.getElementById("posts");
+        container.innerHTML = "";
+
+        posts.forEach(post => {
+            const postEl = document.createElement("div");
+            postEl.className = "blog-post";
+
+            // Title link
+            const h2 = document.createElement("h2");
+            const a = document.createElement("a");
+            a.href = `post.html?id=${post.id}`;
+            a.textContent = post.title;
+            h2.appendChild(a);
+            postEl.appendChild(h2);
+
+            // Date & views
+            const pMeta = document.createElement("p");
+            pMeta.className = "date";
+            pMeta.textContent = `${post.dateTime} | Views: ${post.views}`;
+            postEl.appendChild(pMeta);
+            
+            // Preview (strip HTML tags)
+            const previewText = stripHtml(post.preview);
+            const words = previewText.split(/\s+/).slice(0, 20).join(" ");
+
+            const pPreview = document.createElement("p");
+            pPreview.textContent = words;
+            postEl.appendChild(pPreview);
+
+            container.appendChild(postEl);
+        });
+
+    } catch (err) {
+        console.error("Error loading posts:", err);
+        document.getElementById("posts").textContent = "Failed to load posts.";
+    }
+}
+
+
+window.addEventListener("DOMContentLoaded", loadPosts);
+</script>
+</body>
 </html>

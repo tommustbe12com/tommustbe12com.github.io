@@ -90,8 +90,11 @@ nav {
     justify-content: center;
     align-items: center;
     background-color: #1f1f1f;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;  
+    max-width: 1200px;
+    border-radius: 5px;
 }
+
 
 nav h3 {
     margin-right: auto;
