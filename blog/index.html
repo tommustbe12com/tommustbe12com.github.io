@@ -40,6 +40,9 @@ async function loadPosts() {
         if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
         const posts = await response.json();
 
+        // Sort posts by date, newest first
+        posts.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+
         const container = document.getElementById("posts");
         container.innerHTML = "";
 
@@ -47,7 +50,6 @@ async function loadPosts() {
             const postEl = document.createElement("div");
             postEl.className = "blog-post";
 
-            // Title link
             const h2 = document.createElement("h2");
             const a = document.createElement("a");
             a.href = `post.html?id=${post.id}`;
@@ -55,16 +57,13 @@ async function loadPosts() {
             h2.appendChild(a);
             postEl.appendChild(h2);
 
-            // Date & views
             const pMeta = document.createElement("p");
             pMeta.className = "date";
             pMeta.textContent = `${post.dateTime} | Views: ${post.views}`;
             postEl.appendChild(pMeta);
             
-            // Preview (strip HTML tags)
             const previewText = stripHtml(post.preview);
             const words = previewText.split(/\s+/).slice(0, 20).join(" ");
-
             const pPreview = document.createElement("p");
             pPreview.textContent = words;
             postEl.appendChild(pPreview);
@@ -77,6 +76,7 @@ async function loadPosts() {
         document.getElementById("posts").textContent = "Failed to load posts.";
     }
 }
+
 
 
 window.addEventListener("DOMContentLoaded", loadPosts);
