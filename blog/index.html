@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recent Blog Posts | TomMustBe12 Blog</title>
+    <title>Blog Posts | TomMustBe12 Blog</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        .sort-container {
+            margin: 10px 0;
+        }
+        .sort-container label {
+            margin-right: 5px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <nav>
@@ -23,6 +32,15 @@
             <sub>These are my latest blog posts.</sub>
         </div>
 
+        <div class="sort-container">
+            <label for="sortSelect">Sort by:</label>
+            <select id="sortSelect">
+                <option value="latest">Latest</option>
+                <option value="oldest">Oldest</option>
+                <option value="views">Most Views</option>
+            </select>
+        </div>
+
         <main id="posts"></main>
     </div>
 </div>
@@ -34,50 +52,64 @@ function stripHtml(html) {
     return tmp.textContent || tmp.innerText || "";
 }
 
+let allPosts = []; // store all posts for re-sorting
+
 async function loadPosts() {
     try {
         const response = await fetch('https://corsproxy.io/?https://tmb12.link/blogs/previews');
         if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
-        const posts = await response.json();
-
-        // Sort posts by date, newest first
-        posts.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
-
-        const container = document.getElementById("posts");
-        container.innerHTML = "";
-
-        posts.forEach(post => {
-            const postEl = document.createElement("div");
-            postEl.className = "blog-post";
-
-            const h2 = document.createElement("h2");
-            const a = document.createElement("a");
-            a.href = `post.html?id=${post.id}`;
-            a.textContent = post.title;
-            h2.appendChild(a);
-            postEl.appendChild(h2);
-
-            const pMeta = document.createElement("p");
-            pMeta.className = "date";
-            pMeta.textContent = `${post.dateTime} | Views: ${post.views}`;
-            postEl.appendChild(pMeta);
-            
-            const previewText = stripHtml(post.preview);
-            const words = previewText.split(/\s+/).slice(0, 20).join(" ");
-            const pPreview = document.createElement("p");
-            pPreview.textContent = words;
-            postEl.appendChild(pPreview);
-
-            container.appendChild(postEl);
-        });
-
+        allPosts = await response.json();
+        renderPosts('latest'); // default sort
     } catch (err) {
         console.error("Error loading posts:", err);
         document.getElementById("posts").textContent = "Failed to load posts.";
     }
 }
 
+function renderPosts(sortBy) {
+    const container = document.getElementById("posts");
+    container.innerHTML = "";
 
+    let sortedPosts = [...allPosts];
+
+    if (sortBy === "latest") {
+        sortedPosts.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+    } else if (sortBy === "oldest") {
+        sortedPosts.sort((a, b) => new Date(a.dateTime) - new Date(b.dateTime));
+    } else if (sortBy === "views") {
+        sortedPosts.sort((a, b) => b.views - a.views);
+    }
+
+    sortedPosts.forEach(post => {
+        const postEl = document.createElement("div");
+        postEl.className = "blog-post";
+
+        const h2 = document.createElement("h2");
+        const a = document.createElement("a");
+        a.href = `post.html?id=${post.id}`;
+        a.textContent = post.title;
+        h2.appendChild(a);
+        postEl.appendChild(h2);
+
+        const pMeta = document.createElement("p");
+        pMeta.className = "date";
+        pMeta.textContent = `${post.dateTime} | Views: ${post.views}`;
+        postEl.appendChild(pMeta);
+
+        const previewText = stripHtml(post.preview);
+        const words = previewText.split(/\s+/).slice(0, 20).join(" ");
+        const pPreview = document.createElement("p");
+        pPreview.textContent = words;
+        postEl.appendChild(pPreview);
+
+        container.appendChild(postEl);
+    });
+}
+
+// Handle sorting dropdown change
+document.getElementById("sortSelect").addEventListener("change", (e) => {
+    renderPosts(e.target.value);
+});
 
 window.addEventListener("DOMContentLoaded", loadPosts);
 </script>
