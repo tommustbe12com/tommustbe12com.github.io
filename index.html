@@ -99,7 +99,7 @@
 
             const link = document.querySelector(".blogLink");
             link.textContent = data.title;
-            link.href = "/blog/" + data.id;
+            link.href = "/blog/post.html?id=" + data.id;
 
             const dateP = document.querySelector(".blogDate");
             dateP.textContent = data.dateTime;
