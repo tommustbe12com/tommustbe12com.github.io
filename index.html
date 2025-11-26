@@ -61,13 +61,43 @@
           <div class="muted">I create cool things!</div>
         </div>
       </div>
-      <nav>
+      <nav class="normalNav">
         <a class="nav-link" href="/soundtrack/">Soundtrack</a>
         <a class="nav-link" href="/project-hub/">Projects</a>
         <a class="nav-link" href="https://discord.gg/qFy6MdMV9t">Discord Server</a>
         <a class="nav-link" href="/blog">Blog</a>
         <a class="nav-link speciaw" href="https://codecraft.tommustbe12.com/">CodeCraft Academy</a>
       </nav>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="mobile-nav" id="mobileNav">
+        <a class="nav-link" href="/soundtrack/">Soundtrack</a>
+        <a class="nav-link" href="/project-hub/">Projects</a>
+        <a class="nav-link" href="https://discord.gg/qFy6MdMV9t">Discord Server</a>
+        <a class="nav-link" href="/blog">Blog</a>
+        <a class="nav-link speciaw" href="https://codecraft.tommustbe12.com/">CodeCraft Academy</a>
+      </nav>
+
+      <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        hamburgerBtn.addEventListener('click', () => {
+          hamburgerBtn.classList.toggle('active');
+          mobileNav.classList.toggle('active');
+        });
+
+        mobileNav.querySelectorAll('.nav-link').forEach(link => {
+          link.addEventListener('click', () => {
+            hamburgerBtn.classList.remove('active');
+            mobileNav.classList.remove('active');
+          });
+        });
+      </script>
     </header>
 
     <section class="panel hero">

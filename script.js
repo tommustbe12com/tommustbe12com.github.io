@@ -1,98 +1,98 @@
 (function () {
-      const canvas = document.getElementById('starsCanvas');
-      const gl = canvas.getContext('webgl', { alpha: true, antialias: true });
-      if (!gl) { console.warn('WebGL not supported'); return; }
+  const canvas = document.getElementById('starsCanvas');
+  const gl = canvas.getContext('webgl', { alpha: true, antialias: true });
+  if (!gl) { console.warn('WebGL not supported'); return; }
 
-      let DPR = Math.min(window.devicePixelRatio || 1, 2);
-      function resize() { canvas.width = Math.floor(innerWidth * DPR); canvas.height = Math.floor(innerHeight * DPR); canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; gl.viewport(0, 0, canvas.width, canvas.height); }
-      window.addEventListener('resize', resize); resize();
+  let DPR = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() { canvas.width = Math.floor(innerWidth * DPR); canvas.height = Math.floor(innerHeight * DPR); canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; gl.viewport(0, 0, canvas.width, canvas.height); }
+  window.addEventListener('resize', resize); resize();
 
-      const vert = `attribute vec3 aPos; attribute float aSize; varying float vDepth; uniform mat4 uProj; uniform float uPixelRatio; void main(){ vec4 pos = vec4(aPos,1.0); gl_Position = uProj * pos; gl_PointSize = aSize * uPixelRatio; vDepth = -aPos.z; }`;
-      const frag = `precision mediump float; varying float vDepth; uniform float uOpacity; void main(){ vec2 uv = gl_PointCoord - 0.5; float r = length(uv); float alpha = smoothstep(0.5, 0.0, r); // soft circle
-        // depth-based tint (farther = dimmer)
-        float d = clamp(1.0 - (vDepth/200.0), 0.0, 1.0);
-        // greenish star color (tuned to be warmer/greener)
-        vec3 base = vec3(0.40, 0.95, 0.35);
-        gl_FragColor = vec4(base * d, alpha * uOpacity * d);
-      }`;
+  const vert = `attribute vec3 aPos; attribute float aSize; varying float vDepth; uniform mat4 uProj; uniform float uPixelRatio; void main(){ vec4 pos = vec4(aPos,1.0); gl_Position = uProj * pos; gl_PointSize = aSize * uPixelRatio; vDepth = -aPos.z; }`;
+  const frag = `precision mediump float; varying float vDepth; uniform float uOpacity; void main(){ vec2 uv = gl_PointCoord - 0.5; float r = length(uv); float alpha = smoothstep(0.5, 0.0, r); // soft circle
+    // depth-based tint (farther = dimmer)
+    float d = clamp(1.0 - (vDepth/200.0), 0.0, 1.0);
+    // greenish star color (tuned to be warmer/greener)
+    vec3 base = vec3(0.40, 0.95, 0.35);
+    gl_FragColor = vec4(base * d, alpha * uOpacity * d);
+  }`;
 
-      function compileShader(src, type) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); } return s; }
-      const vS = compileShader(vert, gl.VERTEX_SHADER); const fS = compileShader(frag, gl.FRAGMENT_SHADER);
-      const prog = gl.createProgram(); gl.attachShader(prog, vS); gl.attachShader(prog, fS); gl.linkProgram(prog); if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(prog));
-      gl.useProgram(prog);
+  function compileShader(src, type) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); } return s; }
+  const vS = compileShader(vert, gl.VERTEX_SHADER); const fS = compileShader(frag, gl.FRAGMENT_SHADER);
+  const prog = gl.createProgram(); gl.attachShader(prog, vS); gl.attachShader(prog, fS); gl.linkProgram(prog); if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(prog));
+  gl.useProgram(prog);
 
-      const aPos = gl.getAttribLocation(prog, 'aPos'); const aSize = gl.getAttribLocation(prog, 'aSize');
-      const uProj = gl.getUniformLocation(prog, 'uProj'); const uPixelRatio = gl.getUniformLocation(prog, 'uPixelRatio'); const uOpacity = gl.getUniformLocation(prog, 'uOpacity');
+  const aPos = gl.getAttribLocation(prog, 'aPos'); const aSize = gl.getAttribLocation(prog, 'aSize');
+  const uProj = gl.getUniformLocation(prog, 'uProj'); const uPixelRatio = gl.getUniformLocation(prog, 'uPixelRatio'); const uOpacity = gl.getUniformLocation(prog, 'uOpacity');
 
-      const COUNT = 1400; const depth = 600;
-      const positions = new Float32Array(COUNT * 3);
-      const sizes = new Float32Array(COUNT);
-      for (let i = 0; i < COUNT; i++) {
-        const x = (Math.random() - 0.5) * innerWidth * 0.12;
-        const y = (Math.random() - 0.5) * innerHeight * 0.12;
-        const z = -Math.random() * depth;
-        positions[i * 3 + 0] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = z;
-        sizes[i] = 1.0 + Math.random() * 3.2;
+  const COUNT = 1400; const depth = 600;
+  const positions = new Float32Array(COUNT * 3);
+  const sizes = new Float32Array(COUNT);
+  for (let i = 0; i < COUNT; i++) {
+    const x = (Math.random() - 0.5) * innerWidth * 0.12;
+    const y = (Math.random() - 0.5) * innerHeight * 0.12;
+    const z = -Math.random() * depth;
+    positions[i * 3 + 0] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = z;
+    sizes[i] = 1.0 + Math.random() * 3.2;
+  }
+
+  const posBuffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer); gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW);
+  const sizeBuffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer); gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.STATIC_DRAW);
+
+  gl.enableVertexAttribArray(aPos); gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(aSize); gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer); gl.vertexAttribPointer(aSize, 1, gl.FLOAT, false, 0, 0);
+
+  function setProjection() {
+    const aspect = canvas.width / canvas.height; const fov = 60 * Math.PI / 180; const near = 0.1; const far = 1000;
+    const f = 1.0 / Math.tan(fov / 2);
+    const proj = new Float32Array([f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) / (near - far), -1, 0, 0, (2 * far * near) / (near - far), 0]);
+    gl.uniformMatrix4fv(uProj, false, proj);
+    gl.uniform1f(uPixelRatio, DPR);
+  }
+
+  let velocity = 0.02; const minSpeed = 0.015; const maxSpeed = 0.5; let targetSpeed = minSpeed; let scrollTimeout;
+
+  function computeTarget() { const doc = document.documentElement; const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight); const s = (window.scrollY || 0) / maxScroll; return s; }
+
+  window.addEventListener('scroll', () => {
+    const factor = computeTarget();
+    targetSpeed = minSpeed + Math.pow(factor, 1.8) * (maxSpeed - minSpeed);
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => { targetSpeed = minSpeed; }, 200);
+  }, { passive: true });
+
+  window.addEventListener('wheel', (e) => { velocity += Math.sign(e.deltaY) * 0.06; velocity = Math.max(minSpeed, Math.min(maxSpeed, velocity)); });
+
+  function onResize() { DPR = Math.min(window.devicePixelRatio || 1, 2); resize(); setProjection(); }
+  window.addEventListener('resize', onResize);
+
+  let last = performance.now(); function frame(t) {
+    const dt = Math.min(0.05, (t - last) / 1000); last = t;
+    velocity += (targetSpeed - velocity) * 0.035;
+    velocity = Math.max(minSpeed * 0.5, Math.min(maxSpeed * 1.2, velocity));
+
+    for (let i = 0; i < COUNT; i++) {
+      let z = positions[i * 3 + 2]; z += velocity * (30 + (sizes[i] - 1.0) * 6) * dt * 60;
+      if (z > 20) {
+    z -= depth;
+    positions[i * 3 + 0] = (Math.random() - 0.5) * innerWidth * 0.12;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * innerHeight * 0.12;
       }
+      positions[i * 3 + 2] = z;
+    }
 
-      const posBuffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer); gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW);
-      const sizeBuffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer); gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer); gl.bufferSubData(gl.ARRAY_BUFFER, 0, positions);
 
-      gl.enableVertexAttribArray(aPos); gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
-      gl.enableVertexAttribArray(aSize); gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer); gl.vertexAttribPointer(aSize, 1, gl.FLOAT, false, 0, 0);
+    // subtle green ambient clear so the scene reads as greenish
+    gl.clearColor(0.02, 0.06, 0.03, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform1f(uOpacity, 0.65);
+    gl.drawArrays(gl.POINTS, 0, COUNT);
+    requestAnimationFrame(frame);
+  }
 
-      function setProjection() {
-        const aspect = canvas.width / canvas.height; const fov = 60 * Math.PI / 180; const near = 0.1; const far = 1000;
-        const f = 1.0 / Math.tan(fov / 2);
-        const proj = new Float32Array([f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) / (near - far), -1, 0, 0, (2 * far * near) / (near - far), 0]);
-        gl.uniformMatrix4fv(uProj, false, proj);
-        gl.uniform1f(uPixelRatio, DPR);
-      }
+  setProjection(); requestAnimationFrame(frame);
 
-      let velocity = 0.02; const minSpeed = 0.015; const maxSpeed = 1.8; let targetSpeed = minSpeed; let lastScroll = window.scrollY || 0;
-
-      function computeTarget() { const doc = document.documentElement; const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight); const s = (window.scrollY || 0) / maxScroll; return s; }
-
-      window.addEventListener('scroll', () => {
-        const factor = computeTarget();
-        targetSpeed = minSpeed + Math.pow(factor, 1.8) * (maxSpeed - minSpeed);
-        velocity += 0.12 * (targetSpeed - velocity);
-      }, { passive: true });
-
-      window.addEventListener('wheel', (e) => { velocity += Math.sign(e.deltaY) * 0.06; velocity = Math.max(minSpeed, Math.min(maxSpeed, velocity)); });
-
-      function onResize() { DPR = Math.min(window.devicePixelRatio || 1, 2); resize(); setProjection(); }
-      window.addEventListener('resize', onResize);
-
-      let last = performance.now(); function frame(t) {
-        const dt = Math.min(0.05, (t - last) / 1000); last = t;
-        const scrollFactor = computeTarget(); targetSpeed = minSpeed + Math.pow(scrollFactor, 1.8) * (maxSpeed - minSpeed);
-        velocity += (targetSpeed - velocity) * 0.035;
-        velocity = Math.max(minSpeed * 0.5, Math.min(maxSpeed * 1.2, velocity));
-
-        for (let i = 0; i < COUNT; i++) {
-          let z = positions[i * 3 + 2]; z += velocity * (30 + (sizes[i] - 1.0) * 6) * dt * 60;
-          if (z > 20) {
-            z -= depth;
-            positions[i * 3 + 0] = (Math.random() - 0.5) * innerWidth * 0.12;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * innerHeight * 0.12;
-          }
-          positions[i * 3 + 2] = z;
-        }
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer); gl.bufferSubData(gl.ARRAY_BUFFER, 0, positions);
-
-        // subtle green ambient clear so the scene reads as greenish
-        gl.clearColor(0.02, 0.06, 0.03, 1.0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.uniform1f(uOpacity, 0.65);
-        gl.drawArrays(gl.POINTS, 0, COUNT);
-        requestAnimationFrame(frame);
-      }
-
-      setProjection(); requestAnimationFrame(frame);
-
-      document.getElementById('btnPulse')?.addEventListener('click', () => { velocity += 0.9; setTimeout(() => { velocity = Math.max(minSpeed, velocity * 0.25); }, 220); });
+  document.getElementById('btnPulse')?.addEventListener('click', () => { velocity += 0.9; setTimeout(() => { velocity = Math.max(minSpeed, velocity * 0.25); }, 220); });
 
     })();
 

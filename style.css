@@ -66,6 +66,70 @@ nav {
     gap: 10px;
 }
 
+.hamburger {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    gap: 6px;
+    z-index: 2000;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: all 0.5s ease;
+    color: white;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(10px, 10px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(3px, -3px);
+}
+
+.mobile-nav {
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 0;
+    min-width: 200px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    z-index: 1000;
+}
+
+.mobile-nav.active {
+    max-height: 300px;
+    opacity: 1;
+}
+
+.mobile-nav .nav-link {
+    padding: 12px 20px;
+    display: block;
+    transition: background 0.2s ease;
+}
+
+.mobile-nav .nav-link:hover {
+    background: rgba(6, 95, 70, 0.1);
+}
+
 .nav-link {
     color: var(--muted);
     text-decoration: none;
@@ -107,7 +171,7 @@ nav {
 
 .hero-sub {
     color: var(--muted);
-    font-weight: 600
+    font-weight: 600;
 }
 
 .posts {
@@ -121,35 +185,39 @@ nav {
     padding: 14px;
     border-radius: 12px;
     background: rgba(2, 6, 10, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.02)
+    border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .post h3 {
-    margin: 0 0 6px
+    margin: 0 0 6px;
 }
 
 .muted {
-    color: var(--muted)
+    color: var(--muted);
 }
 
 footer {
     margin-top: 28px;
     color: var(--muted);
-    text-align: center
+    text-align: center;
 }
 
 @media (max-width:880px) {
     .posts {
-        grid-template-columns: 1fr
+        grid-template-columns: 1fr;
     }
 
-    nav {
-        display: none
+    .normalNav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
     }
 
     .hero {
         flex-direction: column;
-        align-items: flex-start
+        align-items: flex-start;
     }
 }
 
@@ -173,7 +241,6 @@ footer {
 .topElement {
     width: 320px;
     align-self: stretch;
-    /* make this flex item match siblings' height */
 }
 
 .blogLink {
