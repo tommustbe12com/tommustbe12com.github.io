@@ -77,11 +77,48 @@
       </div>
       <div class="topElement">
         <div class="panel">
-          Latest Blog Post:
-          <br><br>
-          <a href="blog/playitgg-scan/" class="blogLink">Playit.GG Port Scanning</a>
+          <a href="blog/playitgg-scan/" class="blogLink">Loading...</a>
+          <p class="blogDate">Loading date...</p>
+          <sub class="blogPreview">Loading preview...</p>
         </div>
       </div>
+
+      <script>
+        function stripHTML(html) {
+          // yes im too lazy to fix my blog code rn, so im just gonna do it client side
+          const div = document.createElement("div");
+          div.innerHTML = html;
+          return div.textContent || div.innerText || "";
+        }
+        async function loadLatestBlog() {
+          const url = "https://corsproxy.io/?https://tmb12.link/blog/latest";
+
+          try {
+            const res = await fetch(url);
+            const data = await res.json();
+
+            const link = document.querySelector(".blogLink");
+            link.textContent = data.title;
+            link.href = "/blog/" + data.id;
+
+            const dateP = document.querySelector(".blogDate");
+            dateP.textContent = data.dateTime;
+
+            const previewP = document.querySelector(".blogPreview");
+            previewP.textContent = stripHTML(data.preview);
+
+          } catch (err) {
+            console.error("Error loading blog:", err);
+
+            document.querySelector(".blogLink").textContent = "Failed to load";
+            document.querySelector(".blogDate").textContent = "";
+            document.querySelector(".blogPreview").textContent = "";
+          }
+        }
+
+        loadLatestBlog();
+      </script>
+
     </section>
 
     <section id="about">
@@ -93,9 +130,11 @@
           <div class="right">
             <h2>About Me</h2>
             <p>I've always had a passion for technology and coding. I already had started
-              learning on <span class='khan'>Khan Academy</span>'s platform when I was 8 or 9, and progressed into
+              learning on <a class='khan' href="https://khanacademy.org/profile/webgl">Khan Academy</a>'s platform when
+              I was 8 or 9, and progressed into
               the web developer and technology enthusiast I am today. I now have a growing
-              <span class='youtube'>YouTube channel</span> and am always looking to learn and create more!
+              <a class='youtube' href="https://youtube.com/@TomMustBe12">YouTube channel</a> and am always looking to
+              learn and create more!
             </p>
           </div>
         </div>

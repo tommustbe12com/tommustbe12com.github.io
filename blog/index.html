@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Blog Posts | TomMustBe12 Blog</title>
     <link rel="stylesheet" href="style.css">
@@ -8,110 +9,113 @@
         .sort-container {
             margin: 10px 0;
         }
+
         .sort-container label {
             margin-right: 5px;
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
-<nav>
-    <h3>TomMustBe12 Blog</h3>
-    <a href="https://tommustbe12.com">Homepage</a>
-</nav>
+    <nav>
+        <h3>TomMustBe12 Blog</h3>
+        <a href="https://tommustbe12.com">Homepage</a>
+    </nav>
 
-<div class="largeContainer">
-    <div class="stickyInfo">
-        <h4>Recent Blog Posts</h4>
-        <h4>A place where I can post what I think is interesting.</h4>
-    </div>
-
-    <div class="content">
-        <div class="title">
-            <h1>Recent Blog Posts</h1>
-            <sub>These are my latest blog posts.</sub>
+    <div class="largeContainer">
+        <div class="stickyInfo">
+            <h4>Recent Blog Posts</h4>
+            <h4>A place where I can post what I think is interesting.</h4>
         </div>
 
-        <div class="sort-container">
-            <label for="sortSelect">Sort by:</label>
-            <select id="sortSelect">
-                <option value="latest">Latest</option>
-                <option value="oldest">Oldest</option>
-                <option value="views">Most Views</option>
-            </select>
+        <div class="content">
+            <div class="title">
+                <h1>Recent Blog Posts</h1>
+                <sub>These are my latest blog posts.</sub>
+            </div>
+
+            <div class="sort-container">
+                <label for="sortSelect">Sort by:</label>
+                <select id="sortSelect">
+                    <option value="latest">Latest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="views">Most Views</option>
+                </select>
+            </div>
+
+            <main id="posts"></main>
         </div>
-
-        <main id="posts"></main>
     </div>
-</div>
 
-<script>
-function stripHtml(html) {
-    const tmp = document.createElement("div");
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || "";
-}
+    <script>
+        function stripHtml(html) {
+            const tmp = document.createElement("div");
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || "";
+        }
 
-let allPosts = []; // store all posts for re-sorting
+        let allPosts = []; // store all posts for re-sorting
 
-async function loadPosts() {
-    try {
-        const response = await fetch('https://corsproxy.io/?https://tmb12.link/blogs/previews');
-        if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
-        allPosts = await response.json();
-        renderPosts('latest'); // default sort
-    } catch (err) {
-        console.error("Error loading posts:", err);
-        document.getElementById("posts").textContent = "Failed to load posts.";
-    }
-}
+        async function loadPosts() {
+            try {
+                const response = await fetch('https://corsproxy.io/?https://tmb12.link/blogs/previews');
+                if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
+                allPosts = await response.json();
+                renderPosts('latest'); // default sort
+            } catch (err) {
+                console.error("Error loading posts:", err);
+                document.getElementById("posts").textContent = "Failed to load posts.";
+            }
+        }
 
-function renderPosts(sortBy) {
-    const container = document.getElementById("posts");
-    container.innerHTML = "";
+        function renderPosts(sortBy) {
+            const container = document.getElementById("posts");
+            container.innerHTML = "";
 
-    let sortedPosts = [...allPosts];
+            let sortedPosts = [...allPosts];
 
-    if (sortBy === "latest") {
-        sortedPosts.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
-    } else if (sortBy === "oldest") {
-        sortedPosts.sort((a, b) => new Date(a.dateTime) - new Date(b.dateTime));
-    } else if (sortBy === "views") {
-        sortedPosts.sort((a, b) => b.views - a.views);
-    }
+            if (sortBy === "latest") {
+                sortedPosts.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+            } else if (sortBy === "oldest") {
+                sortedPosts.sort((a, b) => new Date(a.dateTime) - new Date(b.dateTime));
+            } else if (sortBy === "views") {
+                sortedPosts.sort((a, b) => b.views - a.views);
+            }
 
-    sortedPosts.forEach(post => {
-        const postEl = document.createElement("div");
-        postEl.className = "blog-post";
+            sortedPosts.forEach(post => {
+                const postEl = document.createElement("div");
+                postEl.className = "blog-post";
 
-        const h2 = document.createElement("h2");
-        const a = document.createElement("a");
-        a.href = `post.html?id=${post.id}`;
-        a.textContent = post.title;
-        h2.appendChild(a);
-        postEl.appendChild(h2);
+                const h2 = document.createElement("h2");
+                const a = document.createElement("a");
+                a.href = `post.html?id=${post.id}`;
+                a.textContent = post.title;
+                h2.appendChild(a);
+                postEl.appendChild(h2);
 
-        const pMeta = document.createElement("p");
-        pMeta.className = "date";
-        pMeta.textContent = `${post.dateTime} | Views: ${post.views}`;
-        postEl.appendChild(pMeta);
+                const pMeta = document.createElement("p");
+                pMeta.className = "date";
+                pMeta.textContent = `${post.dateTime} | Views: ${post.views}`;
+                postEl.appendChild(pMeta);
 
-        const previewText = stripHtml(post.preview);
-        const words = previewText.split(/\s+/).slice(0, 20).join(" ");
-        const pPreview = document.createElement("p");
-        pPreview.textContent = words;
-        postEl.appendChild(pPreview);
+                const previewText = stripHtml(post.preview);
+                const words = previewText.split(/\s+/).slice(0, 20).join(" ");
+                const pPreview = document.createElement("p");
+                pPreview.textContent = words;
+                postEl.appendChild(pPreview);
 
-        container.appendChild(postEl);
-    });
-}
+                container.appendChild(postEl);
+            });
+        }
 
-// Handle sorting dropdown change
-document.getElementById("sortSelect").addEventListener("change", (e) => {
-    renderPosts(e.target.value);
-});
+        // Handle sorting dropdown change
+        document.getElementById("sortSelect").addEventListener("change", (e) => {
+            renderPosts(e.target.value);
+        });
 
-window.addEventListener("DOMContentLoaded", loadPosts);
-</script>
+        window.addEventListener("DOMContentLoaded", loadPosts);
+    </script>
 </body>
+
 </html>
