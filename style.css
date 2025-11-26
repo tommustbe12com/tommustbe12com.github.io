@@ -99,6 +99,7 @@ nav {
 
 .mobile-nav {
     opacity: 0;
+    pointer-events: none;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -117,6 +118,7 @@ nav {
 
 .mobile-nav.active {
     max-height: 300px;
+    pointer-events: auto;
     opacity: 1;
 }
 
