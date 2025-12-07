@@ -292,6 +292,36 @@
         renderVisualizer();
       });
     });
+
+    const volumeControl = document.createElement("input");
+    volumeControl.type = "range";
+    volumeControl.min = "0";
+    volumeControl.max = "100";
+    volumeControl.value = "70";
+    volumeControl.style.width = "150px";
+    volumeControl.style.cursor = "pointer";
+    volumeControl.style.accentColor = "#00ffcc";
+    
+    audio.volume = 0.7;
+    
+    volumeControl.addEventListener("input", (e) => {
+      audio.volume = e.target.value / 100;
+    });
+    
+    const volumeContainer = document.createElement("div");
+    volumeContainer.style.display = "flex";
+    volumeContainer.style.alignItems = "center";
+    volumeContainer.style.gap = "10px";
+    volumeContainer.style.marginBottom = "20px";
+    volumeContainer.style.zIndex = "2";
+    
+    const volumeLabel = document.createElement("span");
+    volumeLabel.textContent = "🔊";
+    
+    volumeContainer.appendChild(volumeLabel);
+    volumeContainer.appendChild(volumeControl);
+    
+    document.querySelector(".container").insertBefore(volumeContainer, document.querySelector(".controls"));
   </script>
 </body>
 
