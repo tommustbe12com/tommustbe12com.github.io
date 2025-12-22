@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arpy - Network Abomination</title>
+
+  <!-- Meta -->
+  <meta name="description" content="arpy is a Python-based ARP spoofer built for chaos. Open source. Clean. Unapologetic." />
+  <meta name="theme-color" content="#7c5cff" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕷️</text></svg>">
+
+  <style>
+    :root {
+      --bg: #0b120c;
+      --panel: #122515;
+      --panel-2: #183521;
+      --text: #e9e9ff;
+      --muted: #798879;
+      --accent: #c3d6cb;
+      --accent-2: #6d917d;
+      --danger: #ff4d6d;
+      --radius: 18px;
+      --glow: 0 0 40px rgba(206, 235, 218, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(1200px 600px at 10% -10%, #1b4436 0%, transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, #1b4440 0%, transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="200" height="200" filter="url(%23n)" opacity=".03"/></svg>');
+      z-index: 100;
+      mix-blend-mode: overlay;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 120px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0 48px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      letter-spacing: .3px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      color: #0b0b12;
+      font-size: 22px;
+      box-shadow: var(--glow);
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav a {
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      transition: all .2s ease;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+      background: rgba(124,92,255,.12);
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 48px;
+      align-items: center;
+      margin-top: 32px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(124,92,255,.15);
+      color: var(--accent-2);
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.02;
+      margin: 0 0 18px;
+      letter-spacing: -1.5px;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+
+    .cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      transition: all .2s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b0b12;
+      box-shadow: var(--glow);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px) scale(1.02); }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: rgba(124,92,255,.35);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(124,92,255,.12);
+      transform: translateY(-2px);
+    }
+
+    /* Terminal Card */
+    .terminal {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.08);
+      overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,.6);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px;
+      background: rgba(0,0,0,.25);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.red { background: #ff5f56; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green { background: #27c93f; }
+
+    .terminal-body {
+      padding: 22px 24px 26px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #d7d7ff;
+      min-height: 260px;
+    }
+
+    .line { margin-bottom: 10px; }
+    .prompt { color: var(--accent-2); }
+    .danger { color: var(--danger); }
+
+    /* Footer */
+    footer {
+      margin-top: 120px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(124,92,255,.15);
+      transition: all .2s ease;
+    }
+
+    .icon-btn:hover { background: rgba(124,92,255,.3); transform: translateY(-2px); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <img src="https://raw.githubusercontent.com/tommustbe12com/arpy/refs/heads/main/icon.ico">
+        <div>Arpy</div>
+      </div>
+      <nav class="nav">
+        <a href="arpy.exe" download>Download</a>
+        <a href="javascript:alert('coming soon')">Docs</a>
+        <a href="https://github.com/tommustbe12com/arpy" target="_blank">GitHub</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="badge">This is dangerously powerful, don't use at school.</div>
+        <h1>ARP spoofing,<br><span>beautifully unhinged</span></h1>
+        <p class="subtitle">
+          arpy is a Python-based ARP spoofer — a utility for network abomination.
+          Open source, unapologetic, and built to look as chaotic as it feels.
+        </p>
+        <div class="cta">
+          <a id="download" class="btn btn-primary" href="arpy.exe" download>
+            Download .exe
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/tommustbe12com/arpy" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.78.5 12.29c0 5.21 3.44 9.63 8.2 11.19.6.12.82-.27.82-.59 0-.29-.01-1.07-.02-2.1-3.34.75-4.04-1.67-4.04-1.67-.55-1.44-1.34-1.83-1.34-1.83-1.1-.77.08-.76.08-.76 1.21.09 1.85 1.28 1.85 1.28 1.08 1.9 2.83 1.35 3.52 1.03.11-.81.42-1.35.76-1.66-2.67-.32-5.47-1.37-5.47-6.1 0-1.35.46-2.45 1.22-3.31-.12-.32-.53-1.61.12-3.35 0 0 1-.33 3.3 1.27a11.2 11.2 0 0 1 6 0c2.3-1.6 3.3-1.27 3.3-1.27.65 1.74.24 3.03.12 3.35.76.86 1.22 1.96 1.22 3.31 0 4.74-2.8 5.78-5.48 6.1.43.38.81 1.13.81 2.28 0 1.65-.02 2.98-.02 3.38 0 .32.22.71.83.59 4.75-1.56 8.19-5.98 8.19-11.19C23.5 5.78 18.35.5 12 .5z"/></svg>
+            View source
+          </a>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+        </div>
+        <div class="terminal-body" id="terminal"></div>
+      </div>
+    </section>
+
+    <section style="margin-top: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+      <div>
+        <h2 style="font-size: clamp(24px, 4vw, 32px); margin: 0 0 16px; letter-spacing: -0.5px;">Why Arpy?</h2>
+        <p style="color: var(--muted); line-height: 1.6; margin: 0; font-size: 16px;">
+          Arpy was created as an educational tool to demonstrate ARP spoofing vulnerabilities and network security concepts. It's designed for penetration testing, security research, and authorized network testing in controlled environments.
+        </p>
+      </div>
+      <div>
+        <h2 style="font-size: clamp(24px, 4vw, 32px); margin: 0 0 16px; letter-spacing: -0.5px;">Disclaimer</h2>
+        <p style="color: var(--danger); line-height: 1.6; margin: 0; font-size: 16px;">
+          Unauthorized access to computer networks is illegal. Use Arpy only on networks you own or have explicit permission to test. I, TomMustBe12, assume no liability for misuse. Always comply with local laws and regulations.
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top: 80px;">
+        <h2 style="font-size: clamp(24px, 4vw, 32px); margin: 0 0 48px; letter-spacing: -0.5px;">Thanks for Using Arpy</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+            <div style="background: var(--panel); padding: 24px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,.08);">
+                <p style="margin: 0 0 16px; color: var(--accent); font-weight: 600;">★★★★★</p>
+                <p style="margin: 0; color: var(--text); line-height: 1.6; font-size: 15px;">"Arpy is sigma"</p>
+                <p style="margin: 12px 0 0; color: var(--muted); font-size: 14px;">— You?</p>
+            </div>
+            <div style="background: var(--panel); padding: 24px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,.08);">
+                <p style="margin: 0 0 16px; color: var(--accent); font-weight: 600;">★★★★★</p>
+                <p style="margin: 0; color: var(--text); line-height: 1.6; font-size: 15px;">"I'm geeked"</p>
+                <p style="margin: 12px 0 0; color: var(--muted); font-size: 14px;">— You?</p>
+            </div>
+            <div style="background: var(--panel); padding: 24px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,.08);">
+                <p style="margin: 0 0 16px; color: var(--accent); font-weight: 600;">★★★★★</p>
+                <p style="margin: 0; color: var(--text); line-height: 1.6; font-size: 15px;">"what its open source no wayyayyay."</p>
+                <p style="margin: 12px 0 0; color: var(--muted); font-size: 14px;">— You?</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Arpy by <a href="https://tommustbe12.com">TomMustBe12</a></div>
+      <div class="footer-links">
+        <a class="icon-btn" href="https://github.com/tommustbe12com/arpy" target="_blank" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.78.5 12.29c0 5.21 3.44 9.63 8.2 11.19.6.12.82-.27.82-.59 0-.29-.01-1.07-.02-2.1-3.34.75-4.04-1.67-4.04-1.67-.55-1.44-1.34-1.83-1.34-1.83-1.1-.77.08-.76.08-.76 1.21.09 1.85 1.28 1.85 1.28 1.08 1.9 2.83 1.35 3.52 1.03.11-.81.42-1.35.76-1.66-2.67-.32-5.47-1.37-5.47-6.1 0-1.35.46-2.45 1.22-3.31-.12-.32-.53-1.61.12-3.35 0 0 1-.33 3.3 1.27a11.2 11.2 0 0 1 6 0c2.3-1.6 3.3-1.27 3.3-1.27.65 1.74.24 3.03.12 3.35.76.86 1.22 1.96 1.22 3.31 0 4.74-2.8 5.78-5.48 6.1.43.38.81 1.13.81 2.28 0 1.65-.02 2.98-.02 3.38 0 .32.22.71.83.59 4.75-1.56 8.19-5.98 8.19-11.19C23.5 5.78 18.35.5 12 .5z"/></svg>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const lines = [
+      { t: '$ python arpy.py', c: 'prompt' },
+      { t: 'open gui', c: '' },
+      { t: 'Scanning Network....', c: '' },
+      { t: '16 devices found', c: 'danger' },
+      { t: '', c: '' },
+      { t: 'Finding subject', c: 'prompt' },
+      { t: 'Poisoning ARP cache...', c: '' },
+      { t: 'Started spoofing 192.168.4.111 | Mode: drop', c: '' }
+    ];
+
+    const term = document.getElementById('terminal');
+    let i = 0;
+
+    function typeLine() {
+      if (i >= lines.length) return;
+      const div = document.createElement('div');
+      div.className = 'line ' + (lines[i].c || '');
+      div.textContent = lines[i].t;
+      term.appendChild(div);
+      term.scrollTop = term.scrollHeight;
+      i++;
+      setTimeout(typeLine, 420);
+    }
+
+    typeLine();
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
