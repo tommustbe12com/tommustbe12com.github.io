@@ -32,7 +32,7 @@
       }
 
       try {
-        const res = await fetch(`https://corsproxy.io/?https://tmb12.link/blogs/${id}`);
+        const res = await fetch(`https://tmb12.link/blogs/${id}`);
         if (!res.ok) throw new Error('Blog not found');
         const blog = await res.json();
 
@@ -51,6 +51,7 @@
             <div class="blogText">${blog.content}</div>
           </div>
         `;
+        document.title = `${blog.title} | TomMustBe12 Blog`;
       } catch (err) {
         console.error(err);
         container.innerHTML = `<p>Error loading blog: ${err.message}</p>`;

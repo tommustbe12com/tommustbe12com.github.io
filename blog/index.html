@@ -59,7 +59,7 @@
 
         async function loadPosts() {
             try {
-                const response = await fetch('https://corsproxy.io/?https://tmb12.link/blogs/previews');
+                const response = await fetch('https://tmb12.link/blogs/previews');
                 if (!response.ok) throw new Error(`Network response was not ok (${response.status})`);
                 allPosts = await response.json();
                 renderPosts('latest'); // default sort

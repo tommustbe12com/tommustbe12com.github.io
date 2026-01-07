@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Study Guide</title>
+    <style>
+        /* ----------------- RESET & BASE ----------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            /* true OLED black */
+            color: #e0e0e0;
+            /* soft light text */
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #0a0a0a;
+            /* slightly lighter than pure black for depth */
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* ----------------- HEADER ----------------- */
+        header {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: #aaa;
+            font-weight: 400;
+        }
+
+        /* ----------------- NAV / TABS ----------------- */
+        .nav-tabs {
+            display: flex;
+            border-bottom: 2px solid #222;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 14px 0;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            background: #0a0a0a;
+            color: #bbb;
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            color: #fff;
+        }
+
+        .nav-tab.active {
+            color: #00bfff;
+            /* OLED-style blue accent */
+            border-bottom: 3px solid #00bfff;
+        }
+
+        /* ----------------- TAB CONTENT ----------------- */
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ----------------- CATEGORY ----------------- */
+        .category {
+            margin-bottom: 20px;
+            border: 1px solid #222;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: #111;
+            padding: 15px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            color: #e0e0e0;
+            transition: background 0.2s;
+        }
+
+        .category-header:hover {
+            background: #1a1a1a;
+        }
+
+        .category-content {
+            padding: 15px 20px;
+            background: #0a0a0a;
+        }
+
+        /* ----------------- CARDS ----------------- */
+        .person-card,
+        .event-card {
+            background: #111;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #00bfff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+            transition: transform 0.15s, background 0.2s;
+        }
+
+        .person-card:hover,
+        .event-card:hover {
+            transform: translateX(3px);
+            background: #1a1a1a;
+        }
+
+        .person-name,
+        .event-name {
+            font-weight: 600;
+            color: #00bfff;
+            margin-bottom: 6px;
+        }
+
+        .person-desc,
+        .event-desc {
+            font-weight: 400;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        /* ----------------- QUIZ ----------------- */
+        .quiz-option {
+            padding: 12px 18px;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #ccc;
+        }
+
+        .quiz-option:hover {
+            background: #1a1a1a;
+            border-color: #00bfff;
+            color: #fff;
+        }
+
+        .quiz-option.selected {
+            border-color: #00bfff;
+            background: #001f33;
+            color: #fff;
+        }
+
+        .quiz-option.correct {
+            border-color: #28a745;
+            background: #003300;
+            color: #aaffaa;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #dc3545;
+            background: #330000;
+            color: #ffaaaa;
+        }
+
+        .explanation {
+            margin-top: 12px;
+            padding: 12px;
+            background: #222;
+            border-left: 4px solid #ffc107;
+            border-radius: 6px;
+            display: none;
+            color: #eee;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        /* ----------------- BUTTONS ----------------- */
+        .btn {
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #00bfff;
+            color: #000;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #0099cc;
+        }
+
+        .btn-secondary {
+            background: #555;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>history random</h1>
+            <p>random explanations for random</p>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('people')">Historical Figures</button>
+            <button class="nav-tab" onclick="showTab('events')">Events & Movements</button>
+            <button class="nav-tab" onclick="showTab('empires')">Empires & Nations</button>
+            <button class="nav-tab" onclick="showTab('quiz')">Quiz Mode</button>
+        </div>
+
+        <div class="content">
+            <!-- People Tab -->
+            <div id="people" class="tab-content active">
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🔭 Scientists & Astronomers</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="person-card">
+                            <div class="person-name">Galileo Galilei</div>
+                            <div class="person-desc">Astronomer who recanted his heliocentric theory under pressure from
+                                the Catholic Church</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Johannes Kepler</div>
+                            <div class="person-desc">Astronomer who developed the laws of planetary motion</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Nicolaus Copernicus</div>
+                            <div class="person-desc">Astronomer who proposed the heliocentric theory</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Isaac Newton</div>
+                            <div class="person-desc">Scientist who formulated the laws of gravity</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>💡 Enlightenment Thinkers</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="person-card">
+                            <div class="person-name">John Locke</div>
+                            <div class="person-desc">Enlightenment philosopher who argued government exists to serve
+                                people and recognized the right to revolt</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Baron de Montesquieu</div>
+                            <div class="person-desc">Developed the concept of separation of powers, which influenced the
+                                US Bill of Rights</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Adam Smith</div>
+                            <div class="person-desc">Enlightenment economist who laid foundations for capitalism</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Mary Wollstonecraft</div>
+                            <div class="person-desc">Enlightenment thinker who advocated for women's rights</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>⚙️ Industrial Revolution</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="person-card">
+                            <div class="person-name">James Watt</div>
+                            <div class="person-desc">Invented the steam engine</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Samuel Slater</div>
+                            <div class="person-desc">Brought Industrial Revolution textile machinery to America</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Samuel F.B. Morse</div>
+                            <div class="person-desc">Invented the telegraph (not the steam engine)</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Cyrus McCormick</div>
+                            <div class="person-desc">Pioneered mechanized farming and cotton industry</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🗽 Latin American Independence Leaders</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="person-card">
+                            <div class="person-name">Father Manuel Hidalgo</div>
+                            <div class="person-desc">First Mexican independence leader</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">José de San Martín</div>
+                            <div class="person-desc">Argentine and South American independence leader</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Bernardo O'Higgins</div>
+                            <div class="person-desc">Chilean independence leader</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Simón Bolívar</div>
+                            <div class="person-desc">Led independence movements in Northern South America (Colombia,
+                                Venezuela, Ecuador, Peru, Bolivia)</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Agustín de Iturbide</div>
+                            <div class="person-desc">Mexican independence leader who later became emperor</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🇲🇽 Mexican Leaders</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="person-card">
+                            <div class="person-name">Porfirio Díaz</div>
+                            <div class="person-desc">Mexican dictator ousted during the 1910 revolution</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Benito Juárez</div>
+                            <div class="person-desc">Mexican reformer who championed indigenous rights, abolished
+                                slavery, and limited church power</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>⚡ 20th Century Political Leaders</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="person-card">
+                            <div class="person-name">Otto von Bismarck</div>
+                            <div class="person-desc">Led German unification through nationalism</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Adolf Hitler</div>
+                            <div class="person-desc">Germany's Fascist leader during WWII</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Benito Mussolini</div>
+                            <div class="person-desc">Italy's Fascist leader</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Joseph Stalin</div>
+                            <div class="person-desc">USSR leader who implemented the Five-Year Plan for
+                                industrialization</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Vladimir Lenin</div>
+                            <div class="person-desc">USSR's Communist leader</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Ho Chi Minh</div>
+                            <div class="person-desc">Vietnam's Communist leader</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Mao Zedong</div>
+                            <div class="person-desc">Chinese leader who initiated the Great Leap Forward</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Deng Xiaoping</div>
+                            <div class="person-desc">Chinese leader who implemented post-Mao reforms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>👑 WWI Era Leaders</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="person-card">
+                            <div class="person-name">Gavrilo Princip</div>
+                            <div class="person-desc">Assassinated Archduke Franz Ferdinand, triggering WWI</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Woodrow Wilson</div>
+                            <div class="person-desc">US president who proposed the League of Nations (though the US did
+                                not join)</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Nicholas II</div>
+                            <div class="person-desc">Last Russian tsar who lost his empire during WWI</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Wilhelm II</div>
+                            <div class="person-desc">German emperor who lost his empire after WWI</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Charles I</div>
+                            <div class="person-desc">Austria-Hungary's last emperor, lost empire after WWI</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Vittorio Emmanuel II</div>
+                            <div class="person-desc">Italian leader who did not lose his empire after WWI</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🌍 Other Notable Leaders</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="person-card">
+                            <div class="person-name">Jimmy Carter</div>
+                            <div class="person-desc">US president who visited Moscow and Beijing</div>
+                        </div>
+                        <div class="person-card">
+                            <div class="person-name">Elizabeth II</div>
+                            <div class="person-desc">British monarch who visited Ghana</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Tab -->
+            <div id="events" class="tab-content">
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>⚔️ Major Wars</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">World War I (WWI)</div>
+                            <div class="event-desc">Global conflict involving alliances and colonies. Triggered by the
+                                assassination of Franz Ferdinand.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">World War II (WWII)</div>
+                            <div class="event-desc">Allies (US, Britain, USSR) vs Axis (Germany, Italy, Japan). Major
+                                events: Pearl Harbor, Normandy, Iwo Jima, atomic bombs.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Cold War</div>
+                            <div class="event-desc">US vs USSR rivalry including space race (Sputnik) and Korean War
+                                (China helped North Korea).</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Thirty Years' War</div>
+                            <div class="event-desc">Religious conflict in Europe, ended with Peace of Westphalia in
+                                1648.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Korean War</div>
+                            <div class="event-desc">Part of Cold War where China helped North Korea against South Korea
+                                and UN forces.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🏛️ Revolutions & Political Movements</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">French Revolution</div>
+                            <div class="event-desc">King executed during Reign of Terror. Featured estates system: 1st
+                                clergy, 2nd nobility, 3rd commoners.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Mexican Revolution (1910)</div>
+                            <div class="event-desc">Revolution that ousted dictator Porfirio Díaz.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Russian Revolution (1905)</div>
+                            <div class="event-desc">Military fired on protesters, leading to political upheaval.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Taiping Rebellion</div>
+                            <div class="event-desc">Massive civil war in China during the 1800s.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Boxer Rebellion</div>
+                            <div class="event-desc">1900 Chinese uprising that was anti-foreign and anti-Christian.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Meiji Restoration</div>
+                            <div class="event-desc">Emperor restored in Japan, leading to rapid modernization.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🗺️ Independence Movements</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">Spanish American Independence</div>
+                            <div class="event-desc">Led by Bolívar, San Martín, O'Higgins, Hidalgo, and Iturbide.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Korean Resistance</div>
+                            <div class="event-desc">Korea resisted Japan but was later conquered.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Post-WWI Decolonization</div>
+                            <div class="event-desc">Independence movements spread across Latin America, India, and other
+                                colonies.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Indian Independence</div>
+                            <div class="event-desc">India gained independence from Britain post-WWII, becoming the
+                                world's largest democracy.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Vietnamese Independence</div>
+                            <div class="event-desc">Vietnam gained independence from France after WWII.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🌊 Exploration & Expansion</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">Atlantic Exploration / Age of Exploration</div>
+                            <div class="event-desc">Europeans explored for trade routes, colonies, Christianity, and
+                                competition.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>💣 WWII Major Battles & Events</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">Pearl Harbor</div>
+                            <div class="event-desc">Japanese attack where US aircraft carriers were absent. Triggered US
+                                entry into WWII.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Normandy Landings</div>
+                            <div class="event-desc">Highly secret WWII operation in Europe (D-Day).</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Iwo Jima</div>
+                            <div class="event-desc">US captured island for strategic bombing access to Japanese islands.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Blitzkrieg</div>
+                            <div class="event-desc">Germany's fast conquest strategy. Note: Italy was not conquered by
+                                Blitzkrieg.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>😢 Genocides & Atrocities</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">WWI Global Genocides</div>
+                            <div class="event-desc">Targeted Armenians, Assyrians, and Greeks. Note: Russians were not
+                                targeted.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>📉 Economic Events</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">Great Depression Effects</div>
+                            <div class="event-desc">Led to Japanese nationalism and PM assassination. European colonies
+                                pushed for independence.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Naval Arms Race</div>
+                            <div class="event-desc">Pre-WWI competition between Germany and Britain.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empires Tab -->
+            <div id="empires" class="tab-content">
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🔫 Gunpowder Empires</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">Ottoman Empire</div>
+                            <div class="event-desc">Longest-lasting gunpowder empire that controlled the most territory.
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Safavid Empire</div>
+                            <div class="event-desc">Gunpowder empire in Persia/Iran.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Mughal Empire</div>
+                            <div class="event-desc">Gunpowder empire in India. Founder related to Mongols.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Fatimid Empire</div>
+                            <div class="event-desc">Gunpowder empire in Egypt/North Africa.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🌍 Colonial Powers</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">Spain</div>
+                            <div class="event-desc">Colonized the Philippines and the Americas.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Netherlands</div>
+                            <div class="event-desc">Built a trading empire, including in Japan.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">France</div>
+                            <div class="event-desc">Colonized Indochina (Vietnam, Laos, Cambodia), Algeria (settler
+                                colony), and Northwest Africa.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Britain</div>
+                            <div class="event-desc">Worldwide colonies including 13 colonies in North America and India
+                                (later decolonized).</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Japan</div>
+                            <div class="event-desc">Colonized Korea, then Manchuria. Modernized during Meiji
+                                Restoration.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">United States</div>
+                            <div class="event-desc">Hawaii seized by sugar planters. Became world power post-WWI.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🏛️ Major Nations & Developments</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">China</div>
+                            <div class="event-desc">Qing dynasty collapse. Experienced Taiping and Boxer rebellions.
+                                Communist revolution.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">India</div>
+                            <div class="event-desc">Gained post-WWII independence. World's largest democracy.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Vietnam</div>
+                            <div class="event-desc">French colony that gained independence post-WWII.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Tonga</div>
+                            <div class="event-desc">Only Pacific island never colonized.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🌐 Contemporary</span>
+                        <span class="arrow">→</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="event-card">
+                            <div class="event-name">Cold War Division</div>
+                            <div class="event-desc">USSR and US divided Germany and competed for influence in Asia and
+                                Africa.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">One China, Two Systems</div>
+                            <div class="event-desc">Policy applied to Hong Kong.</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">APEC</div>
+                            <div class="event-desc">Asia-Pacific Economic Cooperation (Pacific Rim).</div>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-name">Brexit</div>
+                            <div class="event-desc">United Kingdom's exit from the European Union.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Tab -->
+            <div id="quiz" class="tab-content">
+                <div class="quiz-container">
+                    <div class="score-display" id="scoreDisplay">Score: 0/0</div>
+                    <div id="quizContent"></div>
+                    <div class="quiz-controls">
+                        <button class="btn btn-primary" onclick="loadNewQuestion()">New Question</button>
+                        <button class="btn btn-secondary" onclick="resetScore()">Reset Score</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentScore = 0;
+        let totalQuestions = 0;
+        let currentAnswer = null;
+        let answered = false;
+
+        const quizData = [
+            {
+                question: "Who recanted the heliocentric theory under pressure from the Catholic Church?",
+                options: ["Nicolaus Copernicus", "Galileo Galilei", "Johannes Kepler", "Isaac Newton"],
+                correct: 1,
+                explanations: [
+                    "Copernicus proposed the heliocentric theory but died before facing the Church's opposition.",
+                    "Correct! Galileo was forced to recant his support of heliocentrism by the Catholic Church.",
+                    "Kepler developed laws of planetary motion but wasn't persecuted by the Church in this way.",
+                    "Newton came later and focused on gravity, not heliocentrism."
+                ]
+            },
+            {
+                question: "Who invented the telegraph?",
+                options: ["James Watt", "Samuel Slater", "Samuel F.B. Morse", "Cyrus McCormick"],
+                correct: 2,
+                explanations: [
+                    "James Watt invented the steam engine, not the telegraph.",
+                    "Samuel Slater brought textile machinery to America during the Industrial Revolution.",
+                    "Correct! Samuel F.B. Morse invented the telegraph.",
+                    "Cyrus McCormick developed mechanized farming equipment."
+                ]
+            },
+            {
+                question: "Which independence leader liberated Northern South America including Colombia, Venezuela, Ecuador, Peru, and Bolivia?",
+                options: ["José de San Martín", "Simón Bolívar", "Bernardo O'Higgins", "Agustín de Iturbide"],
+                correct: 1,
+                explanations: [
+                    "San Martín was an Argentine leader who liberated southern parts of South America.",
+                    "Correct! Simón Bolívar led independence in Northern South America across multiple countries.",
+                    "O'Higgins was the Chilean independence leader.",
+                    "Iturbide led Mexican independence and later became emperor."
+                ]
+            },
+            {
+                question: "What event triggered World War I?",
+                options: ["Invasion of Poland", "Assassination of Archduke Franz Ferdinand", "Attack on Pearl Harbor", "Treaty of Versailles"],
+                correct: 1,
+                explanations: [
+                    "The invasion of Poland triggered World War II, not WWI.",
+                    "Correct! Gavrilo Princip's assassination of Archduke Franz Ferdinand sparked WWI.",
+                    "Pearl Harbor brought the US into WWII, not WWI.",
+                    "The Treaty of Versailles ended WWI; it didn't start it."
+                ]
+            },
+            {
+                question: "Which was the longest-lasting gunpowder empire?",
+                options: ["Safavid Empire", "Mughal Empire", "Ottoman Empire", "Fatimid Empire"],
+                correct: 2,
+                explanations: [
+                    "The Safavid Empire was in Persia/Iran but wasn't the longest-lasting.",
+                    "The Mughal Empire ruled India but had a shorter duration than the Ottoman Empire.",
+                    "Correct! The Ottoman Empire was the longest-lasting gunpowder empire and controlled the most territory.",
+                    "The Fatimid Empire was in Egypt/North Africa but wasn't as long-lasting."
+                ]
+            },
+            {
+                question: "Who proposed the separation of powers that influenced the US Bill of Rights?",
+                options: ["John Locke", "Adam Smith", "Baron de Montesquieu", "Mary Wollstonecraft"],
+                correct: 2,
+                explanations: [
+                    "John Locke argued government exists to serve people and recognized the right to revolt, but didn't propose separation of powers.",
+                    "Adam Smith was an economist who laid foundations for capitalism.",
+                    "Correct! Baron de Montesquieu developed the concept of separation of powers.",
+                    "Mary Wollstonecraft advocated for women's rights during the Enlightenment."
+                ]
+            },
+            {
+                question: "Which Mexican leader championed indigenous rights, abolished slavery, and limited church power?",
+                options: ["Porfirio Díaz", "Benito Juárez", "Father Manuel Hidalgo", "Agustín de Iturbide"],
+                correct: 1,
+                explanations: [
+                    "Porfirio Díaz was a dictator who was ousted during the 1910 revolution.",
+                    "Correct! Benito Juárez was a reformer who championed indigenous rights, abolished slavery, and limited church power.",
+                    "Father Manuel Hidalgo was the first Mexican independence leader.",
+                    "Agustín de Iturbide was a Mexican independence leader who became emperor."
+                ]
+            },
+            {
+                question: "What were the Allies in World War II?",
+                options: ["Germany, Italy, Japan", "US, Britain, USSR", "France, Spain, Portugal", "China, Korea, Vietnam"],
+                correct: 1,
+                explanations: [
+                    "Germany, Italy, and Japan were the Axis powers, not the Allies.",
+                    "Correct! The main Allied powers were the US, Britain, and the USSR.",
+                    "France was Allied but Spain and Portugal were largely neutral.",
+                    "China was Allied, but Korea was occupied and Vietnam was a French colony."
+                ]
+            },
+            {
+                question: "Which Chinese leader initiated the Great Leap Forward?",
+                options: ["Deng Xiaoping", "Mao Zedong", "Ho Chi Minh", "Joseph Stalin"],
+                correct: 1,
+                explanations: [
+                    "Deng Xiaoping implemented reforms after Mao, not the Great Leap Forward.",
+                    "Correct! Mao Zedong initiated the Great Leap Forward in China.",
+                    "Ho Chi Minh was Vietnam's Communist leader, not China's.",
+                    "Joseph Stalin was the USSR leader, not Chinese."
+                ]
+            },
+            {
+                question: "Which Pacific island was never colonized?",
+                options: ["Hawaii", "Philippines", "Tonga", "Samoa"],
+                correct: 2,
+                explanations: [
+                    "Hawaii was seized by American sugar planters and later annexed by the US.",
+                    "The Philippines was colonized by Spain and later the United States.",
+                    "Correct! Tonga was the only Pacific island never colonized.",
+                    "Samoa was divided between Germany and the US."
+                ]
+            },
+            {
+                question: "What ended the Thirty Years' War?",
+                options: ["Treaty of Versailles", "Peace of Westphalia", "Congress of Vienna", "Treaty of Paris"],
+                correct: 1,
+                explanations: [
+                    "The Treaty of Versailles ended World War I in 1919.",
+                    "Correct! The Peace of Westphalia ended the Thirty Years' War in 1648.",
+                    "The Congress of Vienna reorganized Europe after Napoleon.",
+                    "Various Treaties of Paris ended different conflicts, not the Thirty Years' War."
+                ]
+            },
+            {
+                question: "Which three estates made up French society before the French Revolution?",
+                options: ["Military, Nobility, Peasants", "Clergy, Nobility, Commoners", "King, Church, People", "Rich, Middle, Poor"],
+                correct: 1,
+                explanations: [
+                    "This is not the correct estates system that existed in pre-revolutionary France.",
+                    "Correct! The three estates were: 1st clergy, 2nd nobility, 3rd commoners.",
+                    "This oversimplifies the actual estates system.",
+                    "This describes general economic classes, not the French estates system."
+                ]
+            },
+            {
+                question: "What was Germany's fast conquest strategy in WWII called?",
+                options: ["Blitzkrieg", "Operation Barbarossa", "Schlieffen Plan", "Lightning War"],
+                correct: 0,
+                explanations: [
+                    "Correct! Blitzkrieg was Germany's fast conquest strategy. Note: Italy was not conquered using Blitzkrieg.",
+                    "Operation Barbarossa was specifically the invasion of the Soviet Union.",
+                    "The Schlieffen Plan was WWI strategy, not WWII.",
+                    "While 'Lightning War' translates to Blitzkrieg, the proper term is Blitzkrieg."
+                ]
+            },
+            {
+                question: "Why did the US capture Iwo Jima in WWII?",
+                options: ["To bomb Tokyo directly", "For strategic bombing access to Japanese islands", "To find the Japanese fleet", "To establish a naval base"],
+                correct: 1,
+                explanations: [
+                    "While closer to Tokyo, the main purpose was broader strategic bombing access.",
+                    "Correct! Iwo Jima provided the US with strategic bombing access to Japanese islands.",
+                    "The battle was about territory and air bases, not finding the fleet.",
+                    "While it did serve as a base, the primary purpose was bombing access."
+                ]
+            },
+            {
+                question: "Which Russian leader implemented the Five-Year Plan?",
+                options: ["Vladimir Lenin", "Joseph Stalin", "Nicholas II", "Mikhail Gorbachev"],
+                correct: 1,
+                explanations: [
+                    "Lenin was the first Soviet leader but didn't implement the Five-Year Plans.",
+                    "Correct! Joseph Stalin implemented the Five-Year Plan for industrialization.",
+                    "Nicholas II was the last tsar, overthrown before the Soviet era.",
+                    "Gorbachev came much later and focused on reforms like glasnost and perestroika."
+                ]
+            }
+        ];
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'quiz' && document.getElementById('quizContent').innerHTML === '') {
+                loadNewQuestion();
+            }
+        }
+
+        function toggleCategory(header) {
+            const content = header.nextElementSibling;
+            const arrow = header.querySelector('.arrow');
+
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                arrow.classList.add('down');
+            } else {
+                content.style.display = 'none';
+                arrow.classList.remove('down');
+            }
+        }
+
+        function loadNewQuestion() {
+            answered = false;
+            const randomIndex = Math.floor(Math.random() * quizData.length);
+            const question = quizData[randomIndex];
+            currentAnswer = question.correct;
+
+            let html = '<div class="quiz-question">';
+            html += `<div class="question-text">${question.question}</div>`;
+            html += '<div class="quiz-options">';
+
+            question.options.forEach((option, index) => {
+                html += `<div class="quiz-option" onclick="selectAnswer(${index}, ${question.correct}, ${randomIndex})">${option}</div>`;
+            });
+
+            html += '</div>';
+            html += '<div class="explanation" id="explanation"></div>';
+            html += '</div>';
+
+            document.getElementById('quizContent').innerHTML = html;
+        }
+
+        function selectAnswer(selected, correct, questionIndex) {
+            if (answered) return;
+
+            answered = true;
+            const options = document.querySelectorAll('.quiz-option');
+            const explanation = document.getElementById('explanation');
+            const question = quizData[questionIndex];
+
+            totalQuestions++;
+
+            options[selected].classList.add('selected');
+
+            if (selected === correct) {
+                options[selected].classList.add('correct');
+                currentScore++;
+                explanation.innerHTML = `<strong>✓ Correct!</strong> ${question.explanations[selected]}`;
+            } else {
+                options[selected].classList.add('incorrect');
+                options[correct].classList.add('correct');
+                explanation.innerHTML = `<strong>✗ Incorrect.</strong> ${question.explanations[selected]}<br><br><strong>The correct answer is:</strong> ${question.options[correct]}. ${question.explanations[correct]}`;
+            }
+
+            explanation.classList.add('show');
+            updateScore();
+        }
+
+        function updateScore() {
+            document.getElementById('scoreDisplay').textContent = `Score: ${currentScore}/${totalQuestions}`;
+        }
+
+        function resetScore() {
+            currentScore = 0;
+            totalQuestions = 0;
+            updateScore();
+            loadNewQuestion();
+        }
+
+        // Initialize all categories as open
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.category-content').forEach(content => {
+                content.style.display = 'block';
+            });
+            document.querySelectorAll('.arrow').forEach(arrow => {
+                arrow.classList.add('down');
+            });
+        });
+    </script>
+</body>
+
+</html>
