@@ -126,3 +126,80 @@ if (broughtFrom === "blackBeltGame") {
         body: JSON.stringify({ content: "User came from Sensei Game Jam Game!" })
     });
 }
+
+const ytWrapper = document.getElementById("youtube-carousel-wrapper");
+const channelId = "UCJJUPBhRVePwRmBP9xEh_hg";
+let ytSlides = [];
+let currentYtSlide = 0;
+
+async function loadLatestYouTubeVideos() {
+  try {
+    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`);
+    const data = await res.json();
+
+    const videos = data.items
+      .filter(item => !item.link.includes("/shorts/"))
+      .slice(0, 3);
+
+    if (videos.length === 0) {
+      ytWrapper.innerHTML = "<p>No recent videos found.</p>";
+      return;
+    }
+
+    // Create all slides and iframes immediately
+    videos.forEach((video, index) => {
+      const videoId = video.link.split("v=")[1];
+      const slide = document.createElement("div");
+      slide.classList.add("youtube-carousel-slide");
+      if (index === 0) slide.classList.add("active");
+
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube.com/embed/${videoId}`;
+      iframe.title = video.title;
+      iframe.setAttribute("frameborder", "0");
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+      iframe.allowFullscreen = true;
+
+      slide.appendChild(iframe);
+      ytWrapper.appendChild(slide);
+      ytSlides.push(slide);
+      
+    });
+
+    initYouTubeCarousel();
+
+  } catch (err) {
+    console.error("Error fetching YouTube videos:", err);
+    ytWrapper.innerHTML = "<p>Failed to load videos.</p>";
+  }
+}
+
+function initYouTubeCarousel() {
+  const prevBtn = document.querySelector(".youtube-btn.prev");
+  const nextBtn = document.querySelector(".youtube-btn.next");
+
+  function showSlide(index) {
+    ytSlides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+  }
+
+  prevBtn.addEventListener("click", () => {
+    currentYtSlide = (currentYtSlide - 1 + ytSlides.length) % ytSlides.length;
+    showSlide(currentYtSlide);
+  });
+
+  nextBtn.addEventListener("click", () => {
+    currentYtSlide = (currentYtSlide + 1) % ytSlides.length;
+    showSlide(currentYtSlide);
+  });
+
+  setInterval(() => {
+    currentYtSlide = (currentYtSlide + 1) % ytSlides.length;
+    showSlide(currentYtSlide);
+  }, 10000);
+}
+
+// Load on page load
+loadLatestYouTubeVideos();
