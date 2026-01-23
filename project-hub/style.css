@@ -23,7 +23,7 @@ body {
   padding: 80px 24px;
 }
 
-/* -------- subtle glass lighting -------- */
+/* glass shtuff */
 .ripple-background {
   position: fixed;
   inset: 0;
@@ -33,13 +33,12 @@ body {
     radial-gradient(circle at 75% 75%, rgba(255,255,255,0.04), transparent 45%);
 }
 
-/* -------- layout -------- */
 .container {
   width: 100%;
   max-width: 1200px;
 }
 
-/* -------- header -------- */
+/* header top */
 header {
   display: flex;
   justify-content: space-between;
@@ -54,7 +53,7 @@ h1 {
   margin: 0;
 }
 
-/* -------- back button -------- */
+/* backkkkkk */
 #back-button {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
@@ -70,7 +69,7 @@ h1 {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* -------- search -------- */
+/* search for projs */
 #search {
   width: 100%;
   margin-bottom: 26px;
@@ -91,7 +90,7 @@ h1 {
   outline: none;
 }
 
-/* -------- categories -------- */
+/* category */
 #project-categories {
   display: flex;
   gap: 14px;
@@ -114,14 +113,13 @@ h1 {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* -------- projects grid -------- */
 #projects-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 28px;
 }
 
-/* -------- project card -------- */
+/* proj cardssss */
 .project {
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid var(--border);
@@ -159,7 +157,6 @@ h1 {
   text-decoration: underline;
 }
 
-/* -------- scrollbar -------- */
 ::-webkit-scrollbar {
   width: 8px;
 }
