@@ -1,44 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TomMustBe12's Project Hub</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    #back-button {
-      background-color: #4CAF50; /* Green */
-      border: none;
-      color: rgb(39, 39, 39);
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-      border-radius: 12px;
-      transition: background-color 0.3s ease;
-    }
-
-    #back-button:hover {
-      background-color: #45a049;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TomMustBe12 - Projects</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="ripple-background"></div>
-  <div class="container">
-    <h1>TomMustBe12's Project Hub</h1>
-    <button onclick="window.location.href='../index.html'" id="back-button">Back to Homepage</button>
-    <input type="text" id="search" placeholder="Search projects...">
+
+  <main class="container">
+    <header>
+      <h1>My Projects</h1>
+      <button id="back-button" onclick="window.location.href='../index.html'">
+        Back
+      </button>
+    </header>
+
+    <input type="text" id="search" placeholder="Search projects" />
+
     <div id="project-categories">
       <button class="category" data-category="all">All</button>
       <button class="category" data-category="productivity">Productivity</button>
       <button class="category" data-category="entertainment">Entertainment</button>
     </div>
+
     <div id="projects-container"></div>
-  </div>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
