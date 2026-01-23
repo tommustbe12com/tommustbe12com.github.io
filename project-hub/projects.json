@@ -68,12 +68,6 @@
       },
       {
         "category": "productivity",
-        "title": "Hive Client",
-        "description": "A client for bookmarklets that let you do stuff on sites.",
-        "link": "https://hive-client.replit.app"
-      },
-      {
-        "category": "productivity",
         "title": "Windows 10 Box",
         "description": "Fake Windows 10 Windows for YouTube videos, pranks, etc.",
         "link": "https://windows10box.replit.app"
@@ -155,6 +149,23 @@
         "title": "TomMail",
         "description": "A mail service, all local, doesn't actually send real emails. Just local sending to others.",
         "link": "https://mail.tommustbe12.com"
+      },
+      {
+        "category": "productivity",
+        "title": "DrCoconut",
+        "description": "Track DonutSMP item auction prices across time periods from January 2025. Invest in items projected to go up.",
+        "link": "https://drcoconut.tommustbe12.com"
+      },
+      {
+        "category": "productivity",
+        "title": "Constype",
+        "description": "Learn how to type as a coder does! Practice typing the specific syntax of Python, HTML, and JavaScript."
+      },
+      {
+        "category": "entertainment",
+        "title": "DonutView",
+        "description": "View DonutSMP player stats, auctions, and more with this simple site that utilizes the DonutSMP API.",
+        "link": "https://donutview.replit.app"
       }
     ]
   }
