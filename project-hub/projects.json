@@ -173,6 +173,12 @@
         "title": "FinalX",
         "description": "Know beforehand what you need to score well on your final - or what you will get if you score a certain amount!",
         "link": "https://final-x.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "Img2Text",
+        "description": "Extract text from images using only your browser. Unlimited usage, for free.",
+        "link": "https://img2text.replit.app"
       }
     ]
   }
