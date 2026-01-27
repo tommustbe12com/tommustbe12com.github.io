@@ -159,13 +159,20 @@
       {
         "category": "productivity",
         "title": "Constype",
-        "description": "Learn how to type as a coder does! Practice typing the specific syntax of Python, HTML, and JavaScript."
+        "description": "Learn how to type as a coder does! Practice typing the specific syntax of Python, HTML, and JavaScript.",
+        "link": "https://constype.replit.app"
       },
       {
         "category": "entertainment",
         "title": "DonutView",
         "description": "View DonutSMP player stats, auctions, and more with this simple site that utilizes the DonutSMP API.",
         "link": "https://donutview.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "FinalX",
+        "description": "Know beforehand what you need to score well on your final - or what you will get if you score a certain amount!",
+        "link": "https://final-x.replit.app"
       }
     ]
   }
