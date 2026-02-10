@@ -1,4 +1,3 @@
-// PushWave Service Worker
 self.addEventListener('push', function(event) {
   var data = event.data ? event.data.json() : {};
   var options = {
@@ -10,7 +9,7 @@ self.addEventListener('push', function(event) {
     data: { url: data.url || '/' },
     actions: data.url ? [{ action: 'open', title: 'Open' }] : [],
     requireInteraction: true,
-    tag: 'pushwave-' + Date.now()
+    tag: 'leafpush-' + Date.now()
   };
   event.waitUntil(
     self.registration.showNotification(data.title || 'Notification', options)
