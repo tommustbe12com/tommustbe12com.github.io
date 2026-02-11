@@ -2,6 +2,18 @@
     "projects": [
       {
         "category": "productivity",
+        "title": "LeafPush",
+        "description": "My web push notification service, made with Node and Express. Completely free and easy to use!",
+        "link": "https://leafpush.com/"
+      },
+      {
+        "category": "productivity",
+        "title": "Soundboard",
+        "description": "Free, portable soundboard application made in Python. Play sounds alongside your mic!",
+        "link": "https://tommustbe12.com/soundboard"
+      },
+      {
+        "category": "productivity",
         "title": "Hire Tom",
         "description": "An easy way to hire Tom for a website or something else!",
         "link": "https://hiretom.replit.app"
