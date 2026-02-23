@@ -347,6 +347,12 @@ a {
   right: 0.5rem;
 }
 
+.links-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .youtube-carousel-slide iframe {

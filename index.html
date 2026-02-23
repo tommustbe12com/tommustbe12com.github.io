@@ -9,6 +9,14 @@
    | $$| $$  | $$| $$ | $$ | $$| $$\  $ | $$| $$  | $$ \____  $$  | $$ /$$| $$  \ $$| $$_____/  | $$  | $$      
    | $$|  $$$$$$/| $$ | $$ | $$| $$ \/  | $$|  $$$$$$/ /$$$$$$$/  |  $$$$/| $$$$$$$/|  $$$$$$$ /$$$$$$| $$$$$$$$
    |__/ \______/ |__/ |__/ |__/|__/     |__/ \______/ |_______/    \___/  |_______/  \_______/|______/|________/ .com!
+
+
+   Hey! Welcome to my website. Thanks for checking it
+   out. I create cool projects, have a blog, and you
+   can even find me on YouTube as well. Feel free to
+   poke around and explore the source code, just my
+   bad code lol. If you have any questions or just want
+   to have timely communication, join the Discord!
 -->
 
 <head>
@@ -172,13 +180,46 @@
 
     <section id="youtube-carousel" class="panel carousel-panel">
       <h2 style="margin-bottom:1rem;">My YouTube Videos</h2>
-      <div class="youtube-carousel-container">
-        <button class="youtube-btn prev" aria-label="Previous Video">&#10094;</button>
-        <div class="youtube-carousel-wrapper" id="youtube-carousel-wrapper">
-          <!-- video slides injected script.js -->
+      <div class="carousel">
+        <div id="youtubeVideos" class="video-grid">
+          <div class="video-skeleton">Loading videos...</div>
         </div>
-        <button class="youtube-btn next" aria-label="Next Video">&#10095;</button>
       </div>
+      <a href="/youtube-videos/" class="panel" style="display: inline-block; margin-top: 1rem; padding: 12px 24px; background-color: #065F46; color: white; text-decoration: none; border-radius: 8px; font-weight: 500;">View All Videos</a>
+      <script>
+        async function loadYouTubeVideos() {
+          try {
+            const channelId = 'UCJJUPBhRVePwRmBP9xEh_hg';
+            const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+            
+            const response = await fetch(encodeURIComponent(feedUrl));
+            const data = await response.json();
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(data.contents, 'text/xml');
+            
+            const entries = Array.from(xml.querySelectorAll('entry')).slice(0, 3);
+            const videosHtml = entries.map(entry => {
+              const title = entry.querySelector('title').textContent;
+              const videoId = entry.querySelector('yt\\:videoId').textContent;
+              const thumbnail = entry.querySelector('media\\:thumbnail')?.getAttribute('url');
+              
+              return `
+                <a href="https://www.youtube.com/watch?v=${videoId}" class="video-card panel" target="_blank">
+                  <img src="${thumbnail}" alt="${title}" class="video-thumbnail">
+                  <h3>${title}</h3>
+                </a>
+              `;
+            }).join('');
+            
+            document.getElementById('youtubeVideos').innerHTML = videosHtml;
+          } catch (err) {
+            console.error('Error loading YouTube videos:', err);
+            document.getElementById('youtubeVideos').innerHTML = '<p>Failed to load videos</p>';
+          }
+        }
+        
+        loadYouTubeVideos();
+      </script>
     </section>
 
     <section id="projects">
@@ -210,7 +251,16 @@
       </div>
     </section>
 
-    <footer>© 2025 TomMustBe12</footer>
+    <footer>
+      © 2025 TomMustBe12
+      <br><br>
+      <div class="links-container">
+        <a href="/blog" class="link-item">Blog</a>
+        <a href="/youtube-videos/" class="link-item">Videos</a>
+        <a href="/project-hub/" class="link-item">Projects</a>
+        <a href="/soundtrack/" class="link-item">Soundtrack</a>
+      </div>
+    </footer>
   </main>
 
   <script src="script.js"></script>
