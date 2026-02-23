@@ -192,7 +192,7 @@
             const channelId = 'UCJJUPBhRVePwRmBP9xEh_hg';
             const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
             
-            const response = await fetch(encodeURIComponent(feedUrl));
+            const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`);
             const data = await response.json();
             const parser = new DOMParser();
             const xml = parser.parseFromString(data.contents, 'text/xml');
