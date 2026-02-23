@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Drawing App</title>
+<style>
+  html, body { margin:0; height:100%; overflow:hidden; font-family:sans-serif; }
+  #toolbar {
+    position: fixed; top:0; left:0; right:0; height:60px;
+    background:#222; color:#fff; display:flex; align-items:center; padding:5px; gap:8px;
+    z-index:10;
+  }
+  button, select, input[type=color], input[type=range] {
+    background:#333; color:#fff; border:none; padding:5px; cursor:pointer;
+    font-size:14px;
+  }
+  button:hover, select:hover, input[type=color]:hover { background:#555; }
+  #canvas-container {
+    position: absolute; top:60px; left:0; right:0; bottom:0; overflow:hidden;
+    background:#eee;
+  }
+  canvas { display:block; cursor:crosshair; }
+  #layers {
+    position: fixed; top:70px; right:10px; width:200px; background:#111; color:#fff;
+    padding:5px; max-height:80%; overflow-y:auto; font-size:12px;
+  }
+  #layers div { padding:3px; border-bottom:1px solid #333; display:flex; justify-content:space-between; }
+  #layers div.selected { background:#333; }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <button id="undo">Undo</button>
+  <button id="redo">Redo</button>
+  <select id="tool">
+    <option value="brush">Brush</option>
+    <option value="eraser">Eraser</option>
+    <option value="line">Line</option>
+    <option value="rect">Rectangle</option>
+    <option value="ellipse">Ellipse</option>
+    <option value="text">Text</option>
+  </select>
+  <input type="color" id="color" value="#000000">
+  <input type="range" id="size" min="1" max="50" value="5">
+  <button id="addLayer">Add Layer</button>
+  <button id="delLayer">Delete Layer</button>
+  <button id="export">Export PNG</button>
+</div>
+
+<div id="canvas-container"></div>
+<div id="layers"></div>
+
+<script>
+const container = document.getElementById('canvas-container');
+const layersDiv = document.getElementById('layers');
+
+let layers = [];
+let activeLayer = null;
+let history = [];
+let redoStack = [];
+
+function createLayer(name='Layer') {
+  const canvas = document.createElement('canvas');
+  canvas.width = container.clientWidth;
+  canvas.height = container.clientHeight;
+  canvas.style.position='absolute';
+  canvas.style.top='0'; canvas.style.left='0';
+  container.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  const layer = {canvas, ctx, name};
+  layers.push(layer);
+  setActiveLayer(layer);
+  updateLayersPanel();
+  saveHistory();
+}
+
+function setActiveLayer(layer) {
+  activeLayer = layer;
+  document.querySelectorAll('#layers div').forEach((d,i)=>{
+    d.classList.toggle('selected', layers[i]===layer);
+  });
+}
+
+function updateLayersPanel() {
+  layersDiv.innerHTML='';
+  layers.forEach((l,i)=>{
+    const div = document.createElement('div');
+    div.textContent = l.name;
+    div.onclick = () => setActiveLayer(l);
+    layersDiv.appendChild(div);
+  });
+}
+
+function deleteActiveLayer() {
+  if(!activeLayer) return;
+  container.removeChild(activeLayer.canvas);
+  layers = layers.filter(l=>l!==activeLayer);
+  activeLayer = layers[layers.length-1] || null;
+  updateLayersPanel();
+  saveHistory();
+}
+
+function saveHistory() {
+  const snapshot = layers.map(l=>{
+    const img = new Image();
+    img.src = l.canvas.toDataURL();
+    return img;
+  });
+  history.push(snapshot);
+  redoStack=[];
+  if(history.length>50) history.shift();
+}
+
+function undo() {
+  if(history.length<2) return;
+  redoStack.push(history.pop());
+  restoreHistory(history[history.length-1]);
+}
+
+function redo() {
+  if(redoStack.length===0) return;
+  const snapshot = redoStack.pop();
+  history.push(snapshot);
+  restoreHistory(snapshot);
+}
+
+function restoreHistory(snapshot) {
+  snapshot.forEach((img,i)=>{
+    layers[i].ctx.clearRect(0,0,layers[i].canvas.width,layers[i].canvas.height);
+    img.onload = ()=>layers[i].ctx.drawImage(img,0,0);
+  });
+}
+
+createLayer('Background');
+
+window.addEventListener('resize', ()=>{
+  layers.forEach(l=>{
+    const data = l.ctx.getImageData(0,0,l.canvas.width,l.canvas.height);
+    l.canvas.width = container.clientWidth;
+    l.canvas.height = container.clientHeight;
+    l.ctx.putImageData(data,0,0);
+  });
+});
+
+document.getElementById('addLayer').onclick = ()=>createLayer(`Layer ${layers.length+1}`);
+document.getElementById('delLayer').onclick = ()=>deleteActiveLayer();
+document.getElementById('undo').onclick = ()=>undo();
+document.getElementById('redo').onclick = ()=>redo();
+document.getElementById('export').onclick = ()=>{
+  const exportCanvas = document.createElement('canvas');
+  exportCanvas.width = container.clientWidth;
+  exportCanvas.height = container.clientHeight;
+  const ctx = exportCanvas.getContext('2d');
+  layers.forEach(l=>ctx.drawImage(l.canvas,0,0));
+  const a = document.createElement('a');
+  a.href = exportCanvas.toDataURL();
+  a.download='drawing.png';
+  a.click();
+};
+
+// DRAWING LOGIC
+let drawing=false;
+let startX=0,startY=0;
+let tool='brush';
+const colorPicker = document.getElementById('color');
+const sizePicker = document.getElementById('size');
+
+document.getElementById('tool').onchange = e=>tool=e.target.value;
+
+container.addEventListener('mousedown', e=>{
+  if(!activeLayer) return;
+  drawing=true;
+  startX=e.offsetX;
+  startY=e.offsetY;
+  if(tool==='text'){
+    const txt = prompt('Enter text:');
+    if(txt){
+      activeLayer.ctx.fillStyle=colorPicker.value;
+      activeLayer.ctx.font=`${sizePicker.value*3}px sans-serif`;
+      activeLayer.ctx.fillText(txt,startX,startY);
+      saveHistory();
+    }
+    drawing=false;
+  }
+});
+
+container.addEventListener('mousemove', e=>{
+  if(!drawing || !activeLayer) return;
+  const ctx = activeLayer.ctx;
+  const x=e.offsetX, y=e.offsetY;
+  ctx.strokeStyle=colorPicker.value;
+  ctx.fillStyle=colorPicker.value;
+  ctx.lineWidth = sizePicker.value;
+  ctx.lineCap = 'round';
+  if(tool==='brush'){
+    ctx.beginPath();
+    ctx.moveTo(startX,startY);
+    ctx.lineTo(x,y);
+    ctx.stroke();
+    startX=x; startY=y;
+  } else if(tool==='eraser'){
+    ctx.clearRect(x-sizePicker.value/2, y-sizePicker.value/2, sizePicker.value, sizePicker.value);
+    startX=x; startY=y;
+  } else {
+    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+    saveHistory();
+  }
+});
+
+container.addEventListener('mouseup', e=>{
+  if(!drawing || !activeLayer) return;
+  const ctx = activeLayer.ctx;
+  if(['line','rect','ellipse'].includes(tool)){
+    const x=e.offsetX, y=e.offsetY;
+    ctx.strokeStyle=colorPicker.value;
+    ctx.fillStyle=colorPicker.value;
+    ctx.lineWidth = sizePicker.value;
+    if(tool==='line'){
+      ctx.beginPath(); ctx.moveTo(startX,startY); ctx.lineTo(x,y); ctx.stroke();
+    } else if(tool==='rect'){
+      ctx.strokeRect(startX,startY,x-startX,y-startY);
+    } else if(tool==='ellipse'){
+      ctx.beginPath();
+      ctx.ellipse((startX+x)/2,(startY+y)/2,Math.abs(x-startX)/2,Math.abs(y-startY)/2,0,0,2*Math.PI);
+      ctx.stroke();
+    }
+  }
+  drawing=false;
+  saveHistory();
+});
+</script>
+</body>
+</html>
