@@ -355,7 +355,7 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
   status.className = 'form-status';
 
   try {
-    const res = await fetch('https://tmb12.link/', {
+    const res = await fetch('https://tmb12.link/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
