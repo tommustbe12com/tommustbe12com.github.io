@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn to Code</title>
+  
+  <!-- Custom Font -->
+  <style>
+    @font-face {
+      font-family: 'BerkeleyMono';
+      src: url('https://tommustbe12.com/assets/BerkeleyMono-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'BerkeleyMono', monospace;
+      background-color: #0f0f0f;
+      color: #f5f5f5;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #1a1a1a;
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 2px solid #333;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #00ffcc;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #00ffcc;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #ff6f61;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      color: #00ffcc;
+      margin-bottom: 1rem;
+    }
+
+    pre {
+      background-color: #111;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00ffcc;
+    }
+
+    code {
+      font-family: 'BerkeleyMono', monospace;
+      color: #f5f5f5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 2px solid #333;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Learn to Code</h1>
+    <nav>
+      <a href="#html">HTML</a>
+      <a href="#css">CSS</a>
+      <a href="#javascript">JavaScript</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="html">
+      <h2>HTML Basics</h2>
+      <p>HTML is the structure of web pages. Here's an example of a simple HTML snippet:</p>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+    </section>
+
+    <section id="css">
+      <h2>CSS Basics</h2>
+      <p>CSS is used for styling HTML elements. Example:</p>
+      <pre><code>body {
+  background-color: black;
+  color: white;
+  font-family: 'BerkeleyMono', monospace;
+}</code></pre>
+    </section>
+
+    <section id="javascript">
+      <h2>JavaScript Basics</h2>
+      <p>JavaScript makes web pages interactive. Example:</p>
+      <pre><code>document.addEventListener('DOMContentLoaded', () =&gt; {
+  alert('Welcome to Learn to Code!');
+});</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Learn to Code
+  </footer>
+
+</body>
+</html>
