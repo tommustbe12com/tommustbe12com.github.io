@@ -347,41 +347,87 @@ setInterval(tick, 1000);
 
 document.getElementById('contact-form').addEventListener('submit', async e => {
   e.preventDefault();
+
   const btn    = document.getElementById('submit-btn');
   const status = document.getElementById('form-status');
 
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const message = document.getElementById('f-msg').value.trim();
+
+  // Reset status
+  status.className = 'form-status';
+  status.textContent = '';
+
+  // === VALIDATION ===
+  if (!name || !email || !message) {
+    status.textContent = 'please fill out all fields.';
+    status.className = 'form-status visible bad';
+    return;
+  }
+
+  // simple email check (not overkill)
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    status.textContent = 'invalid email format.';
+    status.className = 'form-status visible bad';
+    return;
+  }
+
+  // === SUBMIT ===
   btn.disabled = true;
   btn.textContent = 'sending...';
-  status.className = 'form-status';
 
   try {
     const res = await fetch('https://tmb12.link/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name:    document.getElementById('f-name').value.trim(),
-        email:   document.getElementById('f-email').value.trim(),
-        message: document.getElementById('f-msg').value.trim(),
-        ts:      new Date().toISOString()
+        name,
+        email,
+        message,
+        ts: new Date().toISOString()
       })
     });
-    if (!res.ok) throw new Error(res.status);
 
+    // Handle non-OK responses with specific messages
+    if (!res.ok) {
+      let errorMsg = `error ${res.status}`;
+
+      if (res.status === 429) {
+        errorMsg = '429 - your IP is rate limited. Wait for 3 minutes.';
+      } else if (res.status === 400) {
+        errorMsg = '400 - bad request.';
+      } else if (res.status === 500) {
+        errorMsg = '500 - server error. Contact me on Discord.';
+      } else {
+        errorMsg = `${res.status} — unexpected error.`;
+      }
+
+      throw new Error(errorMsg);
+    }
+
+    // SUCCESS
     btn.textContent = 'sent';
-    status.textContent = 'message received.';
+    status.textContent = 'Message received.';
     status.className = 'form-status visible ok';
     e.target.reset();
+
     setTimeout(() => {
       btn.disabled = false;
       btn.textContent = 'send';
       status.className = 'form-status';
     }, 5000);
+
   } catch (err) {
     btn.disabled = false;
     btn.textContent = 'send';
-    status.textContent = 'failed — try again.';
+
+    status.textContent = err.message || 'failed';
     status.className = 'form-status visible bad';
-    setTimeout(() => { status.className = 'form-status'; }, 4000);
+
+    setTimeout(() => {
+      status.className = 'form-status';
+    }, 4000);
   }
 });
 
