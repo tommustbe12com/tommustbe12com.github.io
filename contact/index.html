@@ -1,25 +1,474 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Me | TomMustBe12.com</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Tom</title>
+<style>
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('BerkeleyMono-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('BerkeleyMono-Regular.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #000;          /* keep background black */
+  --text: #e0e0e0;     /* was #bbb */
+  --text-mid: #f0f0f0; /* was #d0d0d0 */
+  --text-bright: #ffffff; /* was #f0f0f0 */
+  --accent: #f5f5f5;   /* was #e0e0e0 */
+  --dim: #aaa;          /* was #777 */
+  --dimmer: #888;       /* was #444 */
+  --font: 'Berkeley Mono', 'Courier New', monospace;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ── page shell ── */
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  padding: 40px 52px;
+  gap: 0;
+}
+
+/* ── header ── */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 64px;
+}
+
+.logo {
+  font-size: 12px;
+  color: var(--dimmer);
+  letter-spacing: 0.06em;
+}
+
+#clock {
+  font-size: 11px;
+  color: var(--dimmer);
+  letter-spacing: 0.08em;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 80px;
+  align-items: start;
+}
+
+.form-side {}
+
+.eyebrow {
+  font-size: 10px;
+  color: var(--dimmer);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 400;
+  color: var(--text-bright);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+h1 .muted {
+  color: var(--dim);
+}
+
+.tagline {
+  font-size: 12px;
+  color: var(--dimmer);
+  margin-bottom: 52px;
+  letter-spacing: 0.04em;
+}
+
+.field {
+  margin-bottom: 32px;
+}
+
+label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dimmer);
+  margin-bottom: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #2a2a2a;
+  color: var(--text-bright);
+  font-family: var(--font);
+  font-size: 14px;
+  padding: 10px 0;
+  outline: none;
+  caret-color: var(--text-bright);
+  transition: border-color 0.25s;
+  -webkit-appearance: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #444;
+  font-size: 13px;
+}
+
+input:focus, textarea:focus {
+  border-bottom-color: var(--dim);
+}
+
+textarea {
+  resize: none;
+  height: 90px;
+  line-height: 1.7;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.form-foot {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+button {
+  background: none;
+  border: 1px solid #333;
+  color: var(--text-mid);
+  font-family: var(--font);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+button:hover {
+  border-color: #666;
+  color: var(--text-bright);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.form-status {
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.form-status.visible { opacity: 1; }
+.form-status.ok  { color: #5a8a6a; }
+.form-status.bad { color: #8a4a4a; }
+
+.viz-side {
+  position: sticky;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+#canvas-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  position: relative;
+}
+
+#three-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.viz-label {
+  font-size: 10px;
+  color: var(--dimmer);
+  letter-spacing: 0.08em;
+}
+
+footer {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--dimmer);
+  letter-spacing: 0.06em;
+}
+
+footer a {
+  color: var(--dimmer);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer a:hover { color: var(--text-mid); }
+
+.footer-links { display: flex; gap: 24px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+[data-fade] { opacity: 0; animation: fadeUp 0.5s ease forwards; }
+[data-fade="1"] { animation-delay: 0.05s; }
+[data-fade="2"] { animation-delay: 0.15s; }
+[data-fade="3"] { animation-delay: 0.28s; }
+[data-fade="4"] { animation-delay: 0.42s; }
+[data-fade="5"] { animation-delay: 0.56s; }
+
+@media (max-width: 760px) {
+  .page { padding: 28px 24px; }
+
+  header { margin-bottom: 44px; }
+
+  main {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-side { order: 1; }
+  .viz-side  { order: 2; margin-top: 56px; position: static; width: 100%; }
+
+  #canvas-wrap { aspect-ratio: 16 / 9; }
+
+  .field-row { grid-template-columns: 1fr; gap: 0; }
+
+  h1 { font-size: 36px; }
+}
+</style>
 </head>
 <body>
-    <iframe src="https://contacttom.replit.app" frameborder="0" allowfullscreen></iframe>
+<div class="page">
+
+  <header data-fade="1">
+    <span class="logo">Contact TomMustBe12</span>
+    <span id="clock"></span>
+  </header>
+
+  <main>
+    <div class="form-side" data-fade="2">
+      <p class="eyebrow">contact</p>
+      <h1>Get in<br><span class="muted">touch.</span></h1>
+      <p class="tagline">i'll get back to you.</p>
+
+      <form id="contact-form" novalidate autocomplete="off">
+        <div class="field-row">
+          <div class="field">
+            <label>name</label>
+            <input type="text" id="f-name" name="name" placeholder="your name" required>
+          </div>
+          <div class="field">
+            <label>email</label>
+            <input type="email" id="f-email" name="email" placeholder="you@..." required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>message</label>
+          <textarea id="f-msg" name="message" placeholder="what's up" required></textarea>
+        </div>
+
+        <div class="form-foot">
+          <button type="submit" id="submit-btn">send</button>
+          <span class="form-status" id="form-status"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="viz-side" data-fade="3">
+      <div id="canvas-wrap">
+        <canvas id="three-canvas"></canvas>
+      </div>
+      <span class="viz-label">drag to rotate</span>
+    </div>
+  </main>
+
+  <footer data-fade="5">
+    <span>TomMustBe12</span>
+    <div class="footer-links">
+      <a href="https://github.com/tommustbe12com">github</a>
+      <a href="https://discord.gg/CwDSvWsXxK">discord</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const clockEl = document.getElementById('clock');
+function tick() {
+  clockEl.textContent = new Date().toTimeString().slice(0, 8);
+}
+tick();
+setInterval(tick, 1000);
+
+document.getElementById('contact-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn    = document.getElementById('submit-btn');
+  const status = document.getElementById('form-status');
+
+  btn.disabled = true;
+  btn.textContent = 'sending...';
+  status.className = 'form-status';
+
+  try {
+    const res = await fetch('https://tmb12.link/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    document.getElementById('f-name').value.trim(),
+        email:   document.getElementById('f-email').value.trim(),
+        message: document.getElementById('f-msg').value.trim(),
+        ts:      new Date().toISOString()
+      })
+    });
+    if (!res.ok) throw new Error(res.status);
+
+    btn.textContent = 'sent';
+    status.textContent = 'message received.';
+    status.className = 'form-status visible ok';
+    e.target.reset();
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = 'send';
+      status.className = 'form-status';
+    }, 5000);
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'send';
+    status.textContent = 'failed — try again.';
+    status.className = 'form-status visible bad';
+    setTimeout(() => { status.className = 'form-status'; }, 4000);
+  }
+});
+
+(function () {
+  const wrap   = document.getElementById('canvas-wrap');
+  const canvas = document.getElementById('three-canvas');
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 5.5;
+
+  function resize() {
+    const w = wrap.clientWidth;
+    const h = wrap.clientHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const solidM = new THREE.MeshStandardMaterial({
+    color: 0x0a0a0a,
+    roughness: 0.3,
+    metalness: 0.8,
+  });
+  const edgeM = new THREE.LineBasicMaterial({ color: 0x666666, transparent: true, opacity: 0.9 });
+
+  function makeEdged(geometry) {
+    const g = new THREE.Group();
+    g.add(new THREE.Mesh(geometry, solidM));
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), edgeM);
+    g.add(edges);
+    return g;
+  }
+
+  const main = makeEdged(new THREE.IcosahedronGeometry(1.4, 1));
+  scene.add(main);
+
+  let dragging = false, lx = 0, ly = 0, vx = 0, vy = 0;
+  let rotX = 0, rotY = 0;
+
+  canvas.addEventListener('mousedown', e => {
+    dragging = true; lx = e.clientX; ly = e.clientY; vx = vy = 0;
+  });
+  window.addEventListener('mouseup', () => { dragging = false; });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    vx = (e.clientX - lx) * 0.01;
+    vy = (e.clientY - ly) * 0.01;
+    lx = e.clientX; ly = e.clientY;
+  });
+
+  canvas.addEventListener('touchstart', e => {
+    dragging = true; lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+  }, { passive: true });
+  canvas.addEventListener('touchend', () => { dragging = false; });
+  canvas.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    vx = (e.touches[0].clientX - lx) * 0.01;
+    vy = (e.touches[0].clientY - ly) * 0.01;
+    lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+  }, { passive: true });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+
+    if (dragging) {
+      rotY += vx; rotX += vy;
+    } else {
+      vx *= 0.92; vy *= 0.92;
+      rotY += vx; rotX += vy;
+      rotY += 0.004;
+    }
+
+    main.rotation.x = rotX;
+    main.rotation.y = rotY;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
 </body>
 </html>
