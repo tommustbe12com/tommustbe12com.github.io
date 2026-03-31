@@ -353,6 +353,31 @@ a {
     gap: 50px;
 }
 
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.video-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.video-thumbnail {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.video-card h3 {
+    font-size: 14px;
+    margin: 0;
+    color: #e8fbff;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .youtube-carousel-slide iframe {
