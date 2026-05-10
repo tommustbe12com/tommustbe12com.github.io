@@ -23,6 +23,37 @@
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="responsiveness.css">
     <!-- yes that much css ik -->
+
+    <style>
+      #school-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .school-link {
+        font-family: 'Quicksand';
+        font-weight: bold;
+        font-size: 18px;
+        color: #34533b;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #f0f0f0;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .school-link:hover {
+        background-color: #34533b;
+        color: #fff;
+      }
+
+      p {
+        font-family: 'Quicksand'; text-align: center; font-weight: bold;
+      }
+    </style>
   </head>
 
   <body>
@@ -40,7 +71,12 @@
 
     <div class="whitespace"></div>
     <div class="whitespace"></div>
-    <p style="font-family: 'Quicksand'; text-align: center; font-weight: bold;">Welcome! This is TomMustBe12's school page. This is where all of his projects<br>are for school. You can look around and explore if you like!.</p>
+    <p style="font-family: 'Quicksand'; text-align: center; font-weight: bold;">Welcome! This is TomMustBe12's school page. This is where all of his projects<br>are for school. You can look around and explore if you like!</p>
+    <p style="font-family: 'Quicksand'; text-align: center; font-weight: bold;">Quick Links</p>
+    <div id="school-links">
+      <a class="school-link" href="science-8/bruh-checker/index.html">Science 8th Bruh Checker</a>
+      <a class="school-link" href="geo-9/calculators.html">Geometry 9th Calculators List</a>
+    </div>
     <div id="footer-other">
       <div class="js-scroll fade-in" id="footer-brand">
         <div id="footer-brand-title">TomMustBe12's School Projects</div>
