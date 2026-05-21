@@ -74,16 +74,16 @@
       if (unit === "years") minutes = amount * 525600;
 
       const totalMinutes = minutes * instances;
-      const money = totalMinutes * 4000;
-      const keys = totalMinutes / 1500;
+      const skellies = totalMinutes / 1500;
+      const money = skellies * 4200000; // each skelly worth 4.2 million
 
       document.getElementById("output").innerHTML = `
         <strong>Base AFK Minutes:</strong> ${minutes.toLocaleString()}<br>
         <strong>Instances:</strong> ${instances}<br><br>
 
         <strong>Total Effective Minutes:</strong> ${totalMinutes.toLocaleString()}<br>
-        <strong>Crate Keys:</strong> ${keys.toFixed(2)}<br>
-        <strong>Money Earned:</strong> $${money.toLocaleString()}
+        <strong>Skellies:</strong> ${skellies.toFixed(2)}<br>
+        <strong>Money Earned:</strong> $${Math.round(money).toLocaleString()}
       `;
     }
   </script>
