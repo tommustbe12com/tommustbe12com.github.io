@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Example</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.12);
+      --text: rgba(245, 247, 250, 0.96);
+      --muted: rgba(220, 226, 235, 0.68);
+      --accent: #7fb7a6;
+      --accent-2: #d4a46c;
+      --shadow: 0 16px 50px rgba(0, 0, 0, 0.24);
+      --sidebar-w: 320px;
+      --topbar-h: 70px;
+      --composer-h: 88px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "Segoe UI", "Segoe UI Variable Text", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        linear-gradient(rgba(7, 10, 15, 0.34), rgba(7, 10, 15, 0.42)),
+        url("../assets/trees.png") center center / cover fixed no-repeat;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.02) 42%, rgba(0, 0, 0, 0.12)),
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.07), transparent 26%),
+        radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.05), transparent 22%);
+      mix-blend-mode: screen;
+    }
+
+    .app {
+      position: relative;
+      display: grid;
+      grid-template-rows: var(--topbar-h) 1fr;
+      height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 10, 15, 0.28);
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      min-width: 220px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search input {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 13px 14px;
+      outline: none;
+      font: inherit;
+    }
+
+    .search input::placeholder { color: rgba(232, 237, 245, 0.52); }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 11px 14px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: 0;
+    }
+
+    .sidebar {
+      min-height: 0;
+      border-right: 1px solid var(--line);
+      background: rgba(8, 12, 18, 0.34);
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .sidebar-top {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      gap: 12px;
+    }
+
+    .compose {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 14px 16px;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .compose span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      padding: 12px 10px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .chat-list {
+      min-height: 0;
+      overflow: auto;
+      padding: 8px;
+    }
+
+    .chat-item {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: start;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      padding: 14px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .chat-item:hover,
+    .chat-item.active {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .chat-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      object-fit: cover;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .chat-meta header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .chat-meta h2 {
+      margin: 0;
+      font-size: 0.93rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .time {
+      color: var(--muted);
+      font-size: 0.76rem;
+      white-space: nowrap;
+    }
+
+    .preview {
+      margin: 0;
+      color: rgba(232, 237, 245, 0.64);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(127, 183, 166, 0.9);
+      color: #07110d;
+      font-size: 0.72rem;
+    }
+
+    .thread {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: rgba(6, 9, 13, 0.32);
+      backdrop-filter: blur(26px) saturate(180%);
+      -webkit-backdrop-filter: blur(26px) saturate(180%);
+    }
+
+    .thread-head {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .thread-title h2 {
+      margin: 0 0 6px;
+      font-size: 1.18rem;
+      font-weight: 600;
+    }
+
+    .thread-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .thread-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .messages {
+      min-height: 0;
+      overflow: auto;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .divider {
+      align-self: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .message {
+      max-width: min(720px, 86%);
+      padding: 14px 15px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      line-height: 1.55;
+      font-size: 0.96rem;
+      box-shadow: var(--shadow);
+    }
+
+    .message.bot {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: rgba(127, 183, 166, 0.9);
+      color: #08110d;
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.65;
+    }
+
+    .composer {
+      border-top: 1px solid var(--line);
+      background: rgba(6, 9, 13, 0.28);
+      padding: 16px 18px 18px;
+    }
+
+    .composer-inner {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .composer textarea {
+      flex: 1;
+      resize: none;
+      min-height: 54px;
+      max-height: 130px;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      line-height: 1.5;
+      padding: 8px 4px;
+    }
+
+    .composer textarea::placeholder { color: rgba(232, 237, 245, 0.5); }
+
+    .send {
+      height: 46px;
+      border: 0;
+      border-radius: 6px;
+      padding: 0 16px;
+      background: rgba(212, 164, 108, 0.95);
+      color: #111;
+      font: inherit;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 18px 6px;
+      font-size: 0.92rem;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      margin-right: 8px;
+      background: var(--accent);
+      vertical-align: middle;
+    }
+
+    .status-line {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .empty-state {
+      padding: 16px 18px;
+      color: var(--muted);
+      max-width: 720px;
+      line-height: 1.55;
+    }
+
+    .empty-state strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .widget-card {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+    }
+
+    .widget-card label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .widget-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .widget-grid input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border-radius: 6px;
+      font: inherit;
+    }
+
+    .widget-card textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border-radius: 6px;
+      font: inherit;
+      line-height: 1.5;
+    }
+
+    .widget-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .copy-ok {
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 0.82rem;
+      align-self: center;
+    }
+
+    .drawer {
+      display: none;
+      border-top: 1px solid var(--line);
+      background: rgba(6, 9, 13, 0.36);
+      padding: 18px 22px 22px;
+    }
+
+    .drawer.open {
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      body { overflow: auto; }
+      .app { height: auto; min-height: 100vh; }
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      .chat-list { max-height: 320px; }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        padding: 12px 14px;
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+      }
+      .brand { min-width: 0; }
+      .actions { justify-content: flex-start; flex-wrap: wrap; }
+      .thread-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .messages { padding: 16px; }
+      .message { max-width: 94%; }
+      .composer { padding: 12px; }
+      .composer-inner { flex-direction: column; align-items: stretch; }
+      .send { width: 100%; }
+    }
+  </style>
+</head>
+  <body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div>
+          <h1>Tom Bot</h1>
+          <p>Simple inbox-style chat, rule-based and site-aware.</p>
+        </div>
+      </div>
+      <div class="search">
+        <input id="search" type="search" placeholder="Search chats" />
+      </div>
+      <div class="actions">
+        <button class="btn" id="openWidgetBtn">Embed widget</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <button class="compose">
+            New chat
+            <span>Create a fresh thread</span>
+          </button>
+          <div class="stats">
+            <div class="stat"><strong id="chatCount">0</strong><span>open</span></div>
+            <div class="stat"><strong>rules</strong><span>only</span></div>
+            <div class="stat"><strong>web</strong><span>local</span></div>
+          </div>
+        </div>
+        <div class="chat-list" id="chatList"></div>
+      </aside>
+
+      <section class="thread">
+        <div class="thread-head">
+          <div class="thread-title">
+            <h2 id="threadName">No chat open</h2>
+            <p id="threadMeta">Create a new chat to start talking.</p>
+          </div>
+          <div class="thread-actions">
+            <button class="btn" id="widgetToggleBtn">Widget form</button>
+            <button class="btn" id="newChatBtn">New chat</button>
+          </div>
+        </div>
+
+        <div class="messages" id="messages"></div>
+
+        <div class="drawer" id="widgetDrawer">
+          <div class="widget-card">
+            <label for="widgetCode">Widget embed</label>
+            <div class="widget-grid">
+              <input id="widgetWidth" type="text" value="100%" />
+              <input id="widgetHeight" type="text" value="700px" />
+              <input id="widgetUrl" type="text" value="" />
+            </div>
+            <textarea id="widgetCode" readonly></textarea>
+            <div class="widget-actions">
+              <button class="btn" id="copyWidgetBtn" type="button">Copy embed code</button>
+              <span class="copy-ok" id="copyWidgetStatus"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="composer">
+          <div class="composer-inner">
+            <textarea id="composerInput" placeholder="Try /help, /about, /projects, /blog, /contact, /open home"></textarea>
+            <button class="send" id="sendBtn">Send</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const siteData = {
+      home: { title: "Home", text: "TomMustBe12 is a tech and gaming site with projects, blog posts, videos, and a Discord link." },
+      about: { title: "About", text: "Tom got started with coding young, built up from Khan Academy, and now makes websites, tools, and videos." },
+      projects: { title: "Projects", text: "Visible projects include CodeCraft Academy, the fake Google login page, the chat app, Smokey Defense, Soundboard, LeafPush, and Countxr." },
+      blog: { title: "Blog", text: "The blog includes posts like domain names, playit.gg scan, Skibidi Toilet, and smart watch." },
+      youtube: { title: "YouTube", text: "The site has a YouTube videos section that loads recent uploads and a link to view all videos." },
+      contact: { title: "Contact", text: "The site points people toward Discord for timely communication." }
+    };
+
+    const commandHelp = [
+      "/help - show commands",
+      "/about - show a short site summary",
+      "/projects - list the main projects",
+      "/blog - list recent blog topics",
+      "/youtube - describe the video section",
+      "/contact - show the contact route",
+      "/open home|about|projects|blog|youtube|contact - open a site section",
+      "/new - clear the current thread and start over",
+      "/clear - clear the current conversation"
+    ];
+
+    const chats = [];
+
+    const chatList = document.getElementById("chatList");
+    const messages = document.getElementById("messages");
+    const threadName = document.getElementById("threadName");
+    const threadMeta = document.getElementById("threadMeta");
+    const composerInput = document.getElementById("composerInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const search = document.getElementById("search");
+    const chatCount = document.getElementById("chatCount");
+    const newChatBtn = document.getElementById("newChatBtn");
+    const widgetToggleBtn = document.getElementById("widgetToggleBtn");
+    const openWidgetBtn = document.getElementById("openWidgetBtn");
+
+    let activeId = null;
+    let widgetOpen = false;
+    let widgetBound = false;
+
+    function makeId() {
+      return "chat-" + Math.random().toString(36).slice(2, 9);
+    }
+
+    function normalize(text) {
+      return text.trim().toLowerCase();
+    }
+
+    function addSystemMessage(text) {
+      const chat = chats.find(item => item.id === activeId);
+      if (!chat) return;
+      chat.messages.push({ role: "bot", label: "Tom Bot", text });
+    }
+
+    function parseCommand(text) {
+      const raw = text.trim();
+      const lower = normalize(raw);
+
+      if (!lower) return null;
+      if (!lower.startsWith("/")) {
+        return {
+          kind: "chat",
+          reply: "I only answer to commands here. Try /help to see what I can do."
+        };
+      }
+
+      const [command, ...rest] = lower.slice(1).split(/\s+/);
+      const arg = rest.join(" ").trim();
+
+      if (command === "help") {
+        return { kind: "command", reply: "Commands:\n" + commandHelp.join("\n") };
+      }
+
+      if (command === "about" || command === "home" || command === "projects" || command === "blog" || command === "youtube" || command === "contact") {
+        const section = siteData[command];
+        return { kind: "command", reply: `${section.title}: ${section.text}` };
+      }
+
+      if (command === "open") {
+        const section = siteData[arg];
+        if (!section) {
+          return { kind: "command", reply: "Usage: /open home, /open about, /open projects, /open blog, /open youtube, or /open contact." };
+        }
+        return { kind: "command", reply: `Opened ${section.title}. ${section.text}` };
+      }
+
+      if (command === "new") {
+        return { kind: "new", reply: "Starting a fresh thread." };
+      }
+
+      if (command === "clear") {
+        return { kind: "clear", reply: "Conversation cleared." };
+      }
+
+      if (command === "widget") {
+        return { kind: "widget", reply: "Widget panel opened." };
+      }
+
+      return { kind: "command", reply: "Unknown command. Try /help." };
+    }
+
+    function renderChatList(filter = "") {
+      const term = filter.trim().toLowerCase();
+      chatList.innerHTML = "";
+
+      const visible = chats.filter(chat => !term || [chat.name, chat.meta].some(value => value.toLowerCase().includes(term)));
+
+      visible.forEach(chat => {
+        const button = document.createElement("button");
+        button.className = `chat-item${chat.id === activeId ? " active" : ""}`;
+        button.innerHTML = `
+          <img class="chat-thumb" src="../assets/profile.png" alt="" />
+          <div class="chat-meta">
+            <header>
+              <h2>${chat.name}</h2>
+              <span class="time">${chat.time}</span>
+            </header>
+            <p class="preview">${chat.meta}</p>
+          </div>
+        `;
+        button.addEventListener("click", () => {
+          activeId = chat.id;
+          renderAll();
+        });
+        chatList.appendChild(button);
+      });
+
+      if (!visible.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "No chats match that search.";
+        chatList.appendChild(empty);
+      }
+
+      chatCount.textContent = String(chats.length);
+    }
+
+    function renderMessages() {
+      const chat = chats.find(item => item.id === activeId);
+      messages.innerHTML = "";
+
+      if (!chat) {
+        threadName.textContent = "No chat open";
+        threadMeta.textContent = "Create a new chat to start talking.";
+
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.innerHTML = `
+          <strong>Tom Bot</strong>
+          Start a new chat and use commands like <code>/help</code>, <code>/about</code>, <code>/projects</code>, or <code>/open projects</code>.
+        `;
+        messages.appendChild(empty);
+        return;
+      }
+
+      threadName.textContent = chat.name;
+      threadMeta.innerHTML = `<span class="dot"></span>${chat.meta}`;
+
+      const divider = document.createElement("div");
+      divider.className = "divider";
+      divider.textContent = "Today";
+      messages.appendChild(divider);
+
+      chat.messages.forEach(message => {
+        const el = document.createElement("div");
+        el.className = `message ${message.role}`;
+        el.innerHTML = `
+          <span class="label">${message.label}</span>
+          <div>${message.text}</div>
+        `;
+        messages.appendChild(el);
+      });
+
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendMessage() {
+      const text = composerInput.value.trim();
+      if (!text) return;
+
+      if (!activeId) {
+        createChat();
+      }
+
+      const chat = chats.find(item => item.id === activeId);
+      chat.messages.push({ role: "user", label: "You", text });
+
+      const parsed = parseCommand(text);
+      if (!parsed) return;
+
+      if (parsed.kind === "new") {
+        composerInput.value = "";
+        createChat();
+        return;
+      }
+
+      if (parsed.kind === "clear") {
+        chat.messages = [];
+      } else {
+        chat.messages.push({ role: "bot", label: "Tom Bot", text: parsed.reply });
+      }
+
+      composerInput.value = "";
+      renderAll();
+    }
+
+    function createChat() {
+      const n = chats.length + 1;
+      const chat = {
+        id: makeId(),
+        name: n === 1 ? "New chat" : `New chat ${n}`,
+        meta: "New thread",
+        time: "now",
+        messages: []
+      };
+      chats.unshift(chat);
+      activeId = chat.id;
+      renderAll();
+      composerInput.focus();
+    }
+
+    function bindWidgetForm() {
+      const width = document.getElementById("widgetWidth");
+      const height = document.getElementById("widgetHeight");
+      const url = document.getElementById("widgetUrl");
+      const code = document.getElementById("widgetCode");
+      const copy = document.getElementById("copyWidgetBtn");
+      const status = document.getElementById("copyWidgetStatus");
+      if (!width || !height || !url || !code || !copy || !status) return;
+
+      if (!url.value) {
+        url.value = `${location.origin}${location.pathname}`;
+      }
+
+      const update = () => {
+        code.value = `<iframe src="${url.value}" style="width:${width.value};height:${height.value};border:0;border-radius:6px;overflow:hidden;" title="Tom Bot"></iframe>`;
+      };
+
+      if (!widgetBound) {
+        [width, height, url].forEach(el => el.addEventListener("input", update));
+        copy.onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(code.value);
+            status.textContent = "Copied.";
+            setTimeout(() => (status.textContent = ""), 1200);
+          } catch {
+            status.textContent = "Copy failed.";
+          }
+        };
+        widgetBound = true;
+      }
+      update();
+    }
+
+    function renderAll() {
+      renderChatList(search.value);
+      renderMessages();
+    }
+
+    search.addEventListener("input", () => renderChatList(search.value));
+    sendBtn.addEventListener("click", sendMessage);
+    newChatBtn.addEventListener("click", createChat);
+    widgetToggleBtn.addEventListener("click", () => {
+      widgetOpen = !widgetOpen;
+      document.getElementById("widgetDrawer").classList.toggle("open", widgetOpen);
+      bindWidgetForm();
+    });
+    openWidgetBtn.addEventListener("click", () => {
+      widgetOpen = true;
+      document.getElementById("widgetDrawer").classList.add("open");
+      bindWidgetForm();
+    });
+    composerInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    renderMessages();
+    renderChatList();
+    bindWidgetForm();
+  </script>
+</body>
+</html>
