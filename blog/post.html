@@ -53,7 +53,7 @@
         if (!res.ok) throw new Error('Blog not found');
         const blog = await res.json();
 
-        // Fill the container with your previous style structure
+        // fill container with previous blog struct
         container.innerHTML = `
           <div class="stickyInfo">
             <div class="author">Author: ${blog.author || 'TomMustBe12'}</div>
@@ -64,7 +64,7 @@
               <h1>${blog.title}</h1>
               ${blog.subtitle ? `<sub>${blog.subtitle}</sub>` : ''}
             </div>
-            ${blog.imageUrl ? `<div class="image"><img src="${blog.imageUrl}" alt="${blog.title}"></div>` : ''}
+            ${blog.imageUrl ? `<div class="image"><img src="${/^\/?images\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(png|jpe?g|gif|webp)$/i.test(blog.imageUrl.replace(/^https?:\/\/tmb12\.link/i, '')) ? 'https://tmb12.link/' + blog.imageUrl.replace(/^https?:\/\/tmb12\.link\/?/i, '').replace(/^\//, '') : blog.imageUrl}" alt="${blog.title}"></div>` : ''}
             <div class="blogText">${blog.content}</div>
           </div>
         `;
