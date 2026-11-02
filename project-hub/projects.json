@@ -191,6 +191,12 @@
         "title": "Img2Text",
         "description": "Extract text from images using only your browser. Unlimited usage, for free.",
         "link": "https://img2text.replit.app"
+      },
+      {
+        "category": "productivity",
+        "title": "Isfet",
+        "description": "A simple, easy way to code and run your code in an online IDE, with many languages.",
+        "link": "https://isfet.xyz"
       }
     ]
   }
